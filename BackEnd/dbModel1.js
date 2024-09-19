@@ -19,7 +19,7 @@ const myQuestion = new mongoose.Schema({
     scoreUser: { type: Number }
 }, { timestamps: true });
 
-
+// this awsome thing in this world
 
 // Main schema for users and their questions
 const UserSchema = new mongoose.Schema({
