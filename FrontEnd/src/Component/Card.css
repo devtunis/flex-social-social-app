@@ -1,0 +1,21 @@
+.cardSectionUser{
+    background-color: black;
+    color: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    gap:10px;
+    align-items: center;
+    
+}
+
+.icon-pictuer{
+    background-color: white;
+    color: black;
+    
+  
+    padding: 10px;
+    border-radius: 15px;
+}

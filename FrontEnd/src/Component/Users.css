@@ -1,0 +1,85 @@
+.user-section{
+    width: 100%;
+    padding: 10px;
+    background-color: rebeccapurple;
+    text-align: center;
+    font-size: 30px;
+    
+
+}
+.user-input{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    input{
+        width: 80%;
+        border: none;
+        padding: 30px;
+        text-align: center;
+        border: 2px solid #666;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+}
+.section-reall-user{
+    width: 100%;
+    background-color: rgb(156, 142, 142);
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.card-user-info-specail {
+    color: rgb(32, 32, 177);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 10px;
+  }
+  
+  .imgInsideContainer {
+    display: flex;
+    align-items: center;
+    
+  }
+  
+  .imgInsideContainer img {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+  }
+  
+  .img-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .username {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .country, .allScore {
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  .country {
+    margin-bottom: 5px;
+  }
+  
