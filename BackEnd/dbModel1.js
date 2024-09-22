@@ -28,7 +28,8 @@ const UserSchema = new mongoose.Schema({
     imgUser :{type:String},
     receiveMessages: [receiveMessageFromAdminSchema],
     myQuestionsBasket : [myQuestion] ,// here add basket to see my all question i wannna asked and then should be deleted for me if i want
-    password : String 
+    password : String ,
+    chatWithAdmin1 :{type:Boolean,default:false}
 }, { timestamps: true });
 
 export default mongoose.model('User', UserSchema);

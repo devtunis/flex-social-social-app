@@ -9,6 +9,7 @@ import cors from "cors"
 import multer from 'multer';
 import path from "path"
 import dotenv from 'dotenv';
+import WebSocket, { WebSocketServer } from 'ws';
 
 dotenv.config();
 
@@ -18,10 +19,7 @@ const PORT = 9000;
 app.use(bodyParser.json());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://admin:CIsVjyXyoO8MjjAs@cluster0.de4vi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect('mongodb+srv://admin:CIsVjyXyoO8MjjAs@cluster0.de4vi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 .then(() => {
     console.log('MongoDB connected'); 
 })
@@ -54,6 +52,52 @@ const upload = multer({
     storage: storage,
     limits: { fileSize: 5 * 1024 * 1024 } // Increase as needed
 });
+ 
+
+
+
+ 
+
+const wss = new WebSocketServer({ port: 8080 });
+
+wss.on('connection', (ws) => {
+  console.log('A new client connected.');
+
+  ws.on('message', (message) => {
+    console.log(`Received message: ${message}`);
+    // Echo the message back to the client
+    ws.send(`Server received: ${message}`);
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected.');
+  });
+});
+
+console.log('WebSocket server running on ws://localhost:8080');
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -82,19 +126,6 @@ app.get("/getQuestion",async(req,res)=>{
         console.log(`this eroor  by ${eroor}`)
     }
 })
-
-
-
-//  app.post("/setUserWithAnswer",async(req,res)=>{
-//      try{
-//       const setAnswer = new User(req.body)
-//       await setAnswer.save()
-//       res.status(200).json(setAnswer)
-//      }catch(eror){
-//          res.status(404).json({message : eror})
-//          console.log(`the error by ${eror}`)
-//      }
-//  })
 app.post('/setUserWithAnswer', upload.single('imgUser'), async (req, res) => {
     
       try {
@@ -336,6 +367,35 @@ app.get("/getChat/:userid",async(req,res)=>{
         res.status(405).json({message : eroor})
     }
 })
+app.get("/auth/:email",async(req,res)=>{
+    try{
+     const response = await User.find({email:req.params.email})
+     res.status(202).json(response)
+    }
+    catch(eroor){
+        console.log(`this eroor by ${eroor}`)
+        res.status(404).json({message : eroor})
+    }
+})
+
+app.put("/check/:id", async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id,
+            {chatWithAdmin1:true},
+            {new : true}
+        );
+        if (!user) {
+            return res.status(404).json({ message: "This user does not exist" });
+        }
+        // inside  the user their chalo bame chatWithadmin i wanna chang this ture 
+        res.status(200).json(user);
+    } catch (error) {
+        console.log(`This error caused: ${error}`);
+        res.status(500).json({ message: error });
+    }
+});
+
+
 
 
 
