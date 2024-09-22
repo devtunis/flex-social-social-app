@@ -76,9 +76,9 @@ const PutComment = () => {
                         </div>
                          {/* <input type='file' onChange={handleFileChange}  />   */}
                <div className='container--file--Upload--Join'>   
-                         <label className="custom-file-upload">
+                         <label className="custom-file-upload" style={{marginLeft:'50px'}}>
                                 <input type="file" onChange={handleFileChange} />
-                                <span className="upload-icon">📁</span> Choose File
+                                <span className="upload-icon">📁</span> Choose Pictuer
                             </label>
 
 

@@ -14,7 +14,7 @@ const HeadersQuestion = () => {
     const HandelGetTheDataFromDataBase = async () => {
         try {
             const response = await axios.get(`/callComments/${AddQuestion._id}`); // here logique when
-            console.log(response.data);
+            console.log(response.data,"your");
             setA(response.data); // can you here after set the data to filter i need last comment post the one 
         } catch (error) {
             console.log(`This error occurred: ${error}`);
@@ -111,7 +111,7 @@ const HeadersQuestion = () => {
 
                                     <div className='SectionCommentForPost'>
                                         <h1>Section Comment</h1>
-                                        <div className='ecran'>
+                                        <div className='ecran'  > 
                                             {actualData.map((b, index) => (
                                                 <CommentSection key={index} b={b}  />
                                             ))}
@@ -119,7 +119,7 @@ const HeadersQuestion = () => {
 
                                         <br /><br />
                                         <div className='EcranComment'>
-                                            <PutComment />
+                                            <PutComment   />
                                               
                                         </div>
                                         <br />

@@ -10,10 +10,12 @@ import ProfilePage from './Component/ProfilePage';
 import MathPage from './Component/MathPage';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cardsx from './Component/Cardsx';
+import Auth from './Component/Auth';
 
 
 const App = () => {
-// window.addEventListener("beforeunload",()=>localStorage.clear())
+// window.addEventListener("beforeunload",()=>localStorage.clear()) 
   return (
     <>
        <Routes>
@@ -25,6 +27,7 @@ const App = () => {
         <Route path='/Users' element={ <><NavBar/> <Users/></> }/>
         <Route path='/Profile' element={ <><ProfilePage/></> }/>
         <Route path='/MathPage' element={ <><MathPage/></> }/>
+        <Route path='/auth' element={ <><Auth/></> }/>
         
        </Routes>
        <ToastContainer />

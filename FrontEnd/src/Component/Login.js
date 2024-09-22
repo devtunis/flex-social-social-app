@@ -30,7 +30,7 @@ const Login = () => {
      const formData = new FormData()
      
      formData.append("username",username)
-     formData.append("email",username)
+     formData.append("email",email)
      formData.append("password",password)
      formData.append("imgUser",selectedFile)
      console.log(formData)

@@ -123,9 +123,10 @@ input[type="file"] {
 }
 
 .container--file--Upload--Join{
-  background-color: red;
+ 
   display: flex;
   align-items: center;
+  
 }
 .containerDispalyImage img{
   width: 200px;

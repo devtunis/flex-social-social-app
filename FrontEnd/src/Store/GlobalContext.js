@@ -92,6 +92,7 @@ export const ContextProvider = ({ children }) => {
     <GlobalContext.Provider value={{ state, dispatch, user: state.user, TokenUser: state.TokenUser,AddQuestion:state.AddQuestion,togle:state.togle,BasketMassages:state.BasketMassages
       ,userTage:state.userTage,UserProfile:state.UserProfile
      }}>
+      
       {children}
     </GlobalContext.Provider>
   );

@@ -14,14 +14,18 @@ const Admin = () => {
         try {
             const response = await axios.get('/getChatPostForAdmin');
             setMessages(response.data);
+            console.log(response.data)
         } catch (error) {
             console.log(`Issue fetching data: ${error}`);
         }
     };
 
-    useEffect(() => {
-        FetchDataFromArray();
-    }, []);
+   useEffect(() => {
+        
+       setInterval(() => {
+           FetchDataFromArray();
+       }, 1000);
+   }, []);
 
     const HandleSendMessageForTheUserReact = async () => {
         if (!document.trim()) {
@@ -96,11 +100,12 @@ const Admin = () => {
         boxSizing: "border-box", // Ensure padding is included in width/height
     }}
 >
-    <BlockMath
+    {/* <BlockMath
         math={String.raw`${item.answerUser}`}
         // Additional styling for BlockMath if needed
         // style={{ maxWidth: "100%" }}
-    />
+    /> */}
+{item.answerUser}
 </div> 
                         </span>  
                         
