@@ -14,6 +14,7 @@ const Login = () => {
   const [imgUrl,setimgUrl]= useState("")
   const [selectedFile,setselectedFile] = useState(null)
   const {state,dispatch,TokenUser} = useGlobalContext()
+  const [open,setOpen] = useState(false)
   const Nav = useNavigate()
   
 
@@ -55,12 +56,17 @@ const Login = () => {
   };
    
   return (
+    <div className='formtadataSection' style={{width:"100%",height:"100vh",display:"flex",justifyContent:"center",alignItems:"center"}}> 
     <div className='Form' >
 
  
-<label htmlFor="avatar">Choose a profile picture:</label>
+<label htmlFor="avatar"  ><img 
+src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/2048px-OneDrive_Folder_Icon.svg.png'
+width="40px" height="40px" 
+style={{cursor:"pointer"}}
+/></label>
 
-<input type="file" id="avatar" name="avatar" accept="/*" onChange={HandelChangePictuer} />
+<input  style={{display:"none"}} type="file" id="avatar" name="avatar" accept="/*" onChange={HandelChangePictuer} />
 
 <br/>
 
@@ -68,13 +74,29 @@ const Login = () => {
         <br/>
         <input type='text'value={email}  name="email" placeholder='email' onChange={(e)=>setEmail(e.target.value)}/>
         <br/>
-        <input type='text'value={password} name="password" placeholder='password'  onChange={(e)=>setpassword(e.target.value)}/>
+        <input type={open ? "text" : "password"}  value={password} name="password" placeholder='password'  onChange={(e)=>setpassword(e.target.value)}
+         
+        />
+       
+         
+        <div>  
+        
+       {open ?
+        <span className="material-symbols-outlined" style={{cursor:"pointer"}} onClick={()=>setOpen((prev)=>!prev)} >
+        visibility
+        </span>
+       
+       : <span className="material-symbols-outlined" style={{cursor:"pointer"}} onClick={()=>setOpen((prev)=>!prev)}>
+       visibility_off
+       </span>}
+
+            </div>
         <br/>
         
         <button onClick={HandelUserPush}>Create your account</button>
       
     </div>
-
+    </div>
   )
 }
 

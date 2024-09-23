@@ -5,11 +5,12 @@ import Card from './Card';
 import { useGlobalContext } from '../Store/GlobalContext';
 import { BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
+import { Tag } from '@chakra-ui/react';
 const Admin = () => {
     const [messages, setMessages] = useState([]);
     const { dispatch, BasketMassages, userTage, TokenUser } = useGlobalContext();
     const [document, setDocument] = useState('');
-
+   
     const FetchDataFromArray = async () => {
         try {
             const response = await axios.get('/getChatPostForAdmin');
@@ -22,10 +23,19 @@ const Admin = () => {
 
    useEffect(() => {
         
-       setInterval(() => {
+      
            FetchDataFromArray();
-       }, 1000);
+     
    }, []);
+
+
+//    useEffect(() => {
+        
+//     setInterval(() => {
+//         FetchDataFromArray();
+//     }, 1000);
+// }, []);
+
 
     const HandleSendMessageForTheUserReact = async () => {
         if (!document.trim()) {
@@ -66,30 +76,37 @@ const Admin = () => {
     };
 
     return (
-        <div className='Admin'>
+        <div className='Admin' style={{display:TokenUser?.username==="admin" ? "flex" : "none"}} >
             <div className='Container__admin'>
-                <div className='right'>
+                <div className='right'  >
                     {messages.map((item) => (
-                        <Card key={item._id} cardItem={item} allMessage={messages} />
+
+                        <Card key={item._id} cardItem={item} allMessage={messages} 
+                        
+                        />
                     ))}
                 </div>
 
                 <div className='left'>
                     <div className='ContainerChat'>
-                        <div className='ContainerName'>N</div>
-                        <div className='ContainerNamec' style={{ color: 'white' }}>N</div>
+                        <div className='ContainerName'>G</div>
+                        {/* <div className='ContainerNamec' style={{ color: 'white' }}>N</div> */}
                     </div>
                     <hr />
                     <div className='MessageaAdminRouetes'>
                         {BasketMassages[0]?.map((item) => (
-                            <div className={item.rept === 'AdminUser' ? 'righINdex' : 'message'}>
-                                <span>Status: {item.rept}</span>
-                                <span>Reference: {item._id}</span>
-                                <span style={{ display: item.textQuestion === '' && 'none' }}>
-                                    Question: {item.textQuestion}
+                            <div className={item.rept === 'AdminUser' ? 'righINdex' : 'message'}
+                            style={{ display: item.textQuestion === '..' && 'none' }}
+                            >
+                                
+                                <span  >
+                                 {item.rept === 'AdminUser'? "" : 'Question : ' }     {item.textQuestion}
                                 </span>
-                    <span >
-                        Answer:  
+
+                    <span   >
+                         
+
+                        {item.rept === 'AdminUser'? "" : ' Answer:  ' }
                         <div
     style={{
         
@@ -100,12 +117,12 @@ const Admin = () => {
         boxSizing: "border-box", // Ensure padding is included in width/height
     }}
 >
-    {/* <BlockMath
+      <BlockMath
         math={String.raw`${item.answerUser}`}
         // Additional styling for BlockMath if needed
         // style={{ maxWidth: "100%" }}
-    /> */}
-{item.answerUser}
+    />  
+ 
 </div> 
                         </span>  
                         

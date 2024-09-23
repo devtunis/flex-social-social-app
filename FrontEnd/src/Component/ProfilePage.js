@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ProfilePage.css';
 import { useGlobalContext } from '../Store/GlobalContext';
+import axios from './axios';
 const ProfilePage = () => {
- 
+  const [saves,setsaves] = useState([])
+
   const {UserProfile} = useGlobalContext()
-   console.log(UserProfile.imgUser,"<==")
+  
   const user = {
     username: UserProfile[0].username,
     country: 'USA',
@@ -14,7 +16,20 @@ const ProfilePage = () => {
     avatar: `${process.env.REACT_APP_API_KEY}/${UserProfile[0].imgUser}`,
     backGround : `myaccountGihutb.png`
   };
+  console.log(UserProfile[0]._id,"dd")
 
+  const Upload = async()=>{
+    try{
+     const {data} =  await axios.get(`/getProfile/${UserProfile[0]._id}`)
+     console.log(data,"tasnim")
+     setsaves(data)
+    }catch(eroor){
+      console.log(`this eroor by ${eroor}`)
+    }
+  }
+  useEffect(()=>{
+    Upload()
+  },[])
   return (
     <div className="profile-container">
         
@@ -102,6 +117,7 @@ const ProfilePage = () => {
         <h2>Recent Activity</h2>
         {/* Add recent activity or other content here */}
         <p>No recent activity to display.</p>
+        
       </div>
     </div>
   );

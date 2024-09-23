@@ -5,6 +5,7 @@ import axios from './axios'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import Cardsx from './Cardsx'
+import HeadersQuestion from './HeadersQuestion'
 import { useGlobalContext } from '../Store/GlobalContext'
 const Body = () => {
   const {TokenUser} = useGlobalContext()
@@ -27,10 +28,7 @@ const Body = () => {
    
 
   },[])
-  const Logout = ()=>{
-    window.localStorage.clear()
-    Nav("/")
-  }
+
 
   return (
     <div className='Body__Container'>
@@ -40,7 +38,7 @@ const Body = () => {
           <div className='Body__Container__Inside__Setting'>
             
           <div className='icon-left-side'>
-  <button onClick={Logout} style={{cursor:"pointer"}}>Clear</button>
+  <button  style={{cursor:"pointer"}}>TOP SCORE</button>
 <div className='icon-self'>
 
    
@@ -79,7 +77,7 @@ const Body = () => {
 
 
           </div>
- <hr />
+  
           <div className='Body__Container__Inside__Question'>
 
             <div className='TopQuestiob__Container'>
@@ -120,6 +118,7 @@ const Body = () => {
 
           
          </div>
+         
     </div>
   )
 }

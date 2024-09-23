@@ -124,7 +124,7 @@ const TextAreaSection = () => {
           <button
             className='sumbitButtonDesigned'
             onClick={handleSubmit}
-            style={{ cursor: "pointer", display: "flex" }}
+            style={{ cursor: "pointer", display: "flex",color:"white",justifyContent:"center" }}
           >
             Submit Answer
           </button>

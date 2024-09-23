@@ -59,6 +59,7 @@ const PutComment = () => {
                     placeholder="Reply"
                     required
                     value={Comment}
+                    style={{color:"black"}}
                     onChange={(e) => setCommentUser(e.target.value)}
                 ></textarea>
                 <div className="formatting">
@@ -72,7 +73,7 @@ const PutComment = () => {
 
                     <div className='EmojiFpramting'>
                         <div className='EmojiFpramtingx'>
-                            <EmojiPicker height={350} open={isOpen} onEmojiClick={(e) => setCommentUser(prev => prev + e.emoji)} />
+                            <EmojiPicker height={350}  open={isOpen} onEmojiClick={(e) => setCommentUser(prev => prev + e.emoji)} />
                         </div>
                          {/* <input type='file' onChange={handleFileChange}  />   */}
                <div className='container--file--Upload--Join'>   

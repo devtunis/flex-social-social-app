@@ -8,12 +8,22 @@ const initialState = {
   togle :    JSON.parse(localStorage.getItem('togle'))    ||    "false",
   BasketMassages : JSON.parse(localStorage.getItem('BasketMessage')) || [],
   // userTage : JSON.parse(localStorage.getItem('userTage')) || '',
-  UserProfile  : JSON.parse(localStorage.getItem("userProfile")) || []
+  UserProfile  : JSON.parse(localStorage.getItem("userProfile")) || [],
+  SavePost : JSON.parse(localStorage.getItem("SavePost")) || []
+
 };
 
 // Reducer function
 const reducer = (state, action) => {
   switch (action.type) {
+    case  "SAVE__POST":
+      const SavePostx = [...state.SavePost,action.paylodSave]
+      localStorage.setItem("SavePost",JSON.stringify(SavePostx))
+    return{
+      ...state,
+      SavePost : SavePostx
+
+    }
   
     case "SET__PROFILE__USER":
       const SetData = [action.payload]
@@ -90,7 +100,7 @@ export const ContextProvider = ({ children }) => {
 
   return (
     <GlobalContext.Provider value={{ state, dispatch, user: state.user, TokenUser: state.TokenUser,AddQuestion:state.AddQuestion,togle:state.togle,BasketMassages:state.BasketMassages
-      ,userTage:state.userTage,UserProfile:state.UserProfile
+      ,userTage:state.userTage,UserProfile:state.UserProfile,SavePost : state.SavePost
      }}>
       
       {children}

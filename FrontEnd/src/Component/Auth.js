@@ -69,6 +69,8 @@ const Auth = () => {
           className="auth-input"
         />
 
+        
+
         <button type="submit" className="auth-button" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>

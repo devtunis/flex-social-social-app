@@ -5,7 +5,7 @@
     background-color: white;
     box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
     border-radius: 17px 17px 27px 27px;
- 
+    margin-top: 10px;
     
   } 
   .title {
@@ -257,10 +257,10 @@
       object-fit: cover;
     }
     .comment-image img{
-      width: 340px;
-      background-color: red;
+      width: 100%;
+      border-radius: 30px;
       height: 340px;
-      object-fit: contain;
+      object-fit: cover;
     }
     
 

@@ -12,6 +12,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cardsx from './Component/Cardsx';
 import Auth from './Component/Auth';
+import ImageUpload from './Component/ImageUpload';
+import FIRSTVIEW from './FirstView/FIRSTVIEW';
 
 
 const App = () => {
@@ -21,13 +23,15 @@ const App = () => {
        <Routes>
 
         <Route path='/Headers' element={ <> <NavBar/> <Body/> </> }/>
-        <Route path='/' element={ <> <Login/></> }/>
+        <Route path='/login' element={ <> <Login/></> }/>
         <Route path='/HeadersTopQuestion' element={ <>   <NavBar/>   <HeadersQuestion/>   </> }/>
         <Route path='/Admin' element={ <><NavBar/> <Admin/></> }/>
         <Route path='/Users' element={ <><NavBar/> <Users/></> }/>
         <Route path='/Profile' element={ <><ProfilePage/></> }/>
         <Route path='/MathPage' element={ <><MathPage/></> }/>
         <Route path='/auth' element={ <><Auth/></> }/>
+        <Route path='/Admin/upload/page' element={ <><ImageUpload/></> }/>
+        <Route path='/' element={ <><FIRSTVIEW/></> }/>
         
        </Routes>
        <ToastContainer />

@@ -1,10 +1,13 @@
 import "./Cardsx.css";
 import { useGlobalContext } from "../Store/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "./axios";
 export default function Cardsx({describre,imgicon,imgpofile,tags,document}) {
-   const {dispatch} = useGlobalContext()
+   const {dispatch,SavePost,TokenUser} = useGlobalContext()
    const Nav = useNavigate()
     const  HandelClickData = ()=>{
+
         dispatch({
           type:"ADD__QUESTION",
           payload2 : document
@@ -17,7 +20,38 @@ export default function Cardsx({describre,imgicon,imgpofile,tags,document}) {
      
       }
 
+const [file,setfile] = useState([])
+const HandelSaveButtonReactJS = async()=>{
+   console.log(document.question,TokenUser._id,SavePost)
+  //  dispatch({
+  //   type: "SAVE__POST",
+  //   paylodSave : document.question
+  //  }) 
+  try{
+  const responseData =  await axios.post(`/pushMyBasket/${TokenUser._id}`,{
+    
+     id :TokenUser._id ,
+     imgItem : document.question.imgItem ,
+     text : document.question.text ,
+     description :document.question.description 
+},
 
+ 
+)  
+ if(responseData){
+  (alert("succes data"))
+ }  
+
+  }catch(eroor){
+    console.log(`this eroor by ${eroor}`)
+    alert("this already ")
+  }
+  
+}
+useEffect(()=>{
+  console.log(SavePost)
+},[SavePost])
+ 
   return (
     <div className="clone-card helper">
       <div className="clone-card-img">
@@ -51,8 +85,8 @@ export default function Cardsx({describre,imgicon,imgpofile,tags,document}) {
           
          </div>
       <div className="icon-det">   
-         <span class="material-symbols-outlined">chat</span>
-         <span class="material-symbols-outlined">bookmark</span>
+         <span className="material-symbols-outlined boxChat1 ">chat</span>
+         <span className="material-symbols-outlined boxChatO " style={{cursor:"pointer"}} onClick={()=>HandelSaveButtonReactJS()}>bookmark</span>
          </div>
       </div>
     </div>
