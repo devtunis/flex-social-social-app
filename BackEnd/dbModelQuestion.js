@@ -31,9 +31,9 @@ const QUESTION = new mongoose.Schema({
     question: { type: QuestionSchema, required: true },  // A single question
     TypQuestion : String,
     peopleJoined: [UserSchema],                           // Array of users who joined
-    view : Number,
-    vote: Number,
-    answers : Number,
+    view : {type:Number,default:0},
+    vote: {type:Number,default:0},
+    answers : {type:Number,default:0},
     Comment : [CommentPeople],
     
 }, { timestamps: true });

@@ -19,6 +19,20 @@ const myQuestion = new mongoose.Schema({
     scoreUser: { type: Number }
 }, { timestamps: true });
 
+
+
+
+const myPosts = new mongoose.Schema({
+    // textQuestion: { type: String, required: true },
+    id: { type: String, required: true }, // Plain String ID
+    imgItem : {type:String},
+    text : {type: String},
+    description:{type:String}
+}, { timestamps: true });
+
+
+
+
 // this awsome thing in this world
 
 // Main schema for users and their questions
@@ -29,7 +43,8 @@ const UserSchema = new mongoose.Schema({
     receiveMessages: [receiveMessageFromAdminSchema],
     myQuestionsBasket : [myQuestion] ,// here add basket to see my all question i wannna asked and then should be deleted for me if i want
     password : String ,
-    chatWithAdmin1 :{type:Boolean,default:false}
+    chatWithAdmin1 :{type:Boolean,default:false},
+    SaveMyPost :{type : [myPosts],default:[]}
 }, { timestamps: true });
 
 export default mongoose.model('User', UserSchema);

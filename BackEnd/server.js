@@ -377,7 +377,6 @@ app.get("/auth/:email",async(req,res)=>{
         res.status(404).json({message : eroor})
     }
 })
-
 app.put("/check/:id", async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id,
@@ -394,7 +393,47 @@ app.put("/check/:id", async (req, res) => {
         res.status(500).json({ message: error });
     }
 });
+app.post("/pushMyBasket/:id", async (req, res) => {
+    try {
+        const Document = req.body;
+         
+        const testUser = await User.findById(req.params.id);
+        
+        if (!testUser) {
+            return res.status(404).json({ message: "This user does not exist" });
+        }
 
+        const existingPost = testUser.SaveMyPost.find(post => post.text === Document.text);
+        
+        if (existingPost) {
+            return res.status(400).json({ message: "This question is already in your basket." });
+        }  
+
+
+        testUser.SaveMyPost.push(Document);
+        await testUser.save(); // Save the updated user document
+
+        res.status(200).json({ message: "Document successfully added", SaveMyPost: testUser.SaveMyPost });
+
+    
+
+    } catch (error) {
+        console.log(`This error: ${error}`);
+        res.status(500).json({ message: "An error occurred" });
+    }
+});
+app.get("/getProfile/:id",async(req,res)=>{
+    try{
+       const response = await User.findById(req.params.id)
+       if(!response){
+        res.status(400).json({message : "this id not here exist"})
+       }
+       res.status(200).json(response.SaveMyPost)
+    }catch(eroor){
+        console.log(`this eroor by ${eroor}`)
+        res.status(404).json({message :eroor})
+    }
+})
 
 
 
