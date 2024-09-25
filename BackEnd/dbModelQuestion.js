@@ -26,12 +26,21 @@ const CommentPeople = new mongoose.Schema({
 }, { timestamps: true });
 
 
+
+const veiewT = new mongoose.Schema({
+     id:{type:String,unique:true}   
+    ,                                 
+}, { timestamps: true });
+
+
+
+
 // Main schema for tracking people and questions
 const QUESTION = new mongoose.Schema({
-    question: { type: QuestionSchema, required: true },  // A single question
+    question: { type: QuestionSchema },  
     TypQuestion : String,
-    peopleJoined: [UserSchema],                           // Array of users who joined
-    view : {type:Number,default:0},
+    peopleJoined: [UserSchema],                          
+    view : [],
     vote: {type:Number,default:0},
     answers : {type:Number,default:0},
     Comment : [CommentPeople],

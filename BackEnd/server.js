@@ -5,17 +5,17 @@ import  QUESTION from "./dbModelQuestion.js"
 import Admin from "./dbAdminSchema.js"
 import User from "./dbModel1.js"
 import ChatSession from "./dbChatMessages.js"
+import ChatTalking  from "./dbTalking.js"
 import cors from "cors"
 import multer from 'multer';
 import path from "path"
 import dotenv from 'dotenv';
-import WebSocket, { WebSocketServer } from 'ws';
 
 dotenv.config();
 
 
 const app = express();
-const PORT = 9000;
+const PORT = 9000 ;
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -25,7 +25,7 @@ mongoose.connect('mongodb+srv://admin:CIsVjyXyoO8MjjAs@cluster0.de4vi.mongodb.ne
 })
 
 app.use(cors({
-    origin: "http://localhost:3000",                  // this to acces the data from api 
+    origin: ["http://localhost:3000","http://localhost:3001","http://localhost:5000","http://localhost:5001"],                  
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"]
 }));
@@ -55,26 +55,7 @@ const upload = multer({
  
 
 
-
  
-
-const wss = new WebSocketServer({ port: 8080 });
-
-wss.on('connection', (ws) => {
-  console.log('A new client connected.');
-
-  ws.on('message', (message) => {
-    console.log(`Received message: ${message}`);
-    // Echo the message back to the client
-    ws.send(`Server received: ${message}`);
-  });
-
-  ws.on('close', () => {
-    console.log('Client disconnected.');
-  });
-});
-
-console.log('WebSocket server running on ws://localhost:8080');
  
  
 
@@ -96,30 +77,30 @@ console.log('WebSocket server running on ws://localhost:8080');
 
 
 
+ 
 
 
 
+app.post("/postQuestion", async (req, res) => {
+    try {
+   
 
-
-
-app.post("/postQuestion",async(req,res)=>{
-    try{ 
+     
 
         const SectionQustion = new QUESTION(req.body);
         await SectionQustion.save();
-        res.status(201).send(SectionQustion)
+        res.status(201).send(SectionQustion);
+    } catch (error) {
+        console.error(`Error: ${error.message}`);
+        res.status(400).json({ message: error.message });
     }
-    catch(eroor){
-        res.status(404).json({message : eroor})
-        console.log(`this eroor  by ${eroor}`)
-    }
-})
+});
 app.get("/getQuestion",async(req,res)=>{
     try{ 
 
         const SectionQustion =  await  QUESTION.find();
-        
-        res.status(201).send(SectionQustion)
+        const DataSorted = SectionQustion.sort((a,b)=>b.creVIatedAt-a.createdAt)
+        res.status(201).send(DataSorted)
     }
     catch(eroor){
         res.status(404).json({message : eroor})
@@ -425,6 +406,7 @@ app.post("/pushMyBasket/:id", async (req, res) => {
 app.get("/getProfile/:id",async(req,res)=>{
     try{
        const response = await User.findById(req.params.id)
+       
        if(!response){
         res.status(400).json({message : "this id not here exist"})
        }
@@ -434,8 +416,160 @@ app.get("/getProfile/:id",async(req,res)=>{
         res.status(404).json({message :eroor})
     }
 })
+app.post("/postVies/:id",async(req,res)=>{
+    try{
+        const {userIdJoin} = req.body
+
+     const  userQuestion = await QUESTION.findById(req.params.id)
+     const  testIdUser = await User.find({_id:userIdJoin})
+     if(!testIdUser){
+        res.status(404).json({msssage : "ops this user ddens not here"})
+     }
+     
+     if(!userQuestion){
+        res.status(404).json({message :" we dont find the user here "})
+     }
+    const CheckQuestion = userQuestion.view.filter((b)=>b===userIdJoin)
+     if(CheckQuestion.length>0){
+          res.status(400).json({message :"This id already here"})
+}
+else{
+    const UpdateOne = await QUESTION.findOneAndUpdate(
+        {_id:req.params.id},
+        {$push :{view : req.body.userIdJoin}},
+        {new:true}
+     )
+     res.status(202).json(UpdateOne)
+
+}
+   
+
+    }
+    catch(eroor){
+        console.log(`This Eroor by ${eroor}`)
+        res.status(404).json({message : eroor})
+    }
+})
+app.get("/viewLen/:id",async(req,res)=>{
+    try{
+      const View =  await QUESTION.findById(req.params.id)
+     
+     
+      res.status(200).send(View.view)
+    }
+    catch(eroor){
+        console.log(`this eroor by ${eroor}`)
+        res.status(404).json({message :eroor})
+    }
+})
+ app.post("/deltevi/:id",async(req,res)=>{
+     try{
+      
+      const  userQuestion = await QUESTION.findById(req.params.id)
+
+      if(!userQuestion){
+         res.status(404).json({message :" we dont find the user here "})
+      }
+ 
+      const UpdateOne = await QUESTION.findOneAndUpdate(
+         {_id:req.params.id},
+         {$pull :{view : req.body.userIdJoin}},
+         {new:true}
+      )
+      res.status(202).json(UpdateOne)
+      
+
+     }
+     catch(eroor){
+         console.log(`This Eroor by ${eroor}`)
+         res.status(404).json({message : eroor})
+     }
+ })
+
+app.post("/deltePosts/:id",async(req,res)=>{
+    try{
+    const {userPost} = req.body
+     const Data = await User.findById(req.params.id)
+     if(!Data){
+        res.status(404).json("This Post Does Not Exist")
+     }
+   
+      
+
+     const UpdateOne = await User.findOneAndUpdate(
+        {_id:req.params.id},
+        {$pull :{SaveMyPost : {_id:userPost}}},
+        {new:true}
+     )
+
+    res.status(200).json(UpdateOne)
 
 
+    }catch(eroor){
+        res.status(404).json({message : eroor})
+    }
+}) // and this data goona be dlet it 
+
+// -----------------------section Chat app------------------------------------------------------------
+app.post("/accesMessage/:id", async (req, res) => {
+    try {
+        const { userId, txt } = req.body; 
+ 
+        let isChat = await ChatTalking.findOne({
+            $and: [
+                { users: { $elemMatch: { $eq: req.params.id } } }, 
+                { users: { $elemMatch: { $eq: userId } } }  
+            ]
+        });
+
+        if (isChat) {
+          
+            isChat.messages.push({
+                senderId: userId,  
+                content: txt,  
+                timestamp: new Date() 
+            });
+            await isChat.save(); 
+            return res.json(isChat);  
+        } else {
+             
+            const newChat = new ChatTalking({
+                users: [req.params.id, userId],  
+                messages: [
+                    { senderId: req.params.id, content: txt, timestamp: new Date() }  
+                ]
+            });
+            await newChat.save(); // Save the new chat
+            return res.json(newChat); // Return the new chat
+        }
+
+    } catch (error) {
+        console.log(`This Error by ${error}`); // Log the error
+        res.status(404).json({ message: error }); // Send a 404 response with the error message
+    }
+});
+
+
+app.get("/get/access/message/:id",async(req,res)=>{
+
+try{
+
+    const { userId } = req.body; 
+ 
+    let isChat = await ChatTalking.findOne({
+        $and: [
+            { users: { $elemMatch: { $eq: req.params.id } } }, 
+            { users: { $elemMatch: { $eq: userId } } }  
+        ]
+    });
+    res.status(200).json(isChat)
+
+
+}catch(eroor){
+    res.status(404).json({message : eroor})
+}
+
+})
 
 
 app.use('/uploads', express.static('uploads'));
