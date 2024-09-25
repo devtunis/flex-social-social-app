@@ -16,7 +16,7 @@ const Body = () => {
     try{
       const response = await axios.get("/getQuestion")
       console.log(response.data)
-      setQuestion(response.data)
+      setQuestion(response.data.sort((a,b)=>b.view.length-a.view.length))
       
     }
     catch(index){

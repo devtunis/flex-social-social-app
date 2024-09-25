@@ -18,15 +18,23 @@ body {
   gap: 10px;
   padding: 10px;
   border-radius: 30px;
-  width: 18%; /* Default for larger screens */
-  
+  width: 18%;  
+  margin-top: 10px;
+  border: 0.333px solid grey;
+}
+.clone-card:hover{
+
+ 
+  scale:1.00999999;
+  border: 1.99px solid white;
 }
 
 .clone-card-img-container img {
   width: 100%; /* Full width by default */
-  height: 250px;
+  height: 160px;
   object-fit: cover;
   border-radius: 14px;
+  
 }
 
 .clone-card-img img {
@@ -152,7 +160,7 @@ body {
   gap: 10px;
   padding: 10px;
   border-radius: 30px;
-  width: 100%; /* Default for larger screens */
+  width: 90%; /* Default for larger screens */
    
 }
 
@@ -213,4 +221,10 @@ body {
 
 
 
+ }
+
+
+ .details:hover{
+  scale: 1.55;
+  
  }

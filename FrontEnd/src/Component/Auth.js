@@ -11,7 +11,7 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { dispatch } = useGlobalContext(); // Example for global dispatch (context)
-
+  const [open,setOpen] = useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -60,16 +60,28 @@ const Auth = () => {
           className="auth-input"
         />
 
-        <input
-          type="password"
+    <div className='alter'>
+
+    <input
+          type={open ? "txt" : "password"}
           placeholder="Type your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           className="auth-input"
         />
+       
+    
+ 
+    {
+      open ?      <span className="material-symbols-outlined auth" onClick={()=>setOpen((index)=>!index)}>
+      visibility
+      </span> :      <span className="material-symbols-outlined auth" onClick={()=>setOpen((index)=>!index)}>
+visibility_off
+</span>
+    }
 
-        
+    </div>
 
         <button type="submit" className="auth-button" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}

@@ -61,4 +61,12 @@
     color: #1877f2;
     text-decoration: none;
   }
+
   
+  .auth{
+ 
+     width: 100%;
+     display: flex;
+     margin-bottom: 5px;
+     cursor: pointer;
+  }

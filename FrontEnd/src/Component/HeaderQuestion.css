@@ -85,6 +85,8 @@
 
 .Space__Vote h2 {
    font-size: medium;
+   padding: 10px;
+  
 }
 
 .PdfSectionUser {
@@ -99,8 +101,9 @@
 .PdfSectionUser img {
  width: 99.99%;
  height: 800px;
- 
+ margin-top: 4px;
  object-fit: contain;
+ border-radius: 50px;
 
 }
 
@@ -170,10 +173,22 @@
  }
 
 @media (max-width: 600px) {
+
+   .PdfSectionUser img {
+      width: 100%;
+      height: auto;
+      margin-top: 4px;
+      object-fit: contain;
+      border-radius: 10px;
+      
+     }
+
+
+     
    .HeadersQuestion {
       width: 100%;
       height: auto;
-      background-color: red;
+       
       display: flex;
       justify-content: center;
       align-items: center;
@@ -184,7 +199,7 @@
       width: 100%;
       max-width: 600px; /* Limit the width on small screens */
       height: auto;
-      background-color: green;
+       
       display: flex;
       flex-direction: column; /* Stack items vertically on small screens */
       gap: 10px;
@@ -192,13 +207,13 @@
    
    .left__Side {
       width: 100%; /* Full width for mobile */
-      background-color: rebeccapurple;
+      
       height: auto;
    }
    
    .rightSide {
       width: 100%; /* Full width for mobile */
-      background-color: rebeccapurple;
+      
       height: auto;
    }
    
@@ -212,7 +227,7 @@
    
    .Level1 {
       width: 100%; /* Full width for mobile */
-      background-color: red;
+      
    }
    
    .Level2 button {
@@ -245,14 +260,14 @@
    .Vote__Question {
       width: 100%; /* Full width for mobile */
       height: auto;
-      background-color: rgb(220, 134, 13);
+      
        display: none;
    }
    
    .right__Vote__Question {
       width: 100%; /* Full width for mobile */
       height: auto;
-      background-color: orangered;
+     
       overflow-x: auto;
     
    }
@@ -265,7 +280,7 @@
       display: flex;
       justify-content: center; /* Center content on mobile */
       align-items: center;
-      background-color: rosybrown;
+    
    }
    
    .ecran {

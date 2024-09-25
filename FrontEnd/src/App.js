@@ -17,7 +17,9 @@ import FIRSTVIEW from './FirstView/FIRSTVIEW';
 
 
 const App = () => {
-// window.addEventListener("beforeunload",()=>localStorage.clear()) 
+// window.addEventListener("beforeunload",()=>localStorage.clear())
+
+
   return (
     <>
        <Routes>

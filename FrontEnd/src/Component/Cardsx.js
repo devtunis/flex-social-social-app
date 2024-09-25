@@ -4,7 +4,27 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "./axios";
 export default function Cardsx({describre,imgicon,imgpofile,tags,document}) {
-   const {dispatch,SavePost,TokenUser} = useGlobalContext()
+   const {dispatch,SavePost,TokenUser,AddQuestion} = useGlobalContext()
+   const [view,setViews] = useState(0)
+
+
+   const HandelGetView = async()=>{
+    try{
+      const {data} = await axios.get(`/viewLen/${document._id}`)
+      setViews(data.length) 
+    
+    }catch(eroor){
+      console.log(`This Eroor by ${eroor}`)
+    }
+   }
+   useEffect(()=>{
+      HandelGetView()
+   
+
+   },[])
+
+
+
    const Nav = useNavigate()
     const  HandelClickData = ()=>{
 
@@ -51,12 +71,46 @@ const HandelSaveButtonReactJS = async()=>{
 useEffect(()=>{
   console.log(SavePost)
 },[SavePost])
+
+const HandelTopReactButton =async()=>{
+   
+  try{
+     
+    const Views   = await axios.post(`/postVies/${document._id}`,{
+      userIdJoin : TokenUser._id
+    })
+    window.location.reload()
+  }
+  catch(eror){
+    console.log(`The Error by ${eror}`)
+  }
+  
+}
+
+
+const HandelFlopReactButton  = async()=>{
+  
+  try{  
+   
+     const Delte   = await axios.post(`/deltevi/${document._id}`,{
+      userIdJoin : TokenUser._id
+    })
+    window.location.reload()
+ 
+     
+  }
+  catch(eroor){
+    console.log(`this eroor by ${eroor}`)
+  }
+}
+
  
   return (
     <div className="clone-card helper">
       <div className="clone-card-img">
         <img
-          src="https://res.cloudinary.com/daily-now/image/upload/t_logo,f_auto/v1655817725/logos/community"
+          src="./423cb91de98e4ee0b31e85d01936961a-free.png"
+          style={{width:'50px',height:'50px',objectFit:"cover",borderRadius:"100%"}}
           alt=""
         />
       </div>
@@ -79,9 +133,9 @@ useEffect(()=>{
       <div className="clone-card-Setting">
 
         <div className="clone-card-top-flop">
-          <span class="material-symbols-outlined">arrow_upward</span>
-          10.3k
-          <span class="material-symbols-outlined">arrow_downward</span>
+          <span className="material-symbols-outlined details" onClick={HandelTopReactButton} >arrow_upward</span>
+           {view}
+          <span className="material-symbols-outlined details" onClick={HandelFlopReactButton}>arrow_downward</span>
           
          </div>
       <div className="icon-det">   

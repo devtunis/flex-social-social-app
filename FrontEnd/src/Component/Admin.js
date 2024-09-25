@@ -5,7 +5,7 @@ import Card from './Card';
 import { useGlobalContext } from '../Store/GlobalContext';
 import { BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
-import { Tag } from '@chakra-ui/react';
+ 
 const Admin = () => {
     const [messages, setMessages] = useState([]);
     const { dispatch, BasketMassages, userTage, TokenUser } = useGlobalContext();
@@ -74,9 +74,9 @@ const Admin = () => {
             console.log(`Error sending message: ${error}`);
         }
     };
-
+                                                                                                       
     return (
-        <div className='Admin' style={{display:TokenUser?.username==="admin" ? "flex" : "none"}} >
+        <div className='Admin' style={{display:TokenUser?.username==="admin" || TokenUser?.username==="devlopper"? "flex" : "none"}} >
             <div className='Container__admin'>
                 <div className='right'  >
                     {messages.map((item) => (

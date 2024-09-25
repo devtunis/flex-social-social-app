@@ -56,8 +56,7 @@
     .NavBar{
     
         height:auto;
-        margin: 3px;
-        background-color: rgb(204, 21, 21);
+        
         display: flex;
         align-items: center;
         gap: 10px;
@@ -69,6 +68,7 @@
     }
     .imgSearch{
         width:98.33%;
+        
      }
 
      .imgStackOverFlow img{
@@ -86,5 +86,6 @@
   .UIX{
     position: absolute;
     right: 3px;
+    z-index: 1
 
   }

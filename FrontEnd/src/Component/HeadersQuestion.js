@@ -9,11 +9,11 @@ import TextAreaSection from './TextAreaSection';
 import { Link } from 'react-router-dom';
 
 const HeadersQuestion = () => {
-    const { AddQuestion, togle } = useGlobalContext();
+    const { AddQuestion, togle ,TokenUser} = useGlobalContext();
     const [actualData, setA] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [view,setViews]  = useState(0)
     const HandelGetTheDataFromDataBase = async () => {
         try {
             const response = await axios.get(`/callComments/${AddQuestion._id}`);
@@ -28,6 +28,61 @@ const HeadersQuestion = () => {
     useEffect(() => {
         HandelGetTheDataFromDataBase();
     }, [togle]);
+
+
+
+    
+
+   const HandelGetView = async()=>{
+    try{
+      const {data} = await axios.get(`/viewLen/${AddQuestion._id}`)
+      setViews(data.length) 
+    
+    }catch(eroor){
+      console.log(`This Eroor by ${eroor}`)
+    }
+   }
+   useEffect(()=>{
+    HandelGetView()
+   
+
+   },[])
+
+
+     const HandelTopReactButton =async()=>{
+   
+      try{
+       
+        const Views   = await axios.post(`/postVies/${AddQuestion._id}`,{
+          userIdJoin : TokenUser._id
+        })
+        window.location.reload()
+      }
+      catch(eror){
+        console.log(`The Error by ${eror}`)
+      }
+    
+    }
+
+    const HandelFlopReactButton  = async()=>{
+  
+        try{  
+         
+           const Delte   = await axios.post(`/deltevi/${AddQuestion._id}`,{
+            userIdJoin : TokenUser._id
+          })
+          window.location.reload()
+       
+           
+        }
+        catch(eroor){
+          console.log(`this eroor by ${eroor}`)
+        }
+      }
+
+
+  
+
 
     return (
         <div className='HeadersQuestion'>
@@ -85,9 +140,9 @@ const HeadersQuestion = () => {
                             <div className='Vote__Question'>
                                 <div className='Main__Vote'>
                                     <br />
-                                    <span className="material-symbols-outlined box">arrow_upward</span>
-                                    <div className='Counter'><span>1</span></div>
-                                    <span className="material-symbols-outlined box">arrow_downward</span>
+   <span className="material-symbols-outlined box" onClick={HandelTopReactButton}>arrow_upward</span>
+                          <div className='Counter'><span>{view}</span></div>
+    <span className="material-symbols-outlined box" onClick={HandelFlopReactButton}>arrow_downward</span>
                                     <br />
                                     <SaveToggle />
                                 </div>

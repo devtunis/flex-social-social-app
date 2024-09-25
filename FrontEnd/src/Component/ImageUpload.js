@@ -35,9 +35,7 @@ const ImageUpload = () => {
         text: questionText,
         description: description,
         imgItem: uploadResponse.data.secure_url,
-        // view  : 0 ,
-        // vote : 0,
-        // answers : 0
+         
       };
 
       const finalData = {
@@ -47,10 +45,9 @@ const ImageUpload = () => {
 
      
       console.log(finalData)
-     await axios.post('/postQuestion', finalData);
-   
-      console.log('Question submitted successfully:', finalData);
-
+     const reponse = await axios.post('/postQuestion', finalData);
+     
+      
       toast({
         title: 'Question created.',
         description: "Your Question awsome created",
@@ -78,7 +75,7 @@ const ImageUpload = () => {
 
   return (
     <>
-    <div className='HandelSumbit' style={{backgroundColor:"#0E1217",display:TokenUser?.username==="admin"? "flex":"none"}}>  
+    <div className='HandelSumbit' style={{backgroundColor:"#0E1217",display:TokenUser?.username==="admin" || TokenUser?.username==="devlopper"? "flex":"none"}}>  
       <form onSubmit={handleSubmit} className='form'>
         <div>
           <textarea 
