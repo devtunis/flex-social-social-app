@@ -6,10 +6,12 @@ import Admin from "./dbAdminSchema.js"
 import User from "./dbModel1.js"
 import ChatSession from "./dbChatMessages.js"
 import ChatTalking  from "./dbTalking.js"
+import postBluskyg from "./dbCurrentPost.js"
 import cors from "cors"
 import multer from 'multer';
 import path from "path"
 import dotenv from 'dotenv';
+import { Console } from 'console';
 
 dotenv.config();
 
@@ -25,7 +27,7 @@ mongoose.connect('mongodb+srv://admin:CIsVjyXyoO8MjjAs@cluster0.de4vi.mongodb.ne
 })
 
 app.use(cors({
-    origin: ["http://localhost:3000","http://localhost:3001","http://localhost:5000","http://localhost:5001"],                  
+    origin: ["http://localhost:3000","http://localhost:3001","http://localhost:5000","http://localhost:5001","http://192.168.1.17:3000","http://192.168.1.17:9000"],                  
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"]
 }));
@@ -513,7 +515,7 @@ app.post("/deltePosts/:id",async(req,res)=>{
 // -----------------------section Chat app------------------------------------------------------------
 app.post("/accesMessage/:id", async (req, res) => {
     try {
-        const { userId, txt } = req.body; 
+        const { userId, txt ,imgUser} = req.body; 
  
         let isChat = await ChatTalking.findOne({
             $and: [
@@ -525,6 +527,7 @@ app.post("/accesMessage/:id", async (req, res) => {
         if (isChat) {
           
             isChat.messages.push({
+                imgUser : imgUser,
                 senderId: userId,  
                 content: txt,  
                 timestamp: new Date() 
@@ -535,9 +538,7 @@ app.post("/accesMessage/:id", async (req, res) => {
              
             const newChat = new ChatTalking({
                 users: [req.params.id, userId],  
-                messages: [
-                    { senderId: req.params.id, content: txt, timestamp: new Date() }  
-                ]
+                messages: []
             });
             await newChat.save(); // Save the new chat
             return res.json(newChat); // Return the new chat
@@ -548,9 +549,7 @@ app.post("/accesMessage/:id", async (req, res) => {
         res.status(404).json({ message: error }); // Send a 404 response with the error message
     }
 });
-
-
-app.get("/get/access/message/:id",async(req,res)=>{
+app.post("/get/access/message/:id",async(req,res)=>{
 
 try{
 
@@ -562,6 +561,7 @@ try{
             { users: { $elemMatch: { $eq: userId } } }  
         ]
     });
+ 
     res.status(200).json(isChat)
 
 
@@ -570,6 +570,356 @@ try{
 }
 
 })
+
+
+
+     
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+app.get("/get/access/specif/:id", async (req, res) => {
+    try {
+      // Get the user ID from the URL parameters
+      const userId = req.params.id;
+  
+      // Find all chats that include the specified user
+      let chats = await ChatTalking.find({
+        users: userId // Check if the user ID is in the users array
+      });
+  
+      if (chats.length > 0) {
+        let TalkingWith  = []
+        const matchedChat = chats.filter(chat=>chat.users.includes(userId))
+        matchedChat.forEach(chat=>{
+           
+          
+
+            chat.users.forEach(user=>{
+                if(user !==userId){
+                    TalkingWith.push(user)
+                }
+            })
+        })
+        const reallyUnique = TalkingWith.filter((item)=>item!=req.params.id)
+      // get operation from data  ----------------------------------------------------------
+     
+      const userf =  await Promise.all(
+        reallyUnique.map((item)=>User.find({_id:item._id})) // in this part give me this eroor
+   
+
+
+      )
+      //currentid:req.params.id,data:reallyUnique,
+    
+    
+        res.status(200).json(userf.flat()); 
+      } else {
+        res.status(404).json({ message: "No chats found for this user" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message }); // Handle server errors
+    }
+  });
+  
+
+
+
+
+
+
+
+
+
+app.get("/get/allAuthor",async(req,res)=>{
+    try{
+           const Users1  = await User.find()
+           res.status(200).json(Users1)
+    }catch(eroor){
+        res.status(404).json({messsage : eroor})
+    }
+})
+
+app.get("/get/accesUser",async(req,res)=>{
+    try{
+    
+    const keyWord = req.query.search  ? {
+        $or : [
+            {username : {$regex : req.query.search,$options:'i'}},
+            {email : {$regex : req.query.search,$options:'i'}}
+        ]
+    }: {}
+
+     const funcdata = await User.find(
+        {...keyWord,
+        _id:{$ne : req.body.currentid}})
+
+     res.status(200).json(funcdata)
+
+    }
+    catch(eroor){
+        res.status(404).json({message  : eroor.message})
+    }
+})
+
+
+//-------------------check server online --------------------------
+
+
+app.post('/update/user/status/:id',async(req,res)=>{
+    try{
+            await User.findByIdAndUpdate(
+            {_id  : req.params.id},
+            {isOnline : "true"},
+            {new : true}
+          )
+          res.status(200).json("we Update status")
+    }catch(eroor){
+        res.status(404).json({message : eroor})
+    }
+})
+
+
+app.post('/update/offline/user/status/:id',async(req,res)=>{
+    try{
+            await User.findByIdAndUpdate(
+            {_id  : req.params.id},
+            {isOnline : "false"},
+            {new : true}
+          )
+          res.status(200).json("we Update status false succesfully")
+    }catch(eroor){
+        res.status(404).json({message : eroor})
+    }
+})
+
+
+
+
+
+app.post('/update/offline/user/lastseen/:id',async(req,res)=>{
+    try{
+           const fata =  await User.findByIdAndUpdate(
+            {_id  : req.params.id},
+            {LastSeen : req.body.lastseen},
+            {new : true}
+          )
+          res.status(200).json(fata)
+    }catch(eroor){
+        res.status(404).json({message : eroor})
+    }
+})
+
+
+
+app.get("/get/date/user/:id",async(req,res)=>{
+    try{
+      const reponse = await User.findById(req.params.id)
+
+  
+      res.status(200).json(reponse)
+}catch(eroor){
+    res.status(404).json({message : eroor})
+}
+})
+
+
+
+// ------------------------------------------------POSTS SECTION ----------------------
+ 
+
+// so this punlic  posts 
+app.post("/post-posts/:id", async (req, res) => {
+    try {
+        const findUser = await User.findById(req.params.id);
+        if (!findUser) {
+            return res.status(404).json({ message: "We couldn't find the user" });
+        }
+
+        // Create a new post
+        const uploadPosts = new postBluskyg({
+            userId: findUser._id,  // Reference the user by their ObjectId
+            post: req.body.post,
+            view: req.body.view,
+            vote: req.body.vote,
+            Comment: []
+       
+        });
+
+        await uploadPosts.save();
+
+        // Optionally populate user information
+        const populatedPost = await postBluskyg.findById(uploadPosts._id) 
+
+        res.status(200).json(populatedPost);  // Return the created post
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ message: error.message || "An unknown error occurred" });
+    }
+});
+
+// post comment 
+
+app.post('/post-comment/:id', async (req, res) => {
+    try {
+        const { currentUserId, comment, imgComment, UsernameComment, ProfileImg } = req.body; // Destructure necessary fields
+
+        // Find the post by ID
+        const post = await postBluskyg.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found." });
+        }
+
+        // Create a comment object to push
+        const newComment = {
+            idUserx: currentUserId, // Ensure currentUserId is an ObjectId
+            comment,
+            imgComment,
+            UsernameComment,
+            ProfileImg,
+        };
+
+        // Push the new comment into the Comment array
+        post.Comment.push(newComment);
+
+        // Save the updated post
+        await post.save();  
+
+        res.status(200).json(post); // Return the updated post
+    } catch (error) {
+        console.error(error); // Log error for debugging
+        res.status(500).json({ message: "An error occurred", error });
+    }
+});
+ 
+app.post('/post-comment/replies/:postId', async (req, res) => {
+    try {
+        const { currentUserId, comment, imgComment, UsernameComment, ProfileImg, commentId } = req.body;
+
+        // Find the post by ID
+        const post = await postBluskyg.findById(req.params.postId);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found." });
+        }
+
+        // Find the specific comment by its ID inside the post's comments array
+        const targetComment = post.Comment.find((com) => com._id.toString() === commentId);
+        if (!targetComment) {
+            return res.status(404).json({ message: "Comment not found." });
+        }
+
+        // Create the reply object
+        const newReply = {
+            idUserx: currentUserId,
+            comment,
+            imgComment,
+            UsernameComment,
+            ProfileImg,
+        };
+
+        // Push the new reply into the replies array of the specific comment
+        targetComment.replies.push(newReply);
+
+        // Save the updated post
+        await post.save();  
+
+        res.status(200).json(post); // Return the updated post
+    } catch (error) {
+        console.error(error); // Log error for debugging
+        res.status(500).json({ message: "An error occurred", error });
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// app.delete('/post-comment/replies/:id', async (req, res) => {
+//     try {
+//         const { commentId, replyId } = req.body;
+
+//         // Check if both commentId and replyId are provided
+//         if (!commentId || !replyId) {
+//             return res.status(400).json({ message: "Comment ID and Reply ID are required." });
+//         }
+
+//         // Find the post by ID
+//         const post = await postBluskyg.findById(req.params.id);
+//         if (!post) {
+//             return res.status(404).json({ message: "Post not found." });
+//         }
+
+//         // Find the specific comment by its ID inside the post's comments array
+//         const targetComment = post.Comment.find((com) => com._id.toString() === commentId);
+//         if (!targetComment) {
+//             return res.status(404).json({ message: "Comment not found." });
+//         }
+
+//         // Check if replies exist in the target comment
+//         if (!targetComment.replies) {
+//             return res.status(404).json({ message: "No replies found for this comment." });
+//         }
+
+//         // Find the specific reply by its ID and remove it
+//         targetComment.replies = targetComment.replies.filter(
+//             (reply) => reply._id.toString() !== replyId
+//         );
+
+//         // Save the updated post
+//         await post.save();
+
+//         res.status(200).json(post); // Return the updated post
+//     } catch (error) {
+//         console.error(error); // Log error for debugging
+//         res.status(500).json({ message: "An error occurred", error });
+//     }
+// });
+
+
+
+  app.get('/post-comment/fetch', async (req, res) => {
+      console.log("Received request:", req.params);
+      try {
+          const allComments = await postBluskyg.find()
+       
+          res.status(200).json(allComments);
+      } catch (error) {
+          console.error(error); // Log the error
+          res.status(500).json({ message: "An error occurred", error });
+      }
+  });
+
+
+//-----------------------------------------------------------------------------------
+
+ 
+
+
+
+// reply section
+
+ 
+
+  
+
 
 
 app.use('/uploads', express.static('uploads'));

@@ -44,7 +44,9 @@ const UserSchema = new mongoose.Schema({
     myQuestionsBasket : [myQuestion] ,// here add basket to see my all question i wannna asked and then should be deleted for me if i want
     password : String ,
     chatWithAdmin1 :{type:Boolean,default:false},
-    SaveMyPost :{type : [myPosts],default:[]}
+    SaveMyPost :{type : [myPosts],default:[]},
+    isOnline  :{type:String,default:'offline'},
+    LastSeen: { type: String, default:""}
 }, { timestamps: true });
 
 export default mongoose.model('User', UserSchema);
