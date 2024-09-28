@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Login.css"
 import axios from './axios'
 import { useGlobalContext } from '../Store/GlobalContext'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import LanguageSwitcher from '../LanguageSwitcher'
+import { useTranslation } from 'react-i18next'
+ 
 
 const Login = () => {
   const [username,setUsername] = useState("")
@@ -54,8 +56,21 @@ const Login = () => {
         console.log(`Error during user creation: ${error}`);
       }
   };
-   
+
+
+  
+  const { t } = useTranslation();
+
+ 
+
+  
+
   return (
+    <>
+
+<LanguageSwitcher/>
+ 
+ 
     <div className='formtadataSection' style={{width:"100%",height:"100vh",display:"flex",justifyContent:"center",alignItems:"center"}}> 
     <div className='Form' >
 
@@ -70,11 +85,11 @@ style={{cursor:"pointer"}}
 
 <br/>
 
-        <input type='text'value={username} name='username' placeholder='username' onChange={(e)=>setUsername(e.target.value)}/>
+        <input type='text'value={username} name='username' placeholder={t('username')} onChange={(e)=>setUsername(e.target.value)}/>
         <br/>
         <input type='text'value={email}  name="email" placeholder='email' onChange={(e)=>setEmail(e.target.value)}/>
         <br/>
-        <input type={open ? "text" : "password"}  value={password} name="password" placeholder='password'  onChange={(e)=>setpassword(e.target.value)}
+        <input type={open ? "text" : "password"}  value={password} name="password" placeholder={t('password')}  onChange={(e)=>setpassword(e.target.value)}
          
         />
        
@@ -93,10 +108,11 @@ style={{cursor:"pointer"}}
             </div>
         <br/>
         
-        <button onClick={HandelUserPush}>Create your account</button>
+        <button onClick={HandelUserPush}>{t('login')}</button>
       
     </div>
     </div>
+    </>
   )
 }
 

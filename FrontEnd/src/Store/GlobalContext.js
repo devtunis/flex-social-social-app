@@ -9,13 +9,43 @@ const initialState = {
   BasketMassages : JSON.parse(localStorage.getItem('BasketMessage')) || [],
   // userTage : JSON.parse(localStorage.getItem('userTage')) || '',
   UserProfile  : JSON.parse(localStorage.getItem("userProfile")) || [],
-  SavePost : JSON.parse(localStorage.getItem("SavePost")) || []
+  SavePost : JSON.parse(localStorage.getItem("SavePost")) || [],
+  currentUser : JSON.parse(localStorage.getItem("currentUser")) || null,
+  currentPictuer : JSON.parse(localStorage.getItem("currentPictuer")) || null
 
 };
 
 // Reducer function
 const reducer = (state, action) => {
+
   switch (action.type) {
+
+
+    case "CURRENT__PIC":
+      const currentPic  = [action.paylod]
+      localStorage.setItem("currentPictuer",JSON.stringify(currentPic))
+      return{
+        ...state,
+        currentPictuer : currentPic
+      }
+
+
+
+    case "CURRENT__USER":
+      const current  = [action.paylod]
+      localStorage.setItem("currentUser",JSON.stringify(current))
+      return{
+        ...state,
+        currentUser : current
+      }
+
+
+
+
+
+
+
+
     case  "SAVE__POST":
       const SavePostx = [...state.SavePost,action.paylodSave]
       localStorage.setItem("SavePost",JSON.stringify(SavePostx))
@@ -100,7 +130,8 @@ export const ContextProvider = ({ children }) => {
 
   return (
     <GlobalContext.Provider value={{ state, dispatch, user: state.user, TokenUser: state.TokenUser,AddQuestion:state.AddQuestion,togle:state.togle,BasketMassages:state.BasketMassages
-      ,userTage:state.userTage,UserProfile:state.UserProfile,SavePost : state.SavePost
+      ,userTage:state.userTage,UserProfile:state.UserProfile,SavePost : state.SavePost,
+      currentUser : state.currentUser ,currentPictuer :state.currentPictuer
      }}>
       
       {children}

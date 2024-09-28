@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes,Route } from 'react-router-dom';
 import NavBar from './Component/NavBar';
 import Body from './Component/Body';
@@ -14,14 +14,21 @@ import Cardsx from './Component/Cardsx';
 import Auth from './Component/Auth';
 import ImageUpload from './Component/ImageUpload';
 import FIRSTVIEW from './FirstView/FIRSTVIEW';
-
-
+import BuskyHome from './BskyAppClone/HeaderBusky/BuskyHome';
+import Posts from './BskyAppClone/All__Card/Posts';
+import BuskyHomeFreind from './HeaderBuskyFreind/BuskyHomeFreind';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher'; // Adjust the import based on your file structure
+import './i18n'
+import ReallChat from './ReallChat/ReallChat';
 const App = () => {
-// window.addEventListener("beforeunload",()=>localStorage.clear())
-
-
+ 
+  
+    //window.addEventListener("beforeunload",()=>localStorage.clear())
+    
   return (
     <>
+      
        <Routes>
 
         <Route path='/Headers' element={ <> <NavBar/> <Body/> </> }/>
@@ -34,9 +41,17 @@ const App = () => {
         <Route path='/auth' element={ <><Auth/></> }/>
         <Route path='/Admin/upload/page' element={ <><ImageUpload/></> }/>
         <Route path='/' element={ <><FIRSTVIEW/></> }/>
+        <Route path='/bluskG' element={ <><BuskyHome/></> }/>
+        <Route path='/card' element={ <><Posts/></> }/>
+        <Route path='/bluskG/freind' element={ <><BuskyHomeFreind/></> }/>
+        <Route path='/bluskG/chat' element={ <><ReallChat/></> }/>
         
        </Routes>
        <ToastContainer />
+
+
+       
+
     </>
   );
 };

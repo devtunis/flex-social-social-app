@@ -31,6 +31,8 @@ const Auth = () => {
           username: response.data[0].username,
           chatWithAdmin1 : response.data[0].chatWithAdmin1,
           _id: response.data[0]._id,
+          isonline : response.data[0].isonline,
+          LastSeen : response.data[0].LastSeen
         },
       });
 
@@ -67,7 +69,7 @@ const Auth = () => {
           placeholder="Type your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
+          
           className="auth-input"
         />
        

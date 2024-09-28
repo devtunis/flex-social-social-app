@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { color } from "framer-motion";
 const UIX = ({close}) => {
     const Nav = useNavigate()
     const Logout = ()=>{
@@ -49,28 +50,27 @@ const UIX = ({close}) => {
               <path d="M19 16v6" />
               <path d="M22 19h-6" />
             </svg>
-            <p className="uix-label">Add Member</p>
+       
+            <Link to={"/bluskG/freind"} style={{cursor:"pointer" ,color:"grey"}}>     <p className="uix-label">Add Member</p></Link>
           </li>
         </ul>
         <div className="uix-separator" />
         <ul className="uix-list">
           <li className="uix-element">
-            <svg
-              className="lucide lucide-settings"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth={2}
-              stroke="#7e8590"
-              fill="none"
-              viewBox="0 0 24 24"
-              height="24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-              <circle r="3" cy="12" cx="12" />
-            </svg>
-            <p className="uix-label">Settings</p>
+          <Link to={"/bluskG"} state={{color:'none'}}><svg
+  xmlns="http://www.w3.org/2000/svg"
+  height="24"
+  width="24"
+  viewBox="0 0 24 24"
+  fill="#1DA1F2"  // Twitter's blue color
+>
+  <path d="M24 4.557a9.805 9.805 0 0 1-2.828.775 4.935 4.935 0 0 0 2.165-2.724 9.863 9.863 0 0 1-3.127 1.195 4.922 4.922 0 0 0-8.39 4.482A13.978 13.978 0 0 1 1.671 3.149a4.923 4.923 0 0 0 1.523 6.573 4.903 4.903 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.946 4.89a4.93 4.93 0 0 1-2.224.084c.626 1.954 2.444 3.376 4.599 3.416A9.877 9.877 0 0 1 0 19.54a13.93 13.93 0 0 0 7.548 2.212c9.057 0 14.01-7.496 14.01-13.986 0-.213-.005-.426-.014-.637A9.965 9.965 0 0 0 24 4.557z"/>
+</svg></Link>
+
+
+            <p className="uix-label">
+              <Link to={"/bluskG"} state={{color:'none'}}>Socail media </Link>
+            </p>
           </li>
         
         </ul>
