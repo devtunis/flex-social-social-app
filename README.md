@@ -40,3 +40,39 @@ const CreateUserProfile = () => {
 };
 
 export default CreateUserProfile;
+
+
+const [fileName, setFileName] = useState('');
+const [image,setImage] = useState('')
+ 
+
+ 
+
+
+const handleFileChange = async (e) => {
+  const file = e.target.files[0];
+  setFileName(file.name); // Update state with the selected image
+ 
+  // Ensure an image is selected
+  if (!fileName) return;
+
+  const formData = new FormData();
+  formData.append("file", fileName);
+  formData.append("upload_preset", 'ask-app'); // Replace with your Cloudinary upload preset
+ 
+  try {
+    // Upload the image to Cloudinary
+    const uploadResponse = await axios.post(
+      'https://api.cloudinary.com/v1_1/dfmdgsiid/upload', // Replace with your Cloudinary cloud name
+      formData
+    );
+    console.log(uploadResponse.data.secure_url); 
+    setImage(uploadResponse.data.secure_url)
+    
+  } catch (error) {
+    console.log(`This error is caused by ${error}`); // Corrected typo in "error"
+    setLoading(false)
+  }
+};
+
+
