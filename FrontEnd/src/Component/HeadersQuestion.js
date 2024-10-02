@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './HeaderQuestion.css';
 import CommentSection from './CommentSection';
 import PutComment from './PutComment';
@@ -14,6 +14,8 @@ const HeadersQuestion = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [view,setViews]  = useState(0)
+    const UseReff = useRef(null)
+
     const HandelGetTheDataFromDataBase = async () => {
         try {
             const response = await axios.get(`/callComments/${AddQuestion._id}`);
@@ -81,7 +83,12 @@ const HeadersQuestion = () => {
       }
 
 
-  
+  const HandelGodown = ()=>{
+    UseReff.current.scrollIntoView({
+        behavior: "smooth",
+       
+      });
+  }
 
 
     return (
@@ -157,8 +164,10 @@ const HeadersQuestion = () => {
                                             alt=''
                                         />
                                     </div>
-                                    <div className='SectionCommentForPost'>
-                                        <h1 style={{ fontSize: "30px", color: "white", fontWeight: 'bolder' }}>Section Comment</h1>
+                                    <div className='SectionCommentForPost'  style={{height:"1000px",overflowX:"auto"}}>
+                                        <h1 style={{ fontSize: "30px", color: "white", fontWeight: 'bolder' }}>   <span 
+                                         onClick={()=>HandelGodown()}
+                                        className="material-symbols-outlined">arrow_downward</span>         Section Comment</h1>
                                         {loading ? (
                                             <p>Loading comments...</p>
                                         ) : error ? (
@@ -178,10 +187,11 @@ const HeadersQuestion = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='Questionbottom'></div>
+                        <div className='Questionbottom' ref={UseReff}></div>
                     </div>
                 </div>
             </div>
+           
         </div>
     );
 };

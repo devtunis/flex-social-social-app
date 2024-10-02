@@ -50,10 +50,10 @@ const Admin = () => {
             answerUser: document,
             rept: "AdminUser",
         };
-
+ // fix this cheat in other day 
         try {
             // Update the database
-            const response = await axios.put(`/ChatSession/${TokenUser._id}`, {
+            const response = await axios.put(`/ChatSession/66f771bc66699b7f34390f25`, {
                 PrivateSession: [newMessage],
             });
 

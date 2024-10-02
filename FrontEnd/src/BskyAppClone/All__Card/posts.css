@@ -50,7 +50,7 @@
 
  .busky-app-descibe-user p{
     width: 100%;
-    
+     
     margin-bottom: 4px;
     font-size: 16px;
     letter-spacing: 0.25px;
@@ -82,25 +82,29 @@
  
  .busky-app-info-img{
    /* background-color: red; */
-    margin-top: 10px;
+    margin-top: 5px;
    width: var(--size-vide-2);
-  
+   
+    
    display: flex;
-   justify-content: center;
-   flex-direction: column;
-   align-items: center;
+   justify-content: flex-start;
+   flex-direction: row;
+ 
   
  }
  .busky-app-info-img img{
     object-fit: contain;
- 
+   
     border-radius: 30px;
      cursor: pointer;
     
  }
 
  .busky-app-info-user{
-    display: flex;
+   
+    flex-direction: row;
+    color: grey;
+     font-weight: bold;
  }
  .busky-app-avatar{
     margin-top: 8px;

@@ -7,7 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LanguageSwitcher from '../LanguageSwitcher'
 import { useTranslation } from 'react-i18next'
- 
+import { useToast } from '@chakra-ui/react'
+
 
 const Login = () => {
   const [username,setUsername] = useState("")
@@ -18,7 +19,7 @@ const Login = () => {
   const {state,dispatch,TokenUser} = useGlobalContext()
   const [open,setOpen] = useState(false)
   const Nav = useNavigate()
-  
+  const toast = useToast()
 
   const HandelChangePictuer =(e)=>{
     let file = e.target.files[0]
@@ -43,8 +44,15 @@ const Login = () => {
               'Content-Type':'multipart/form-data'
             }
           })
-          reponse && toast.success("Welcome sure we add you :)")
-
+        if(reponse){
+          toast({
+            title: 'Account created.',
+            description: "We've created your account for you.",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })    
+        }
        dispatch({
          type: "ADD__NEW__USER",
          payload: reponse.data  

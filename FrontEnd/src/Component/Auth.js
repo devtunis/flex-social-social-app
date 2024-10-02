@@ -38,6 +38,7 @@ const Auth = () => {
 
       // Navigate after successful login
       navigate("/Headers");
+       
     } catch (error) {
       console.error(`This error occurred: ${error}`);
       setError('Failed to login. Please check your credentials.');

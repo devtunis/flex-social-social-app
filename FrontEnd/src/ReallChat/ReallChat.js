@@ -4,6 +4,8 @@ import { Avatar, AvatarBadge, Button, Divider, Flex } from '@chakra-ui/react'
 import { useGlobalContext } from '../Store/GlobalContext'
 import axios from '../Component/axios'
 import { useNavigate } from 'react-router-dom'
+import ThreePoint from '../FirstView/ThreePoint'
+
 const ReallChat = () => {
   const Nav = useNavigate()
   const [input, setInput] = useState("")
@@ -16,6 +18,12 @@ const ReallChat = () => {
   const [currentRealOpen,setcurrenRealOpen] = useState(false)
   const [lastSeen,setLastSeen] = useState('')
   const [statusUser,setstatusUser] = useState("")
+  const  [stop,setstopx]  = useState("f")
+  
+
+
+
+
 
   const HandelChunk = async()=>{
     setLoading(true)
@@ -23,16 +31,21 @@ const ReallChat = () => {
       senderId: TokenUser._id,   // Assuming TokenUser is the sender
       content: input,
       timestamp: new Date().toISOString(),  // Adding the timestamp immediately
+      
      
     };
     setMessages([...messages,newMessage])
     try{
-      await axios.post(`/accesMessage/${currentUser[0]._id}`,{
+     const data=  await axios.post(`/accesMessage/${currentUser[0]._id}`,{
        userId :  TokenUser._id ,
        txt : input,
        imgUser :image,
-       vue :"oui"
+       vue :"oui",
+       imgProfile : TokenUser.imgUser
+
+
       })
+      console.log(data,"data")
       setLoading(false)
       setInput("")
       Useref?.current?.scrollIntoView({behavior:"smooth"})
@@ -71,10 +84,10 @@ Useref.current?.scrollIntoView({behavior:"smooth"})
     const getLastSeen = async()=>{
       try{
           const {data} = await axios.get(`/get/date/user/${currentUser[0]._id}`)
-          console.log('lastMessage',data.LastSeen,'status',data.isOnline)
+          console.log('lastMessage',data.LastSeen,'status',data.isOnline,data.waiting)
           setLastSeen(data.LastSeen)
           setstatusUser(data.isOnline)
-    
+          setstopx(data.waiting)
       }catch(eroor){
           console.log(`This Eroor ${eroor}`)
       }
@@ -91,7 +104,7 @@ Useref.current?.scrollIntoView({behavior:"smooth"})
    const interval = setInterval(() => {
     Conversation();
     getLastSeen()
-  }, 1300); // Fetch messages every 3 seconds
+  },1000); // Fetch messages every 3 seconds
   return () => clearInterval(interval); 
    },[])
 
@@ -184,12 +197,38 @@ const HandelSeeMessage = (b)=>{
   setcurrenRealOpen(true)
 }
 
-useEffect(()=>{
-  console.log(currentPictuer,"<==")
-},[currentPictuer])
-
-  
  
+
+
+ 
+
+const HadndelTyping = async()=>{
+  try{
+      await  axios.post(`/set/typing/${TokenUser._id}`,{
+      isTyping : "Typing"
+    })
+    
+  }
+  catch(eroor){
+    console.log(eroor)
+  }
+}
+ 
+
+const HandelCloseTyping = async()=>{
+  try{
+      await  axios.post(`/set/typing/${TokenUser._id}`,{
+      isTyping : "close"
+    })
+    
+  }catch(eroor){
+    console.log(`This Eroor by ${eroor}`)
+  }
+
+}
+useEffect(()=>{
+  console.log(messages)
+},[])
   return (
     <>  
     <div className='reallchat'>
@@ -203,8 +242,10 @@ useEffect(()=>{
               </Avatar>
               <div className='left--card-account1'>
                 <h2 style={{ color: "white" }}> {currentUser[0].username}</h2>
-                <p style={{ color: "grey" }}>@{currentUser[0]?.email}</p>
+                {/* <p style={{ color: "grey" }}>@{currentUser[0]?.email}</p> */}
+                <p style={{ color: "grey",display:"flex" }}>{stop=="Typing" && <> Typing <ThreePoint/>  </>} </p>
                 <p className='messageme' style={{ color: "white" ,display:statusUser==='true' && 'none'}} >Last seen {lastSeen} </p>
+              
               </div>
             </div>
 
@@ -214,16 +255,27 @@ useEffect(()=>{
           <div className='scrennMessage' style={{color:"white"}}>
         
                   {messages.map(b=>
+                 
                   // "oneToOne  oneToneLeft
                    <>
                   <div key={b._id} className={b.senderId===TokenUser._id  ? 'oneToneLeft' : 'oneToOne'} style={{cursor:"pointer"}}>
-                     
-                    <h2  style={{fontWeight:"bold",display:"flex",alignItems:"center",gap:"10px"}}> 
+                   <div  style={{display:b.senderId===TokenUser._id && "flex",justifyContent:"flex-end"}}>
+                   <Avatar   size='md' src={`${process.env.REACT_APP_API_KEY}/${b.imgProfile}`}   > 
+                <AvatarBadge boxSize='18px' bg={statusUser==='true' ? 'green.500' : 'red.500'} />
+              </Avatar> 
+                   </div>
+                    <h2  style={{fontWeight:"bold",display:"block",alignItems:"center",gap:"10px"}}> 
                   
                             <div>    
 
                       
-                       <div className='content'>  {b.content} </div> 
+                       <div className='content' style={{backgroundColor:"green",
+                       height:"100%",
+                       width:"100%"
+                       
+
+                       }}
+                       >  {b.content} </div> 
 
                        <p style={{ color: "black", fontSize: "16px", marginTop: "5px",overflowX:"auto" }}> 
                     
@@ -245,7 +297,9 @@ useEffect(()=>{
                             </Avatar>
                             </div> */}
                             
-
+                            {/* <div className='ThreePart'  >
+      <ThreePoint/>
+    </div> */}
                   </div>
                     </>
                    
@@ -273,11 +327,14 @@ useEffect(()=>{
               value={input}
               onChange={(e) => setInput(e.target.value)}
               style={{ width: "80%", fontWeight: "bold", fontSize: "19px" }}
+              onClick={()=>HadndelTyping()}
+              onBlur={()=>HandelCloseTyping()}
             />
             <Button
               isLoading={loading}
               style={{ backgroundColor: "white", width: "80px", height: "45px", cursor: "pointer", marginLeft: "10px", fontWeight: 'bold', borderRadius: "100px" }}
               onClick={HandelChunk}
+              
             >
               SEND
             </Button>
@@ -287,7 +344,10 @@ useEffect(()=>{
     </div>
     <div className='containerSeeTheCurrentImages' style={{display:currentRealOpen?"block":"none"}} >
       <div className='containeraddxsrgr' style={{display:currentRealOpen ? 'flex':"none"}}
-      onClick={()=>setcurrenRealOpen(false)}
+      onClick={()=>{setcurrenRealOpen(false)
+        HadndelTyping()}
+      }
+      
       ><svg
   xmlns="http://www.w3.org/2000/svg"
   height="24"
@@ -308,7 +368,10 @@ useEffect(()=>{
 </div>
 
 <div className='currentImg' ><img src={currentPictuer && currentPictuer[0]?.imgUser} alt=''/></div>
+   
+    
     </div>
+    
     </>
   )
 }
