@@ -6,8 +6,6 @@ const postSchema = new mongoose.Schema({
     text: { type: String, required: true },            
     like : {type:Number,default:0},
     share  :{type:Number,default:0},
-
-
     imgItem: String,                                   
 }, { timestamps: true });
 
@@ -40,7 +38,14 @@ const CommentPeople = new mongoose.Schema({
 
 
  
+const mylikes = new mongoose.Schema({
+    // textQuestion: { type: String, required: true },
+    id: { type: String, required: true }, // Plain String ID
+    name :{type:String},
+    email : {type:String},
+    imgUser :{type:String}
 
+}, { timestamps: true });
 
 // Main schema for tracking people and questions
 const postBluskyg = new mongoose.Schema({
@@ -49,6 +54,11 @@ const postBluskyg = new mongoose.Schema({
     view : [],
     vote: {type:Number,default:0},
     Comment :{type:  [CommentPeople] ,default : []} ,
+    onwerHasPictuer : {type:String},
+    ownerUserName: {type:String},
+    email : {type:String},
+    LikesPost :{type:[mylikes],default:[]},
+    repostUser :{type:[],defualt:[]}
     
 }, { timestamps: true });
 

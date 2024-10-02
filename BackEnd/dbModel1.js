@@ -27,8 +27,10 @@ const myPosts = new mongoose.Schema({
     id: { type: String, required: true }, // Plain String ID
     imgItem : {type:String},
     text : {type: String},
-    description:{type:String}
+    description:{type:String},
+
 }, { timestamps: true });
+
 
 
 
@@ -46,7 +48,8 @@ const UserSchema = new mongoose.Schema({
     chatWithAdmin1 :{type:Boolean,default:false},
     SaveMyPost :{type : [myPosts],default:[]},
     isOnline  :{type:String,default:'offline'},
-    LastSeen: { type: String, default:""}
+    LastSeen: { type: String, default:""},
+    waiting : {type:String,default:"stop"}
 }, { timestamps: true });
 
 export default mongoose.model('User', UserSchema);

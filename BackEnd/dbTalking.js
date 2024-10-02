@@ -10,7 +10,8 @@ const chatSchema = new mongoose.Schema({
             content: String,   
             timestamp: { type: Date, default: Date.now }   ,
             imgUser : {type:String},
-            vue: { type: String, default: "notSeen" }
+            vue: { type: String, default: "notSeen" },
+            imgProfile : {type:String}
         }
     ]
 });

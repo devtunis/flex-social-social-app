@@ -515,7 +515,7 @@ app.post("/deltePosts/:id",async(req,res)=>{
 // -----------------------section Chat app------------------------------------------------------------
 app.post("/accesMessage/:id", async (req, res) => {
     try {
-        const { userId, txt ,imgUser} = req.body; 
+        const { userId, txt ,imgUser,imgProfile} = req.body; 
  
         let isChat = await ChatTalking.findOne({
             $and: [
@@ -530,7 +530,9 @@ app.post("/accesMessage/:id", async (req, res) => {
                 imgUser : imgUser,
                 senderId: userId,  
                 content: txt,  
-                timestamp: new Date() 
+                timestamp: new Date() ,
+                imgProfile : imgProfile,
+
             });
             await isChat.save(); 
             return res.json(isChat);  
@@ -753,14 +755,18 @@ app.post("/post-posts/:id", async (req, res) => {
             post: req.body.post,
             view: req.body.view,
             vote: req.body.vote,
-            Comment: []
-       
+            Comment: [],
+            onwerHasPictuer : req.body.onwerHasPictuer,
+            ownerUserName: req.body.ownerUserName,
+            email : req.body.email,
+            LikesPost :[],
+            repostUser :[]
         });
 
         await uploadPosts.save();
 
         // Optionally populate user information
-        const populatedPost = await postBluskyg.findById(uploadPosts._id) 
+        const populatedPost = await postBluskyg.findById(uploadPosts._id)
 
         res.status(200).json(populatedPost);  // Return the created post
     } catch (error) {
@@ -773,7 +779,7 @@ app.post("/post-posts/:id", async (req, res) => {
 
 app.post('/post-comment/:id', async (req, res) => {
     try {
-        const { currentUserId, comment, imgComment, UsernameComment, ProfileImg } = req.body; // Destructure necessary fields
+        const {  comment, imgComment, UsernameComment, ProfileImg } = req.body; // Destructure necessary fields
 
         // Find the post by ID
         const post = await postBluskyg.findById(req.params.id);
@@ -783,7 +789,7 @@ app.post('/post-comment/:id', async (req, res) => {
 
         // Create a comment object to push
         const newComment = {
-            idUserx: currentUserId, // Ensure currentUserId is an ObjectId
+            idUserx: req.params.id, // Ensure currentUserId is an ObjectId
             comment,
             imgComment,
             UsernameComment,
@@ -914,14 +920,115 @@ app.post('/post-comment/replies/:postId', async (req, res) => {
 
 
 
+
+app.get('/post-comment/fetchx/:id', async (req, res) => {
+    console.log("Received request:", req.params);
+    try {
+        const allComments = await postBluskyg.findById(req.params.id)
+     
+        res.status(200).json({AllComment: allComments , specifCommnt:allComments.Comment});
+    } catch (error) {
+        console.error(error); // Log the error
+        res.status(500).json({ message: "An error occurred", error });
+    }
+});
+
+
+
 // reply section
 
  
+app.post("/set/typing/:id", async (req, res) => {
+    try {
+        // Find the user by ID
+        const waitingD = await User.findById(req.params.id);
+        if (!waitingD) {
+            // Send 404 if the user is not found and return to stop execution
+            return res.status(404).json({ message: "This user does not exist" });
+        }
 
+        // Update the typing status
+        const updateTyping = await User.findByIdAndUpdate(
+            req.params.id,
+            { $set: { waiting: req.body.isTyping } },
+            { new: true } // This option returns the updated document
+        );
+
+        // Send the updated user back as a response
+        res.status(200).json(updateTyping);
+    } catch (error) {
+        console.log(`This error occurred: ${error}`);
+        // Send an error response in case of failure
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+
+
+// ---------------------------------post likes----------------------
+app.post("/setLikePost/:id", async (req, res) => {
+    try {
+      // Find the user by ID
+      const user = await User.findById(req.params.id);
+      if (!user) {
+        return res.status(404).json("User not found");
+      }
+  
+      // Check if the post exists
+      const post = await postBluskyg.findById(req.body.PostId);
+      if (!post) {
+        return res.status(404).json("Post not found");
+      }
+  
+      // Check if the user already liked the post
+      const isLiked = post.LikesPost.some(like => like.id === req.params.id);
+      if (isLiked) {
+        return res.status(409).json("User already liked this post");
+      }
+  
+      // Create an object to push to LikesPost array
+      const userObject = {
+        id: req.params.id,  // User ID
+        name: user.username,    // User name
+        email: user.email  , // User email
+        imgUser :user.imgUser,
+      };
+      
+      // Push the user's object using updateOne
+      const updatedPost = await postBluskyg.updateOne(
+        { _id: req.body.PostId },  // Find the post by its ID
+        { $push: { LikesPost: userObject } },  // Add the user object to the LikesPost array
+        { new: true }
+      );
+  
+      
+      if(updatedPost){
+        res.status(200).json("susccess : )")
+      }else{
+        res.status(404).json("failed : )")
+      }
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  });
+  // -------get post like ------------------------------------
+
+app.post("/getLikesPost/:id",async(req,res)=>{
+    try{
+        const getData = await postBluskyg.findById(req.params.id)
+        if(getData){
+            res.status(200).json(getData.LikesPost)
+        }
+    }catch(eroor){
+        console.log(eroor)
+    }
+})
+
+  
   
 
 
-
+  
 app.use('/uploads', express.static('uploads'));
 
 
