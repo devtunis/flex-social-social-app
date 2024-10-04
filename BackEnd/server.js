@@ -11,8 +11,7 @@ import cors from "cors"
 import multer from 'multer';
 import path from "path"
 import dotenv from 'dotenv';
-import { Console } from 'console';
-
+ 
 dotenv.config();
 
 
@@ -21,7 +20,10 @@ const PORT = 9000 ;
 app.use(bodyParser.json());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://admin:CIsVjyXyoO8MjjAs@cluster0.de4vi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://admin:CIsVjyXyoO8MjjAs@cluster0.de4vi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
 .then(() => {
     console.log('MongoDB connected'); 
 })
@@ -580,15 +582,6 @@ try{
  
 
 
-
-
-
-
-
-
-
-
-
  
 
 app.get("/get/access/specif/:id", async (req, res) => {
@@ -858,48 +851,6 @@ app.post('/post-comment/replies/:postId', async (req, res) => {
 
 
 
-// app.delete('/post-comment/replies/:id', async (req, res) => {
-//     try {
-//         const { commentId, replyId } = req.body;
-
-//         // Check if both commentId and replyId are provided
-//         if (!commentId || !replyId) {
-//             return res.status(400).json({ message: "Comment ID and Reply ID are required." });
-//         }
-
-//         // Find the post by ID
-//         const post = await postBluskyg.findById(req.params.id);
-//         if (!post) {
-//             return res.status(404).json({ message: "Post not found." });
-//         }
-
-//         // Find the specific comment by its ID inside the post's comments array
-//         const targetComment = post.Comment.find((com) => com._id.toString() === commentId);
-//         if (!targetComment) {
-//             return res.status(404).json({ message: "Comment not found." });
-//         }
-
-//         // Check if replies exist in the target comment
-//         if (!targetComment.replies) {
-//             return res.status(404).json({ message: "No replies found for this comment." });
-//         }
-
-//         // Find the specific reply by its ID and remove it
-//         targetComment.replies = targetComment.replies.filter(
-//             (reply) => reply._id.toString() !== replyId
-//         );
-
-//         // Save the updated post
-//         await post.save();
-
-//         res.status(200).json(post); // Return the updated post
-//     } catch (error) {
-//         console.error(error); // Log error for debugging
-//         res.status(500).json({ message: "An error occurred", error });
-//     }
-// });
-
-
 
   app.get('/post-comment/fetch', async (req, res) => {
       console.log("Received request:", req.params);
@@ -1023,9 +974,124 @@ app.post("/getLikesPost/:id",async(req,res)=>{
         console.log(eroor)
     }
 })
+app.post("/verifyIfyouHaveLikeOrNo/:id", async (req, res) => {
+    try {
+        // Find the post by ID
+        const getData = await postBluskyg.findById(req.params.id);
 
+        if (getData) {
+            // Check if the user has already liked the post
+            const userLiked = getData.LikesPost.find(b => b.id === req.body.PostId);
+
+            if (userLiked) {
+                // Use $pull to remove the user from LikesPost array
+                await postBluskyg.findByIdAndUpdate(
+                     req.params.id,
+                    { $pull: { LikesPost: { id: req.body.PostId } } },
+                    { new: true } // Return the updated document
+                );
+
+                return res.status(200).json("User removed from LikesPost.");
+            } else {
+                return res.status(404).json("User has not liked this post.");
+            }
+        } else {
+            return res.status(404).json("Post not found.");
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Internal server error.");
+    }
+});
+
+
+
+
+
+// check request if this user already have or no
+
+
+app.post("/verifyD/:id", async (req, res) => {
+    try {
+        const getData = await postBluskyg.findById(req.params.id);
+
+         if (getData) {
+             // Filter LikesPost to find the specific user
+           const userLiked = getData.LikesPost.filter(b => b.id ==req.body.PostId); //Assuming you're passing userId in request body
+
+           if (userLiked.length>0) {
+               
+               return res.status(200).json("true");
+            } else {
+                return res.status(404).json("false");
+            }
+        } else {
+            return res.status(404).json("Post not found");
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Internal server error");
+    }
+});
+app.post("/remove/post/:id", async (req, res) => {
+    try {
+      // Find post by its ID
+      const post = await postBluskyg.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json("This post does not exist.");
+      }
   
+      // Verify if the post belongs to the user (based on userId)
+      if (post.userId.toString() !== req.body.useridIdentfy) {
+        return res.status(405).json("This user ID is not authorized to delete this post.");
+      }
+      
   
+      // Delete the post
+      const deletedPost = await postBluskyg.findByIdAndDelete(req.params.id);
+  
+      if (deletedPost) {
+        return res.status(200).json("Post successfully deleted 🎉🎉🎉");
+      } else {
+        return res.status(404).json("Failed to delete the post, please try again.");
+      }
+    } catch (error) {
+      // Handle any other errors
+      return res.status(500).json("An error occurred: " + error.message);
+    }
+  });
+app.post("/testIfIexist/:id",async(req,res)=>{
+    try{
+        const data = await postBluskyg.findById(req.params.id)
+        
+        if(!data){
+            res.status(404).json("we dont found this ueser here")
+        }
+        const datF  = (data.userId.toString()===req.body.useridIdentfy)
+        if(datF){
+            res.status(200).json({message :"true"})
+        }else{
+            res.status(404).json({message : "false"})
+        }
+    }catch(eroor){
+        console.log(eroor)
+    }
+})
+ app.post("/copyText/:id",async(req,res)=>{
+     try{
+         const data = await postBluskyg.findById(req.params.id)
+        
+         if(!data){
+             res.status(404).json("we dont found this ueser here")
+         }
+         
+         res.status(200).json({message : data.post.imgItem})
+     }catch(eroor){
+         console.log(eroor)
+     }
+ })
+  
+
 
 
   
