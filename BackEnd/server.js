@@ -16,11 +16,12 @@ dotenv.config();
 
 
 const app = express();
-const PORT = 9000 ;
+const PORT = process.env.PORT ;
 app.use(bodyParser.json());
 app.use(express.json());
+const allowedOrigins = process.env.CORS_ORIGINS.split(',');
 
-mongoose.connect('mongodb+srv://admin:CIsVjyXyoO8MjjAs@cluster0.de4vi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',{
+mongoose.connect(process.env.CONNECTION_DATABASE,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
@@ -29,7 +30,7 @@ mongoose.connect('mongodb+srv://admin:CIsVjyXyoO8MjjAs@cluster0.de4vi.mongodb.ne
 })
 
 app.use(cors({
-    origin: ["http://localhost:3000","http://localhost:3001","http://localhost:5000","http://localhost:5001","http://192.168.1.17:3000","http://192.168.1.17:9000"],                  
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"]
 }));
@@ -76,9 +77,9 @@ const upload = multer({
 
 
 
+app.get("/",(req,res)=>res.send("this server wokring"))
 
-
-
+    
 
 
  
