@@ -106,7 +106,7 @@ app.listen(PORT, () => {
  //--------------------------------------------------------------------
 
 
-app.get("/",(req,res)=>res.status(200).json("hello"))
+app.get("/",(req,res)=>res.status(200).json("hello test api wokring"))
 
 
 app.post("/postQuestion", async (req, res) => {
