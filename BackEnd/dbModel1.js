@@ -33,6 +33,9 @@ const myPosts = new mongoose.Schema({
 
 
 
+ 
+
+
 
 
 // this awsome thing in this world
@@ -49,7 +52,16 @@ const UserSchema = new mongoose.Schema({
     SaveMyPost :{type : [myPosts],default:[]},
     isOnline  :{type:String,default:'offline'},
     LastSeen: { type: String, default:""},
-    waiting : {type:String,default:"stop"}
+    waiting : {type:String,default:"stop"},
+
+    myListChatFriend: {
+        type: [String],  
+        default: []     
+      },
+    noTifaction : {type :[String] ,default:[]},
+    postIpostsINthisApp :{type:[String],default:[]}
+      
+
 }, { timestamps: true });
 
 export default mongoose.model('User', UserSchema);

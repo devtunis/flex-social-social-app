@@ -7,28 +7,34 @@ import User from "./dbModel1.js"
 import ChatSession from "./dbChatMessages.js"
 import ChatTalking  from "./dbTalking.js"
 import postBluskyg from "./dbCurrentPost.js"
+import Reels from "./dbReels.js"
+
 import cors from "cors"
 import multer from 'multer';
 import path from "path"
 import dotenv from 'dotenv';
- 
+import { WebSocketServer } from 'ws';
+import http  from "http"
 dotenv.config();
-
-
+ 
 const app = express();
+
+
+
+
+
+
+
 const PORT = process.env.PORT ;
 app.use(bodyParser.json());
 app.use(express.json());
 const allowedOrigins = process.env.CORS_ORIGINS.split(',');
 
-mongoose.connect(process.env.CONNECTION_DATABASE,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(process.env.CONNECTION_DATABASE)
 .then(() => {
     console.log('MongoDB connected'); 
 })
-
+.catch(err => console.error(err));
 app.use(cors({
     origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -41,7 +47,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 
 
-
+// app multer 
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -58,11 +64,37 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 } // Increase as needed
 });
  
+//---------------------------------------------
+
+// const server = http.createServer(app)
+ 
+// const wss = new WebSocketServer({ server });
+// wss.on('connection', (ws) => {
+//     console.log('New WebSocket client connected  plz connectedd as weel 🎉🎉🎉');
+
+//     ws.on('message', (message) => {
+//         console.log('Received message:', message);
+//     });
+
+//     ws.on('close', () => {
+//         console.log('Client disconnected');
+//     });
+// });
+ 
+
+
+
+
+
+
+
 
 
  
- 
- 
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
 
 
 
@@ -71,19 +103,10 @@ const upload = multer({
 
 
 
+ //--------------------------------------------------------------------
 
 
-
-
-
-
-app.get("/",(req,res)=>res.send("this server wokring"))
-
-    
-
-
- 
-
+app.get("/",(req,res)=>res.status(200).json("hello"))
 
 
 app.post("/postQuestion", async (req, res) => {
@@ -577,14 +600,6 @@ try{
 })
 
 
-
-     
-
- 
-
-
- 
-
 app.get("/get/access/specif/:id", async (req, res) => {
     try {
       // Get the user ID from the URL parameters
@@ -629,15 +644,6 @@ app.get("/get/access/specif/:id", async (req, res) => {
     }
   });
   
-
-
-
-
-
-
-
-
-
 app.get("/get/allAuthor",async(req,res)=>{
     try{
            const Users1  = await User.find()
@@ -685,8 +691,6 @@ app.post('/update/user/status/:id',async(req,res)=>{
         res.status(404).json({message : eroor})
     }
 })
-
-
 app.post('/update/offline/user/status/:id',async(req,res)=>{
     try{
             await User.findByIdAndUpdate(
@@ -699,11 +703,6 @@ app.post('/update/offline/user/status/:id',async(req,res)=>{
         res.status(404).json({message : eroor})
     }
 })
-
-
-
-
-
 app.post('/update/offline/user/lastseen/:id',async(req,res)=>{
     try{
            const fata =  await User.findByIdAndUpdate(
@@ -716,9 +715,6 @@ app.post('/update/offline/user/lastseen/:id',async(req,res)=>{
         res.status(404).json({message : eroor})
     }
 })
-
-
-
 app.get("/get/date/user/:id",async(req,res)=>{
     try{
       const reponse = await User.findById(req.params.id)
@@ -768,9 +764,7 @@ app.post("/post-posts/:id", async (req, res) => {
         res.status(500).json({ message: error.message || "An unknown error occurred" });
     }
 });
-
 // post comment 
-
 app.post('/post-comment/:id', async (req, res) => {
     try {
         const {  comment, imgComment, UsernameComment, ProfileImg } = req.body; // Destructure necessary fields
@@ -842,19 +836,8 @@ app.post('/post-comment/replies/:postId', async (req, res) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
   app.get('/post-comment/fetch', async (req, res) => {
-      console.log("Received request:", req.params);
+  
       try {
           const allComments = await postBluskyg.find()
        
@@ -871,14 +854,23 @@ app.post('/post-comment/replies/:postId', async (req, res) => {
  
 
 
-
-
 app.get('/post-comment/fetchx/:id', async (req, res) => {
     console.log("Received request:", req.params);
     try {
-        const allComments = await postBluskyg.findById(req.params.id)
-     
-        res.status(200).json({AllComment: allComments , specifCommnt:allComments.Comment});
+        // Find the post by ID
+        const allComments = await postBluskyg.findById(req.params.id);
+
+        if (!allComments) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        // Sort comments by `createdAt`, newest first
+        const sortedComments = allComments.Comment.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt); // descending order (latest first)
+        });
+
+        // Respond with the sorted comments
+        res.status(200).json({ AllComment: allComments, specifCommnt: sortedComments });
     } catch (error) {
         console.error(error); // Log the error
         res.status(500).json({ message: "An error occurred", error });
@@ -1093,9 +1085,106 @@ app.post("/testIfIexist/:id",async(req,res)=>{
  })
   
 
+ // ------- do logic avoide return data again-----
+
+ app.post("/avoidRquest/:id",async(req,res)=>{ 
+    try{
+        const MatchUser  = await User.findById(req.params.id)
+        if(!MatchUser){
+            res.status(404).json("we dont found this users in this data base")
+        }
+        const StoreOne =  await User.findByIdAndUpdate(
+            req.params.id,
+            {$addToSet:{myListChatFriend :req.body.mycurrentId}},
+            {new : true}
+        )
+        const SendRequestToMe  = await User.findOne({_id:req.body.mycurrentId})
+        if(!SendRequestToMe){
+            res.status(404).json("we dont found you")
+        }
+        const StoreMyRequest =  await User.findByIdAndUpdate(
+            req.body.mycurrentId,
+            {$addToSet:{myListChatFriend :req.params.id}},
+            {new : true}
+        )
+
+        return res.status(200).json(StoreMyRequest)
 
 
+    }catch(eroor){
+        res.status(404).json(eroor)
+    }
+ })
+
+
+ app.post("/getAvoideRequest/:id",async(req,res)=>{
+    try{
+        const Datat = await User.findById(req.params.id)
+        res.status(200).json(Datat.myListChatFriend)
+
+    }catch(eroor){
+        res.status(404).json("this user does not found in this data base go check other data bases")
+    }
+ })
+
+
+ 
+
+// In your API endpoint for posting a video
+app.post('/api/videos/webSocket', async (req, res) => {
+
+    try {
+        const newVideo = new Reels(req.body);
+        await newVideo.save();
   
+        // Emit the new video data via WebSocket
+    ;
+        // wss.clients.forEach((client) => {
+        //     if (client.readyState === WebSocket.OPEN) {
+        //         console.log('Sending message to WebSocket client');
+        //         client.send(JSON.stringify({ type: 'newVideo', video: newVideo }));
+        //     }
+        // });
+
+        res.status(201).json(newVideo);
+    } catch (error) {
+        console.error('Error creating video:', error);
+        res.status(500).json({ message: 'Error creating video', error: error.message });
+    }
+});
+
+
+app.get("/api/video/get/websocket",async(req,res)=>{
+
+    try{
+        const data =await Reels.find()
+        res.status(200).json(data)
+    }catch(eroor){
+        res.status(404).json(eroor)
+    }
+})
+
+
+//-------------------------------------
+ 
+
+
+
+
+app.post("/api/author/profile/:id",async(req,res)=>{
+
+    try{
+        const data =await User.findById(req.params.id)
+        res.status(200).json(data)
+    }catch(eroor){
+        res.status(404).json(eroor)
+    }
+})
+
+
+
+
+
 app.use('/uploads', express.static('uploads'));
 
 
@@ -1104,6 +1193,3 @@ app.use('/uploads', express.static('uploads'));
 
 
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
