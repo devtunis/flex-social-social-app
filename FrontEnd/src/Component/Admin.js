@@ -127,7 +127,8 @@ const Admin = () => {
                         </span>  
                         
                                         
-                                <span>{item.createdAt}</span>
+   <span>{new Date(item.createdAt).getHours()} :     <span>{new Date(item.createdAt).getMinutes()}</span>  [<span>{new Date(item.createdAt).toLocaleDateString()}]</span> </span>
+                                
                             </div>
                         ))}
                     </div>

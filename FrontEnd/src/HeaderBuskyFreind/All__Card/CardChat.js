@@ -8,28 +8,44 @@ const CardChat = ({index,item}) => {
   const [wait,setwait] = useState(false)
   const {TokenUser,currentUser,dispatch} = useGlobalContext()
 
-
+ 
     const DataScooper = async(data)=>{
       
      setwait(true)
+    console.log("send rquest to ",data._id ,"my current id ",TokenUser._id)
     
-  
       
-          try{
-             await axios.post(`/accesMessage/${TokenUser._id}`,{
-              userId : data._id
-             })
-             setwait(false)
+           try{
+              await axios.post(`/accesMessage/${TokenUser._id}`,{
+               userId : data._id
+              })
+              setwait(false)
             
-          }catch(eroor){
-            console.log(eroor)
-            setwait(false)
-          }
+           }catch(eroor){
+             console.log(eroor)
+             setwait(false)
+           }
         
-       
+          
+
+try{
+const uix =  await axios.post(`/avoidRquest/${data._id }`,{
+  mycurrentId :TokenUser._id
+
+}
+ 
+)
+uix && alert("This is good 🎉🎉🎉")
+}
+catch(eroor){
+  console.log(eroor)
+}
+
+
+
     }
     
-
+ 
   return (
 
     <div className='CardChat--1' key={index}>
@@ -44,7 +60,7 @@ const CardChat = ({index,item}) => {
   <Button 
   onClick={()=>DataScooper(item)}
   isLoading={wait}
-  loadingText="Hani nb3thlha bchwy"
+  loadingText="sending Request"
   colorScheme='blue' variant='solid'>
     Add Freind
   </Button>

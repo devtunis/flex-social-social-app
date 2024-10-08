@@ -113,6 +113,28 @@
    font-size: large;
  }
 
+ .square{
+   background-color:#25232E;
+   padding: 10px;
+   border-radius: 10px;
+ 
+
+}
+.square{
+   svg:hover{
+     transform: scale(1.4);
+   }
+   span:hover{
+      transform: scale(1.4);
+    }
+}
+video{
+   border-radius: 14px;
+   width: 67%;
+}
+
+
+
  @media screen and (max-width:630px){
 
    .busky-app-avatar{

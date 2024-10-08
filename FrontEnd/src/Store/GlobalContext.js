@@ -11,7 +11,10 @@ const initialState = {
   UserProfile  : JSON.parse(localStorage.getItem("userProfile")) || [],
   SavePost : JSON.parse(localStorage.getItem("SavePost")) || [],
   currentUser : JSON.parse(localStorage.getItem("currentUser")) || null,
-  currentPictuer : JSON.parse(localStorage.getItem("currentPictuer")) || null
+  currentPictuer : JSON.parse(localStorage.getItem("currentPictuer")) || null,
+  Ram : [],
+  userProfileSe:JSON.parse(localStorage.getItem("userProfileSe")) || null
+
 
 };
 
@@ -19,7 +22,23 @@ const initialState = {
 const reducer = (state, action) => {
 
   switch (action.type) {
+    case "SeeMyProfile":
+      const userProfileSedata  = [action.paylod]
+      localStorage.setItem("userProfileSe",JSON.stringify(userProfileSedata))
+      return{
+        ...state,
+        userProfileSe : userProfileSedata
+      }
 
+
+
+    case "Ram":
+      const Ram2  = [action.payloadData]
+
+    return{
+      ...state,
+      Ram:Ram2
+    }
 
     case "CURRENT__PIC":
       const currentPic  = [action.paylod]
@@ -128,10 +147,14 @@ export const ContextProvider = ({ children }) => {
     //console.log(state);
   }, [state.TokenUser,state.AddQuestion]);
 
+
+
   return (
     <GlobalContext.Provider value={{ state, dispatch, user: state.user, TokenUser: state.TokenUser,AddQuestion:state.AddQuestion,togle:state.togle,BasketMassages:state.BasketMassages
       ,userTage:state.userTage,UserProfile:state.UserProfile,SavePost : state.SavePost,
-      currentUser : state.currentUser ,currentPictuer :state.currentPictuer
+      currentUser : state.currentUser ,currentPictuer :state.currentPictuer,
+      Ram:state.Ram,
+      userProfileSe:state.userProfileSe
      }}>
       
       {children}

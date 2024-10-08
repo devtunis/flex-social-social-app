@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LanguageSwitcher from '../LanguageSwitcher'
 import { useTranslation } from 'react-i18next'
 import { useToast } from '@chakra-ui/react'
+import { Spinner } from '@chakra-ui/react'
 
 
 const Login = () => {
@@ -20,7 +21,7 @@ const Login = () => {
   const [open,setOpen] = useState(false)
   const Nav = useNavigate()
   const toast = useToast()
-
+  const [isLodingLogin,setisLodingLogin]  = useState(false)
   const HandelChangePictuer =(e)=>{
     let file = e.target.files[0]
    if(file){
@@ -36,9 +37,10 @@ const Login = () => {
      formData.append("username",username)
      formData.append("email",email)
      formData.append("password",password)
-     formData.append("imgUser",selectedFile)
+     formData.append("imgUser",selectedFile||'https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg')
      console.log(formData)
       try {
+        setisLodingLogin(true)
           const reponse = await axios.post("/setUserWithAnswer",formData,{
             headers :{
               'Content-Type':'multipart/form-data'
@@ -52,6 +54,7 @@ const Login = () => {
             duration: 9000,
             isClosable: true,
           })    
+          setisLodingLogin(false)
         }
        dispatch({
          type: "ADD__NEW__USER",
@@ -62,6 +65,7 @@ const Login = () => {
   
       } catch (error) {
         console.log(`Error during user creation: ${error}`);
+        setisLodingLogin(false)
       }
   };
 
@@ -76,9 +80,9 @@ const Login = () => {
   return (
     <>
 
-<LanguageSwitcher/>
+{/* <LanguageSwitcher/>
  
- 
+  */}
     <div className='formtadataSection' style={{width:"100%",height:"100vh",display:"flex",justifyContent:"center",alignItems:"center"}}> 
     <div className='Form' >
 
@@ -116,12 +120,24 @@ style={{cursor:"pointer"}}
             </div>
         <br/>
         
-        <button onClick={HandelUserPush}>{t('login')}</button>
-      
+         
+      {isLodingLogin ?  <div style={{display:"flex",justifyContent:"center"}}>
+        <Spinner
+  thickness='3px'
+  speed='0.1s'
+  emptyColor='gray.200'
+  color='blue.500'
+  size='md'
+/> 
+        </div> : 
+       <button onClick={HandelUserPush}>Login</button>  
+       }
     </div>
     </div>
+    
     </>
   )
-}
+//   <button onClick={HandelUserPush}>{t('login')}</button>  
+  }
 
 export default Login

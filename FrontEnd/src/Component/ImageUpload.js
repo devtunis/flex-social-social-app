@@ -35,7 +35,9 @@ const ImageUpload = () => {
         text: questionText,
         description: description,
         imgItem: uploadResponse.data.secure_url,
-         
+        //here should be img user i wannna pass it  
+        // dont forget this 
+        // and all peaople can caess this and create button delte just fo the ownser 
       };
 
       const finalData = {
@@ -75,7 +77,8 @@ const ImageUpload = () => {
 
   return (
     <>
-    <div className='HandelSumbit' style={{backgroundColor:"#0E1217",display:TokenUser?.username==="admin" || TokenUser?.username==="devlopper"? "flex":"none"}}>  
+    {/* display:TokenUser?.username==="admin" || TokenUser?.username==="devlopper"? "flex":"none" */}
+    <div className='HandelSumbit' style={{backgroundColor:"#0E1217"}}>  
       <form onSubmit={handleSubmit} className='form'>
         <div>
           <textarea 

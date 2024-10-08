@@ -3,6 +3,7 @@ import { useGlobalContext } from "../Store/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "./axios";
+import { Spinner } from "@chakra-ui/react";
 export default function Cardsx({describre,imgicon,imgpofile,tags,document}) {
    const {dispatch,SavePost,TokenUser,AddQuestion} = useGlobalContext()
    const [view,setViews] = useState(0)
@@ -12,16 +13,25 @@ export default function Cardsx({describre,imgicon,imgpofile,tags,document}) {
     try{
       const {data} = await axios.get(`/viewLen/${document._id}`)
       setViews(data.length) 
-    
+
     }catch(eroor){
       console.log(`This Eroor by ${eroor}`)
     }
    }
-   useEffect(()=>{
-      HandelGetView()
-   
+ 
 
-   },[])
+
+
+   useEffect(()=>{
+
+    const intervalId = setInterval(() => {
+      HandelGetView()
+  
+  }, 900);
+
+  
+})
+
 
 
 
@@ -72,35 +82,44 @@ useEffect(()=>{
   console.log(SavePost)
 },[SavePost])
 
+const [isLikeSucess,setisLikesSucess] = useState(false)
+const [isDisLikeSucess,setisDisLikeSucess] = useState(false)
+
+
 const HandelTopReactButton =async()=>{
-   
+ 
   try{
-     
+      setisLikesSucess(true)
     const Views   = await axios.post(`/postVies/${document._id}`,{
       userIdJoin : TokenUser._id
     })
-    window.location.reload()
+    // window.location.reload()
+    setisLikesSucess(false)
   }
   catch(eror){
     console.log(`The Error by ${eror}`)
+    setisLikesSucess(false)
   }
+
   
 }
 
 
 const HandelFlopReactButton  = async()=>{
-  
+
   try{  
-   
+      setisDisLikeSucess(true)
+    
      const Delte   = await axios.post(`/deltevi/${document._id}`,{
       userIdJoin : TokenUser._id
     })
-    window.location.reload()
- 
+    // window.location.reload()
+    setisDisLikeSucess(false)
      
   }
   catch(eroor){
     console.log(`this eroor by ${eroor}`)
+    setisDisLikeSucess(false)
   }
 }
 
@@ -133,10 +152,12 @@ const HandelFlopReactButton  = async()=>{
       <div className="clone-card-Setting">
 
         <div className="clone-card-top-flop">
-          <span className="material-symbols-outlined details" onClick={HandelTopReactButton} >arrow_upward</span>
-           {view}
-          <span className="material-symbols-outlined details" onClick={HandelFlopReactButton}>arrow_downward</span>
+        
+          {isLikeSucess ? <Spinner/> :  <span className="material-symbols-outlined details" onClick={HandelTopReactButton} >arrow_upward</span>}
           
+           {view}
+           {isDisLikeSucess ? <Spinner/> :  <span className="material-symbols-outlined details" onClick={HandelFlopReactButton}>arrow_downward</span>
+}
          </div>
       <div className="icon-det">   
          <span className="material-symbols-outlined boxChat1 ">chat</span>

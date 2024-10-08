@@ -23,11 +23,20 @@ const Body = () => {
       console.log(`this eroor by ${index}`)
     }
   }
-  useEffect(()=>{
-    HandelApi()
-   
+ 
+ 
+ 
+useEffect(()=>{
+  HandelApi()
+},[])
 
-  },[])
+
+useEffect(()=>{
+
+  const intervalId = setInterval(() => {
+    HandelApi()
+
+}, 4000);})
 
 
   return (

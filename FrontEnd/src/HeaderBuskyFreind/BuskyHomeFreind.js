@@ -17,23 +17,50 @@ const BuskyHomeFreind = () => {
   const [loading2,setLoading2] = useState(false)
   const [user2,setUser2]= useState([])
   const [input,setinput] = useState([])
-  const {TokenUser,currentUser,dispatch} = useGlobalContext()
+  const {TokenUser,currentUser,dispatch,Ram} = useGlobalContext()
   const [user3,setUser3] = useState([])
   const [lodaing3,setlodaing3] = useState(false)
+
+
   const Nav  =useNavigate()
-   useEffect(()=>{
+ 
     const UsersApi  = async()=>{
-      setLoading(true)
+    
       const {data} = await axios.get("/get/allAuthor")
-      const arr = data.filter((item)=>item._id!=TokenUser._id) // these for does not bring me again
-      setUsers(arr)
+      const arr = data.filter((item)=>item._id!=TokenUser._id) 
+      const reponse  = await axios.post(`/getAvoideRequest/${TokenUser._id}`)
+      const result =    arr.filter((piece)=>TestIds(piece._id,reponse.data)==true) // why this return to me id should be reutne data ?
+      console.log(result)
+      setUsers(result)
       setLoading(false) 
+      // console.log(arr)
       
     }
-    UsersApi()
+     
 
-   },[])
- 
+   
+
+
+
+  useEffect(()=>{
+
+    const intervalId = setInterval(() => {
+      UsersApi()
+  },700);
+
+
+  return () => clearInterval(intervalId);
+
+  },[])
+
+
+
+
+
+
+
+
+   
    const handleInputChange = useCallback(
 
     
@@ -88,10 +115,10 @@ const BuskyHomeFreind = () => {
 
  Nav('/bluskG/chat')
  }
-useEffect(()=>{
-  console.log(currentUser,TokenUser)
+// useEffect(()=>{
+//   console.log(currentUser,TokenUser)
 
-})
+// })
 
 
 const OfflineUser = async()=>{
@@ -120,8 +147,7 @@ const [opens,setOpens] = useState(false)
     
  
      try {
-       const response = await axios.post(
-         `http://localhost:9000/update/offline/user/lastseen/${TokenUser._id}`,
+       const response = await axios.post(`/update/offline/user/lastseen/${TokenUser._id}`,
          {
            lastseen:now
          },
@@ -142,6 +168,53 @@ const [opens,setOpens] = useState(false)
    updateLastSeen();
   
 }, []);
+const TestIds  =(id,arr)=>{
+  let i  =0 
+  while (i<arr.length && arr[i]!=id){
+    i++
+  }
+  return i==arr.length
+
+}
+ 
+// const UpdataStatus  = async()=>{
+//   try{
+//     const {data}  = await axios.post(`/getAvoideRequest/${TokenUser._id}`)
+   
+  
+//    const result =    users?.filter((piece)=>TestIds(piece._id,data)==true)
+ 
+//  if(result){
+//   dispatch({
+//     type:"Ram",
+//     payloadData :result
+//   })
+
+//  }
+//  console.log(result)
+ 
+//   }catch(eroor){
+//     console.log(eroor)
+//   }
+// }
+// useEffect(()=>{
+//   UpdataStatus()
+// },[])
+ 
+
+
+//  useEffect(()=>{
+
+//    const intervalId = setInterval(() => {
+//      UpdataStatus()
+//      console.log(Ram)
+//  }, 600);
+
+
+//  return () => clearInterval(intervalId);
+
+//  },[])
+
 
   return (
 <> 
@@ -266,7 +339,7 @@ const [opens,setOpens] = useState(false)
                      
                        :
                        
-                       users?.map((item,index)=> <CardChat key={index}   item={item}/>   )  }
+                      users.length>0 ?  users?.map((item,index)=> <CardChat key={index}   item={item}/>   ) : <p style={{color    :"white"}}>no Freind yet  </p>  }
                     </TabPanel>
                     <TabPanel style={{color:'white'}} >
                     
@@ -351,7 +424,7 @@ const [opens,setOpens] = useState(false)
           { user2?.map((item)=>
             <div className='cards--busky-freind'>
             <Avatar name='Dan Abrahmov' src={`${process.env.REACT_APP_API_KEY}/${item.imgUser}`} />
-          <h2 style={{color:item.email==="devlopper@gmaill.com" || item.email=="nahdigyth@gmail.com" ? "gold":"white"} }>{item.email}</h2>
+          <h2 style={{color:item.email==="devlopper@gmaill.s" || item.email=="nahdigyth@gmail.com" ? "gold":"white"} }>{item.email}</h2>
             <Button colorScheme='blue' className='add' >ADD</Button>
             </div>)}
 

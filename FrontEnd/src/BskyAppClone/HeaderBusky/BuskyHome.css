@@ -2,40 +2,45 @@
 
 
 .SectionComment{
-     position: absolute;
+    position: absolute;
     top: 50%;
-    left: 55%;
+    left:59%;
     transform: translate(-50%,-50%);
     overflow-x: auto;  
     width: 60%;
     height: 100%;
-    background-color: #3cbfbf;
-  
+   
+   
     display: flex;
-
-
+     
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+   
     .big{
+        border: 2px solid grey;
+        border-radius: 10px;
+        margin-top: 10px;
         width: 70%;
         height: 100%;
-        background-color: beige;
+        background-color: #0E1217;
+        padding: 10px;
     }
-    .small{
-        /* width: 30%;
-        height: 100%;
-        background-color: red;
-        position: absolute;
-        right: 0;
-        top: 0; */
-    }
+     
     .routerComment{
         background-color: #208BFE;
+         display: flex;
+         align-items: center;
+         
+       
         .routerCommentIcon{
             display: flex;
             justify-content: flex-start;
-            gap: 10px;
+            gap: 1px;
             cursor: pointer;
             color: white;
             font-weight: bold;
+           align-items: center;
+        
         }
     }
 .sectionCommentDescsiprion{
@@ -45,17 +50,21 @@
         color: white;
         font-weight: bold;
         font-size: 30px;
+        
     }
     .pargraph{
          border-left: 3px  solid rgb(235, 18, 206);
         p{
-            background-color: rgb(171, 171, 171);
+ 
             width: 80%;
             color: whitesmoke;
             font-weight: bold;
             margin-left: 10px;
         }
     }
+}
+.imgPost{
+    margin-top: 10px;
 }
 
 .imgPostContainer img{
@@ -67,6 +76,7 @@
 .nmuberofcomment{
     display: flex;
     gap: 10px;
+    margin-top: 10px;
 }
 
  
@@ -83,6 +93,7 @@
 .timeCreated{
     color: grey;
     font-weight: bold;
+    margin-top: 10px;
 }
 .nmuberofcomment{
     h1{
@@ -115,24 +126,52 @@
    border-radius: 10px;
    width: 90%;
    border: 1px solid grey;
+
+   margin-top: 10px;
 }
 
 
 .SectionCurrentPost{
+    margin-left: auto;
+    margin-right: auto;
+    width:100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 20px;
+    input{
+        background-color: transparent;
+        border: none;
+    }
+    input:focus {
+      
+       border: none;
+      }
     .containerAppF{
-        background-color: rgb(49, 87, 37);
+        
+        margin-top: 10px;   
+        background-color: #1A1F26;
+        margin-left: 10px;
+        padding: 10px;
+        border-radius: 10px;
         display: flex;
         align-items: center;
-        justify-content: space-around;
-        width: 80%;
+        justify-content: space-between;
+        width: 100%;
+        color: white;
+       
+        
         .buttonPost button{
             color: white;
             background-color: #161E27;
             padding: 10px;
+          
+
             border-radius: 10px;
         }
         .shareButtonS{
-            background-color: royalblue;
+          
             width: 70%;
         }
         .imgconainerPdf{
@@ -155,21 +194,20 @@
 
 .awsomeComment {
     padding: 10px; /* Optional padding for the outer container */
-    border: 1px solid #302b2b; /* Optional: visualize the div */
-    /* Height is determined by the content */
-    overflow: auto;
-    height: 300px;
+ 
+    height: 100vh;
   }
 
 
 
 .autoPaddingWithHeightelmentInsideit {
-    padding: 20px; /* Add padding to the inner element */
-    background-color: lightblue; /* Optional: background color for visibility */
+    margin-top: 10px;
+    /* background-color: rgb(175, 14, 130);  */
     /* The height of this element will automatically dictate the height of the parent */
     border: 1px solid black;  
-   
-    
+    position: absolute;
+    left: 0;
+    width: 70%;
 }
 
 
@@ -200,6 +238,314 @@
     flex-direction: column;
     gap: 10px;
     border: 2px solid grey;
+    
+     
+}
+
+.gmail{
+    color: gray;
+    font-weight: bold;
+}
+
+
+
+
+.shaireThingIcon0{
+    display: flex;
+    gap: 10px;
+}
+
+
+
+
+
+
+.GhaithNahdi{
+    border: 2px solid grey;
+    border-radius:8px;
+    width: 100%;
+    padding: 10px;
+}
+
+
+
+
+.containertest{
+    background-color:#b40975;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    padding: 10px;
+    position: absolute;
+    top: 70%;
+    z-index: 1;
+    left: 30.1%;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+}
+
+.tagAndMention{
+    margin-top: 20px;
+}
+
+
+/*  section video reels  */
+
+.sectionReels{
+    width: 100%;
+    height: 82vh;
+    background-color: red;
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none; 
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    scroll-behavior: smooth;  
+    
+
+}
+ 
+@media only screen and (max-width:900px) {
+ /* section comment  */
+
+
+.SectionComment{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow-x: auto;  
+    width: 100%;
+    height: 100%;
+ 
+    box-shadow: 10px 4px 50px 10px grey;
+    display: flex;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+   
+    .big{
+        width: 100%;
+        height: 100%;
+        background-color: #0E1217;
+        padding: 10px;
+    }
+ 
+    .routerComment{
+        background-color: #208BFE;
+         display: flex;
+         align-items: center;
+        .routerCommentIcon{
+            display: flex;
+            justify-content: flex-start;
+            gap: 1px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+           align-items: center;
+        
+        }
+    }
+.sectionCommentDescsiprion{
+    display: flex;
+    flex-direction: column;
+    h1{
+        color: white;
+        font-weight: bold;
+        font-size: 30px;
+        
+    }
+    .pargraph{
+         border-left: 3px  solid rgb(235, 18, 206);
+        p{
+ 
+            width: 80%;
+            color: whitesmoke;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    }
+}
+.imgPost{
+    margin-top: 10px;
+}
+
+.imgPostContainer img{
+ width: 60%;
+ height: 60%;
+ border-radius: 20px;
+ object-fit: contain;
+}
+.nmuberofcomment{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+ 
+
+.mentionWebTracking{
+    background-color: #161E27;
+    color: grey;
+    margin:3px;
+    padding: 4px;
+    border-radius: 10px;
+    font-weight: bold;
+    
+}
+.timeCreated{
+    color: grey;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.nmuberofcomment{
+    h1{
+        color: grey;
+        font-weight: bold;
+        
+    }
+}
+
+.samex{
+    display: flex;
+    align-items: center;
+    
+    gap: 3px;
+}
+
+.topFlop{
+    display: flex;
+    gap: 10px;
+}
+
+.numberOfVoteButton{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background-color: #1A1F26;
+   color: grey;
+   font-weight: bold;
+   padding: 10px;
+   border-radius: 10px;
+   width: 90%;
+   border: 1px solid grey;
+
+   margin-top: 10px;
+}
+
+
+.SectionCurrentPost{
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 20px;
+    input{
+        background-color: transparent;
+        border: none;
+    }
+    input:focus {
+      
+       border: none;
+      }
+    .containerAppF{
+        
+        margin-top: 10px;   
+        background-color: #1A1F26;
+        margin-left: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        color: white;
+       
+        
+        .buttonPost button{
+            color: white;
+            background-color: #161E27;
+            padding: 10px;
+            border: 1px solid grey;
+
+            border-radius: 10px;
+        }
+        .shareButtonS{
+          
+            width: 70%;
+        }
+        .imgconainerPdf{
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            
+        }
+        .imgconainerPdf img {
+            border-radius: 10px;
+        }
+    }
+}
+ 
+
+}
+
+
+
+
+.awsomeComment {
+    padding: 10px; /* Optional padding for the outer container */
+ 
+    height: 100vh;
+  }
+
+
+
+.autoPaddingWithHeightelmentInsideit {
+    margin-top: 10px;
+  /* Optional: background color for visibility */
+    /* The height of this element will automatically dictate the height of the parent */
+    border: 1px solid grey;  
+    position: absolute;
+     
+    width: 100%;
+}
+
+
+
+.userInfoCardComment{
+    display: flex;
+    img{
+        width: 60px;
+        height:50px;
+        object-fit: contain;
+        border-radius: 14px;
+    }
+}
+
+.shareInThing{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cardcomment{
+    background-color:#161E27;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 2px solid grey;
+    
+     
 }
 
 .gmail{
@@ -229,9 +575,27 @@
 
 
 
+.containertest{
+    background-color:#b40975;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    padding: 10px;
+    position: absolute;
+    top: 70%;
+    z-index: 1;
+    left: 30.1%;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+}
 
-
-
+.tagAndMention{
+    margin-top: 20px;
+}
+  }
 
 
 /* ------------------------------------------------------------ */
@@ -431,8 +795,8 @@
  
 .Discover{
   
-    height: 85vh;
-    
+    height: 85.8898888vh;
+     /* // fix this area bro  */
     overflow-y:auto;
     -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -708,6 +1072,32 @@
 
 
 
+    .containertest{
+        background-color:#b40975;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 100px;
+        padding: 10px;
+        position: absolute;
+        top: 70%;
+        z-index: 1;
+        left: 5%;
+        transform: translate(-50%,-50%);
+    }
+
+
+
+
+    .Discover {
+        height: 90vh;
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+    }
 
 
 
@@ -963,3 +1353,23 @@
 }  
 
 }
+
+.busky--container--section {
+    transition: background-color 0.3s ease, border-radius 0.3s ease, padding 0.3s ease;
+}
+
+.busky--container--section:hover {
+    background-color: #283542;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
+
+ .replyComment{
+  position: absolute;
+  left: 47%;
+  top: 70%;
+  transform: translate(-50%,-50%);
+  
+ }

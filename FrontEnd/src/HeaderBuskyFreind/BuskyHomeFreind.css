@@ -34,8 +34,11 @@
 .busky--navbarx{
     width: 20%;
     height: 100%;
-    background-color: var(--background-color);
+background-color: var(--background-color);
+   
   
+   display: flex;
+   justify-content: flex-end;
 
 }
 .busky--postsx{
