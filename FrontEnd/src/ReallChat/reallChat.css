@@ -1,0 +1,170 @@
+.reallchat{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container--reallchat{
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(44, 44, 45);
+    display: flex;
+    justify-content: center;
+ 
+}
+    
+.chatPage {
+    width: 40%;
+    height: 100%;
+    background-color: #161E27;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid grey;
+  
+}
+ 
+.card-wrapp--acountx{
+ 
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+ 
+.itemcards{
+   
+    width: 40%;
+    display: flex;
+    gap: 10px;
+}
+.user-info-chat-block{
+    font-size: 40px;
+}
+
+
+.scrennMessage{
+    background-color: #161E27;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.current{
+    background-color:#fff ;
+    padding: 10px;
+    width: 30%;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0px 0px 13px 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 4px;
+    color: black;
+}
+
+
+
+.diffcurrent{
+    background-color:#208BFE ;
+    color: black;
+    padding: 10px;
+    width: 30%;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0px 0px 13px 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.messgehelp{
+    background-color: green;
+    display: flex;
+    justify-content: flex-end;
+    gap: 3px;
+}
+.righttarck{
+display: flex;
+justify-content: flex-start;
+}
+ 
+
+.oneToOne{
+    width: 40%;
+    padding: 10px;
+     
+     h2{
+        background-color: white;
+        color: black;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 2px;
+        width: 100%;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+     }
+      
+    }
+.oneToneLeft{
+    width: 40%;
+    padding: 10px;
+    margin-left: auto;
+    h2{
+        background-color: white;
+        color: black;
+        margin: 10px; background-color:#208BFE ;
+        border-radius: 10px;
+        padding: 4px;
+        width: 100%;
+     }
+     
+}
+    
+
+.containerSeeTheCurrentImages{
+   
+    background-color: beige;
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.currentImg img {
+    width: 100%;
+     height:480px;
+    object-fit: cover;
+}
+.currentImg{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.containeraddxsrgr{
+ 
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+
+/* .content{
+    background-color: red;
+    width: 70%;
+}
+.contentimg{
+ 
+     background-color: red;
+     width: 50%;
+} */
+ 
