@@ -828,9 +828,9 @@ useEffect(()=>{
            </div>
            
 
-           <div className='busky--container--section' style={{display:"flex",alignItems:"center",backgroundColor:"red"}}>
+           <div className='busky--container--section' style={{display:"flex",alignItems:"center"}}>
            
-            <Link to={"/bluskG/freind"}  style={{cursor:"pointer",color:"none"}}  >  <img src='./imgHome/chat.png' alt='' style={{marginLeft:"17px"}}/></Link>
+            <Link to={"/bluskG/freind"}  style={{cursor:"pointer",color:"none"}}  >  <img src='./imgHome/chat.png' alt='' className='moon'/></Link>
             <Link to={"/bluskG/freind"} style={{cursor:"pointer",color:"none"}} > <span>Chat</span></Link>
            </div>
            
