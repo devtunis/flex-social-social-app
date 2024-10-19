@@ -36,7 +36,7 @@ mongoose.connect(process.env.CONNECTION_DATABASE)
 })
 .catch(err => console.error(err));
 app.use(cors({
-    origin: allowedOrigins,
+    origin: ['http://flex-tunisia-users-projects.vercel.app','https://flex-tunisia-users-projects.vercel.app', 'http://localhost:3000'],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"]
 }));
