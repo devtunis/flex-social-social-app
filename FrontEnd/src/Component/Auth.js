@@ -40,12 +40,13 @@ const Auth = () => {
       navigate("/Headers");
        
     } catch (error) {
-      console.error(`This error occurred: ${error}`);
+      // console.error(`This error occurred: ${error}`);
       setError('Failed to login. Please check your credentials.');
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="auth-container">

@@ -22,6 +22,9 @@ import RightCard from './ReelsSection/RightCard/RightCard';
 import Test from './Test';
 import UplodRellsSection from './ReelsSection/UplodRellsSection';
 import ProfileBuskt from './ProfileUser/ProfileBuskt.js';
+import Rank from './RankUsers/Rank.js';
+import CircleAnimation from './RankUsers/CircleAnimation.js';
+import AdminPosterPdf from './UniverstyPdf/AdminPosterPdf.js';
 const App = () => {
  const [online,setIsOnline] = useState(true)
  // here dedict if i onlin or no
@@ -49,6 +52,8 @@ const App = () => {
             <Route path='/bluskG/chat' element={<><ReallChat/></>} />
             <Route path='/testfile' element={<><UplodRellsSection/></>} />
             <Route path='/flexProfile' element={<><ProfileBuskt/></>} />
+            <Route path='/RankPage' element={<><Rank/></>} />
+            <Route path='/blsuky/pdf' element={<><AdminPosterPdf/></>} />
          
           </Routes>
           <ToastContainer />

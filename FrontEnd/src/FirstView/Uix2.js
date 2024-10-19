@@ -12,6 +12,7 @@ const Uix2 = ({close}) => {
   return (
     <StyledWrapper  style={{display:close?"none":"block"}}>
       <div className="uix-card">
+
         <ul className="uix-list">
           <li className="uix-element">
           <svg
@@ -55,7 +56,11 @@ const Uix2 = ({close}) => {
             <Link to={"/bluskG/freind"} style={{cursor:"pointer" ,color:"grey"}}>     <p className="uix-label">Add Member</p></Link>
           </li>
         </ul>
+
+
         <div className="uix-separator" />
+
+
         <ul className="uix-list"  > 
           <li className="uix-element" style={{display:"flex",flexDirection:"row"}} >
           <Link to={"/Headers"} state={{color:'none'}}>
@@ -111,7 +116,41 @@ const Uix2 = ({close}) => {
             <p className="uix-label" style={{color:"red"}} onClick={()=>Logout()} >LOG OUT </p>
           </li>
         </ul>
+
+        <ul className="uix-list">
+          <li className="uix-element">
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="25"
+  height="25"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#7e8590"
+  strokeWidth={2}
+  strokeLinecap="round"
+  strokeLinejoin="round"
+  className="lucide lucide-file-pdf"
+>
+  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"></path>
+  <path d="M14 2v6h6"></path>
+  <path d="M9 12h1.5v6H9z"></path>
+  <path d="M12 12h1.5v6H12z"></path>
+  <path d="M15 12h1.5v6H15z"></path>
+  <line x1="9" y1="17" x2="15" y2="17"></line>
+</svg>
+
+
+            <p className="uix-label" style={{color:"red"}} onClick={()=>Nav("/blsuky/pdf")} >PDF</p>
+          </li>
+        </ul>
+
+
+        
       </div>
+
+
+
+
 
 
       

@@ -19,9 +19,13 @@
 
     }
     .Body__Container__Inside__Setting{
-        width:14%;
+         
+
+        width: 14%;
+        padding: 3px;
         height: 100%;
-        background-color: #0E1217;
+        background-color: rgb(255, 255, 255);
+        border-radius: 10px;
        
     }
         .Body__Container__Inside__Question{

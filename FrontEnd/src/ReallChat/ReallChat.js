@@ -5,7 +5,8 @@ import { useGlobalContext } from '../Store/GlobalContext'
 import axios from '../Component/axios'
 import { useNavigate } from 'react-router-dom'
 import ThreePoint from '../FirstView/ThreePoint'
-
+import BlockUsers from './BlockUsers'
+import { Progress } from '@chakra-ui/react'
 const ReallChat = () => {
   const Nav = useNavigate()
   const [input, setInput] = useState("")
@@ -19,13 +20,15 @@ const ReallChat = () => {
   const [lastSeen,setLastSeen] = useState('')
   const [statusUser,setstatusUser] = useState("")
   const  [stop,setstopx]  = useState("f")
-  
+  const [iclick,seticlick] = useState(false)
 
 
 
 
 
   const HandelChunk = async()=>{
+    seticlick((prev)=>!prev)
+  
     setLoading(true)
     const newMessage = {
       senderId: TokenUser._id,   // Assuming TokenUser is the sender
@@ -45,9 +48,11 @@ const ReallChat = () => {
 
 
       })
+      
       console.log(data,"data")
       setLoading(false)
       setInput("")
+      setImage("")
       Useref?.current?.scrollIntoView({behavior:"smooth"})
    }catch(eroor){
      console.log(eroor)
@@ -64,16 +69,19 @@ const ReallChat = () => {
    },[])
 Useref.current?.scrollIntoView({behavior:"smooth"})
 
-
-   
+const [block,setBlock] = useState(false)
+const [rayzen,setRayzen] = useState([])
      
     const Conversation =async ()=>{
       try{
         const {data} = await  axios.post(`/get/access/message/${TokenUser?._id}`,{
           userId : currentUser[0]?._id
         })
-      // console.log(data.messages)
+      
        setMessages(data.messages)
+    
+       setBlock(data.Block)
+
       }
       catch(eroor){
         console.log(`This eroor by ${eroor}`)
@@ -81,10 +89,39 @@ Useref.current?.scrollIntoView({behavior:"smooth"})
     }
 
 
+
+    //   setRayzen(data.DataBlocker)
+
+
+    const getBlocker =async ()=>{
+      try{
+        const {data} = await  axios.post(`/get/access/message/${TokenUser?._id}`,{
+          userId : currentUser[0]?._id
+        })
+      
+       
+        setRayzen(data.DataBlocker)
+        console.log(data.DataBlocker,"fiee")
+      }
+      catch(eroor){
+        console.log(`This eroor by ${eroor}`)
+      }
+    }
+
+
+
+useEffect(()=>{
+  console.log(TokenUser._id,"import")
+  console.log(currentUser[0]._id,"import")
+  
+},[])
+
+
+
     const getLastSeen = async()=>{
       try{
           const {data} = await axios.get(`/get/date/user/${currentUser[0]._id}`)
-          console.log('lastMessage',data.LastSeen,'status',data.isOnline,data.waiting)
+          // console.log('lastMessage',data.LastSeen,'status',data.isOnline,data.waiting)
           setLastSeen(data.LastSeen)
           setstatusUser(data.isOnline)
           setstopx(data.waiting)
@@ -104,11 +141,13 @@ Useref.current?.scrollIntoView({behavior:"smooth"})
    const interval = setInterval(() => {
     Conversation();
     getLastSeen()
+   
   },1000); // Fetch messages every 3 seconds
   return () => clearInterval(interval); 
    },[])
 
 
+  
   //  useEffect(()=>{
   // console.log(Useref?.current?.scrollIntoView({behavior:"smooth"}))
   //  },[messages])
@@ -117,6 +156,8 @@ Useref.current?.scrollIntoView({behavior:"smooth"})
     Nav("/auth")
     
   }
+
+  
 
 
   const UpdateUser = async()=>{
@@ -158,9 +199,9 @@ Useref.current?.scrollIntoView({behavior:"smooth"})
 
 
 
-useEffect(()=>{
-  console.log(currentUser,"ff")
-},[])
+// useEffect(()=>{
+//   console.log(currentUser,"ff")
+// },[])
 
  
 const handleImageChange = async (e) => {
@@ -229,27 +270,67 @@ const HandelCloseTyping = async()=>{
 useEffect(()=>{
   console.log(messages)
 },[])
+
+
+const HandelDelteMyMessages =async()=>{
+  alert("hello")
+}
+
+// other world 
+
+const [progressBar,setProgressBar] = useState(false)
+
+const helpPassToBlockUserFunction =(y) =>{
+  setProgressBar(y)
+}
+
+const [open,setopen] = useState(false)
+// const HandelThisOpen  = (x)=>{
+//   setopen(x)
+// }
+
+const [asus,setassus] = useState(false)
+const rio =()=>{
+  setopen((prev)=>!prev)
+  getBlocker()
+  setassus(true)
+  
+}
   return (
     <>  
+   
     <div className='reallchat'>
    
       <div className='container--reallchat'>
         <div className='chatPage'>
+        {progressBar &&    <Progress size='xs' colorScheme='blue' height='3.2px' isIndeterminate />
+     }
           <div className='card-wrapp--acountx'>
             <div className='itemcards'>
-              <Avatar   size='md' src={`${process.env.REACT_APP_API_KEY}/${currentUser[0].imgUser}`}>
-                <AvatarBadge boxSize='18px' bg={statusUser==='true' ? 'green.500' : 'red.500'} />
+              <Avatar   size='md' src={block?"":`${process.env.REACT_APP_API_KEY}/${currentUser[0].imgUser}`}>
+                
+                {block ? '' :  <AvatarBadge boxSize='18px'  bg={statusUser==='true' ? 'green.500' : 'red.500'} />}
               </Avatar>
               <div className='left--card-account1'>
-                <h2 style={{ color: "white" }}> {currentUser[0].username}</h2>
+                <h2 style={{ color: "white" }}> {block ? "User Flex"  : currentUser[0].username}</h2>
                 {/* <p style={{ color: "grey" }}>@{currentUser[0]?.email}</p> */}
                 <p style={{ color: "grey",display:"flex" }}>{stop=="Typing" && <> Typing <ThreePoint/>  </>} </p>
-                <p className='messageme' style={{ color: "white" ,display:statusUser==='true' && 'none'}} >Last seen {lastSeen} </p>
-              
+
+                {block ? <p style={{color:"white"}}>Block</p> :                 <p className='messageme' style={{ color: "white" ,display:statusUser==='true' && 'none'}} >Last seen {lastSeen} </p>}
               </div>
             </div>
 
-            <div className='user-info-chat-block' style={{ color: "white" }}>...</div>
+            <div className='user-info-chat-block' style={{ color: "white",cursor:"pointer" }}>
+              
+               <h1 onClick={()=>rio()}>...</h1>
+               
+              <div style={{position:"absolute",zIndsex:"2"}}>
+                <BlockUsers myId={TokenUser._id} matchID={currentUser[0]._id} passFunction  ={helpPassToBlockUserFunction}
+                 test ={rayzen} testBlock = {block}
+                 isOpen = {open}   asuss = {asus}
+                />
+              </div>
+            </div>
           </div>
 
           <div className='scrennMessage' style={{color:"white"}}>
@@ -282,8 +363,14 @@ useEffect(()=>{
 
        <img src={b?.imgUser} alt='' className='contentimg' style={{borderRadius:"10px",cursor:'all-scroll'}}  onClick={()=>HandelSeeMessage(b)}/>
                 
-                      {new Date(b.timestamp).getHours()} :
-                      {new Date(b.timestamp).getMinutes().toString().padStart(2, '0')}
+                     
+                      <div style={{backgroundColor:"white",display:"flex",justifyContent:"space-between"}}> 
+                    <div>   {new Date(b.timestamp).getHours()} :
+                      {new Date(b.timestamp).getMinutes().toString().padStart(2, '0')}</div>
+                         <div>
+                          <h1 onClick={()=>HandelDelteMyMessages()}>  remove</h1>
+                         </div>
+                      </div>
                             </p>
                             </div>
                     
@@ -309,36 +396,39 @@ useEffect(()=>{
                      
           </div>
 
-          <div className='submitMessages' style={{ display: "flex", alignItems: "center" }}>
+        {!block?    <div className='submitMessages' style={{ display: "flex", alignItems: "center" }}>
        
-          <label htmlFor="myfile" style={{color:"white"}}>
-            
-            <img src='https://cdn-icons-png.flaticon.com/256/6326/6326015.png'
-            alt=''
-            style={{width:"30px",height:"30px",objectFit:"cover",cursor:"pointer"}}
-            />
-            </label>       
-          <input type="file" id="myfile" name="myfile" onChange={handleImageChange}/>
-          
+       <label htmlFor="myfile" style={{color:"white"}}>
          
+         <img src='https://cdn-icons-png.flaticon.com/256/6326/6326015.png'
+         alt=''
+         style={{width:"30px",height:"30px",objectFit:"cover",cursor:"pointer"}}
+         />
+         </label>       
+       <input type="file" id="myfile" name="myfile" onChange={handleImageChange}/>
+       
+      
 
-            <input
-              type='text'
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              style={{ width: "80%", fontWeight: "bold", fontSize: "19px" }}
-              onClick={()=>HadndelTyping()}
-              onBlur={()=>HandelCloseTyping()}
-            />
-            <Button
-              isLoading={loading}
-              style={{ backgroundColor: "white", width: "80px", height: "45px", cursor: "pointer", marginLeft: "10px", fontWeight: 'bold', borderRadius: "100px" }}
-              onClick={HandelChunk}
-              
-            >
-              SEND
-            </Button>
-          </div>
+         <input
+           type='text'
+           value={input}
+           onChange={(e) => setInput(e.target.value)}
+           style={{ width: "80%", fontWeight: "bold", fontSize: "19px" }}
+           onClick={()=>HadndelTyping()}
+           onBlur={()=>HandelCloseTyping()}
+         />
+         <Button
+           isLoading={loading}
+           style={{ backgroundColor: "white", width: "80px", height: "45px", cursor: "pointer", marginLeft: "10px", fontWeight: 'bold', borderRadius: "100px" }}
+           onClick={HandelChunk}
+           
+         >
+           SEND
+         </Button>
+       </div> :<div className='blockConainter' style={{textAlign:"center"}} >
+        <hr/>
+        <p style={{color:"grey"}}>Tout le monde ne peut pas envoyer de message a ce compte </p>
+        </div>}
         </div>
       </div>
     </div>

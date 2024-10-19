@@ -8,7 +8,7 @@ import UixCom from '../../FirstView/UixCom';
 import { useToast } from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
  
-const Posts = ({ item, updateMessage, passFunc }) => {
+const Posts = ({ item, updateMessage, passFunc ,pass2Func}) => {
   const [isLiked, setIsLiked] = useState(false); // Track like state
   const { TokenUser,dispatch } = useGlobalContext();
   const [isLoadingRequest, setIsLoadingRequest] = useState(false);
@@ -27,6 +27,7 @@ const Posts = ({ item, updateMessage, passFunc }) => {
       // If the like is successful, update the local state
       if (response) {
         setIsLiked(true); // Set like state to true
+        pass2Func()
       }
     } catch (error) {
       console.error(`Error: ${error}`);
@@ -59,7 +60,16 @@ const Posts = ({ item, updateMessage, passFunc }) => {
   useEffect(() => {
     verifyLikeStatus();
      
-  }, []);
+  }, [isLiked]);
+
+
+ 
+
+
+
+ 
+
+
 
   const HandelremoveLikeinDataBaseLikePost = async()=>{
     
@@ -69,7 +79,8 @@ const Posts = ({ item, updateMessage, passFunc }) => {
           PostId  : TokenUser._id
          })
          setIsLoadingRequest(false)
-           
+         setIsLiked(false)
+         ReactNodeJs &&  pass2Func()
     }catch(eroor){
       console.log(`This Eroor by ${eroor}`)
       setIsLoadingRequest(false)
@@ -109,6 +120,7 @@ const Posts = ({ item, updateMessage, passFunc }) => {
       })
       setLoadingG(false)
       setUpdateProfile(false)
+     
     }catch(eroor){
       console.log(`this eroor by ${eroor}`)
       setLoadingG(false)
@@ -199,10 +211,12 @@ const [ShareLink,setShareLink] = useState("")
         </div>
 
         <div className='busky-app-descibe-user' >
-          <p>{item.post?.text}</p>
+          <p className='psotCommentEtoile'  >{item.post?.text}<small style={{color:"#0056b3"}}> #0001</small></p>
+
         </div>
 
         <div className='busky-app-info-img'>
+
   {item.post.imgItem.includes('/video/upload') ? (
     <video controls  >
       <source src={item.post.imgItem} type="video/mp4" />

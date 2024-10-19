@@ -72,8 +72,17 @@ const UIX = ({close}) => {
               <Link to={"/bluskG"} state={{color:'none'}}>Socail media </Link>
             </p>
           </li>
-        
+         
         </ul>
+
+
+
+
+
+
+
+
+        
         <div className="uix-separator" />
         <ul className="uix-list">
           <li className="uix-element">

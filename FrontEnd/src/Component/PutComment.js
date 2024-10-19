@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './PutComment.css';
 import EmojiPicker from 'emoji-picker-react';
-import axios from 'axios'; // Ensure you import axios correctly
+import axios from '../Component/axios'; // Ensure you import axios correctly
 import { useGlobalContext } from '../Store/GlobalContext';
 
 const PutComment = () => {
@@ -31,7 +31,7 @@ const PutComment = () => {
         formData.append('image', selectedFile || own); // Append the file or a link
         formData.append('ProfileImg',TokenUser.imgUser)
         try {
-            const response = await axios.post(`http://localhost:9000/test-upload/${AddQuestion._id}`, formData, {
+            const response = await axios.post(`${process.env.REACT_APP_API_KEY}/test-upload/${AddQuestion._id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

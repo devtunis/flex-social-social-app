@@ -1,6 +1,6 @@
 import React, { useRef, useState,useEffect } from 'react'
 import "./BuskyHome.css"
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Divider, Box, Avatar, CircularProgress, EnvironmentProvider, useEventListener, Hide, Spinner } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Divider, Box, Avatar, CircularProgress, EnvironmentProvider, useEventListener, Hide, Spinner, AlertTitle, useFocusEffect, CircularProgressLabel } from '@chakra-ui/react'
 import Posts from '../All__Card/Posts'
 import InputSearch from '../All__Card/InputSearch'
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
@@ -10,7 +10,6 @@ import { useGlobalContext } from '../../Store/GlobalContext'
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import { useToast } from '@chakra-ui/react'
 import { AvatarBadge, AvatarGroup, WrapItem } from '@chakra-ui/react'
-
 import 'aos/dist/aos.css'; // Import AOS styles
 import AOS from 'aos'; // Import AOS
 import Input from '../../FirstView/Input'
@@ -18,8 +17,7 @@ import UIX from '../../Component/UIX'
 import Uix2 from '../../FirstView/Uix2'
 import Reels from '../../ReelsSection/Reels'
 import RightCard from '../../ReelsSection/RightCard/RightCard'
-
-
+ 
 const BuskyHome = () => {
   var scroll = require("window-scroll");
   const [open,setopen] = useState(false)
@@ -28,7 +26,7 @@ const BuskyHome = () => {
   const textareaRef = useRef(null);
   const [k,setk] = useState(300)
   const [post,setPost] = useState(false)
-  const {TokenUser} = useGlobalContext()
+  const {TokenUser,dispatch} = useGlobalContext()
   const toast = useToast()
   const [dataFromPostComeent,setdataFromPostComeent] = useState("")
   const [helpInput,setHelpInput] = useState([])
@@ -36,6 +34,38 @@ const BuskyHome = () => {
   const [tompData,setTompaerData]  = useState([])
   const [loading1,setLoading1] = useState(false)
   const [killme,setkillme] = useState(false)
+  const [notFiactionb,setnotifactiouy] = useState([])
+  const [helpFunctioE,sethelpFunctioE] = useState(false)
+  const [postLoading,setPostLoadingFire] = useState(false)
+  const [progressPost,setProgress] = useState(30)
+
+  console.log(`
+
+ 
+
+    ███████╗██╗     ███████╗██╗  ██╗
+    ██╔════╝██║     ██╔════╝██║ ██╔╝
+    █████╗  ██║     █████╗  █████╔╝ 
+    ██╔══╝  ██║     ██╔══╝  ██╔═██╗ 
+    ██     ███████╗███████╗██║  ██╗
+           
+    
+     
+    
+        `)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   const [voidReels,setvoidReels]  = useState([])
@@ -53,22 +83,27 @@ const BuskyHome = () => {
  
 
 
-  useEffect(() => {
+  // useEffect(() => {
   
-    const intervalId = setInterval(() => {
+  //   const intervalId = setInterval(() => {
    
-      callData()
-      console.log(voidReels)
-    },1000);
+  //     callData()
+  //     console.log(voidReels)
+  //   },3000);
 
     
-    return () => clearInterval(intervalId);
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
+
+
+  useEffect(() => {
+ 
+      callData()
+   
+
+     
   }, []);
-
-
-
-
-
 
 
 
@@ -235,18 +270,24 @@ const res = image && image
 
 
 const HandelPushPost =async ()=>{
-  if(textAra.length<30  ||image==false
+  // if(textAra.length<30  ||image==false
     
-  ){
-    toast({
-      title: 'Your ! Post  created.',
-      description: "We've can  create your post put more 10 word :).",
-      status: "warning",
-      duration: 2000,
-      isClosable: true,
-    })
-  }
+  // ){
+  //   toast({
+  //     title: 'Your ! Post  created.',
+  //     description: "We've can  create your post put more 10 word :).",
+  //     status: "warning",
+  //     duration: 2000,
+  //     isClosable: true,
+  //   })
+  // }
+  setPostLoadingFire(true)
+  setProgress(10)
+ 
  try{
+
+  setProgress(40)
+  setProgress(50)
    const PushData = await axios.post(`/post-posts/${TokenUser._id}`,
     {
       post: {
@@ -265,6 +306,7 @@ const HandelPushPost =async ()=>{
   }
     
    )
+   setProgress(100)
    if(PushData){
     toast({
       title: 'Your post created.',
@@ -273,23 +315,30 @@ const HandelPushPost =async ()=>{
       duration: 2000,
       isClosable: true,
     })
+    
     setTextArea("")
     setImage("")
     setPost(false)
-
+    sethelpFunctioE((prev)=>!prev)
+    
+    setPostLoadingFire(false)
    }
    else{
     toast({
-      title: 'Your ! Post  created.',
+      title: 'Your ! Post not   created.',
       description: "We've can  create your post :).",
       status: "warning",
       duration: 2000,
       isClosable: true,
     })
+    setProgress(0)
+    setPostLoadingFire(false)
    }
  }
  catch(eroor){
   console.log(eroor)
+  setProgress(0)
+  setPostLoadingFire(false)
  }
 }
 const [fetchPostsFromDataBase,setfetchPostsFromDataBase] = useState([])
@@ -301,10 +350,13 @@ const CoffeeTime = async()=>{
     const {data}   =  await axios.get('/post-comment/fetch')
      
  
-    const sortedData = fetchPostsFromDataBase.sort((a,b)=>b.createdAt-a.createdAt)
-    // console.log(sortedData)
-    setfetchPostsFromDataBase(data)
+    const sortedData = data.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))
+   
+    setfetchPostsFromDataBase(sortedData)
     seti(false)
+
+
+
    
   }
 
@@ -313,53 +365,91 @@ const CoffeeTime = async()=>{
     seti(true)
   }
 
+
+  
 }
 
- 
-
-
-// useEffect(() => {
-//   CoffeeTime();
-
-//   const intervalId = setInterval(() => {
-   
-//     CoffeeTime()
-//   }, 6000);
-
-//   // Cleanup function to clear the interval
-//   return () => clearInterval(intervalId);
-// }, []);
-// useEffect(()=>{
-
-//    const intervalId = setInterval(() => {
-//     CoffeeTime()
- 
-//  }, 1000);
-
 
 
  
-//  return () => clearInterval(intervalId);
-
-// },[])
 useEffect(()=>{
   CoffeeTime()
+    
 },[])
 
+ 
+
+const RenderWithNoLoading  = async()=>{
+
+  try{
+    const {data}   =  await axios.get('/post-comment/fetch')
+     
+      
+    const sortedDataRneder = data.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))
+     setfetchPostsFromDataBase(sortedDataRneder)
+   
+  }
+
+  catch(eroor){
+    console.log(eroor)
+     
+  }
+}
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+ useEffect(()=>{
+  RenderWithNoLoading()
+ },[helpFunctioE])
+
+ 
+
+
+ 
+
+ 
 
 
 
 
 const [CommentPost,setCommentPost] = useState(false)
 const [variable,setVaribale] = useState("")
-
+const[imghyf,setimghyf] = useState("")
+const [textf,settextf] =useState("")
+const [creatTime,setCeateTime] =useState("")
+//section comment for the users
+const [userid7oula,setuserid7oula] = useState("")
 const updatePost= async(newMessage,item) => {
   setCommentPost(newMessage);
-  console.log(item._id)
-  setVaribale(item._id)
   
+  setVaribale(item._id)
+  dispatch({
+    type: "CommentSection",
+    paylod : item
+  })
+   
+  setimghyf(item.post.imgItem)
+  settextf(item.post.text)
+  setCeateTime(item.post.createdAt)
+  setuserid7oula(item.userId)
 
 };
+ 
+ 
+
+ 
 useEffect(()=>{
   getAutoherCommentSpecif()
 },[CommentPost==true])
@@ -409,6 +499,27 @@ const PostCommentA = async()=>{
  
 
 
+ 
+   
+    try{
+
+      const dataBel7oula = await axios.post(
+        `/send/notification/author/${userid7oula}`,
+        {
+          myid: TokenUser.id,
+          myidimg: TokenUser.imgUser,
+          myusername: TokenUser.username,
+          recipientId: userid7oula,
+          postImage: imghyf,
+          postContent: textf,
+          comment: dataFromPostComeent
+        },
+        { headers: { 'Content-Type': 'application/json' } } // Ensure the server knows it's JSON
+      );
+      
+   }catch(eroor){
+     console.log(eroor)
+   }
 
 
 }
@@ -479,10 +590,103 @@ const funcIclicktoThisButton =()=>{
 const [testCard2,settestCard2] = useState(true)
 
 
+//---------------------------------------------------------------------------------
+const [ase,setttofc] = useState([])
+const notify = async()=>{
+  try{
+    const {data} = await axios.post(`/send/notification/author/${TokenUser._id}`)
+     
+   // setttofc(data)
+   setttofc(data.noTifaction)
+    console.log(data.noTifaction)
 
-
-
+  }catch(eroor){
+    console.log(eroor)
+  }
+}
  
+useEffect(()=>{
+  notify()
+ 
+},[])
+ 
+const [postamn,setpostamn] = useState(true)
+const [showNotfication,setshowNotfication] = useState(false)
+// the goals  why i stared this false in my account cause i 
+// dont wan't see this notficatiob by dafult in thi pa
+const [dataofNotfication,setdataNotifaction] = useState([])
+const funcQ = async()=>{
+  try{
+   const {data} = await axios.get(`/get/notifacation/${TokenUser._id}`)
+   
+   setdataNotifaction(data)
+   console.log(data)
+  }
+  catch(eroor){
+   console.log(eroor)
+  }
+}
+
+// useEffect(()=>{funcQ()},[])
+useEffect(()=>{funcQ()
+  console.log(dataofNotfication,"this data good")
+},[showNotfication])
+
+
+const [warzone,setwarzone] = useState(false)
+// here we gonna build function Heart 
+const DetactLikes = (item)=>{
+   
+   setwarzone((prev)=>!prev)
+      
+}
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const { data } = await axios.get('/post-comment/fetch');
+      setfetchPostsFromDataBase(data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+  fetchData();  // Call the function inside useEffect
+}, [warzone]);  // Track warzone changes
+
+
+
+const [FilterReversePost,setFilterReversePost] =useState(false)
+useEffect(()=>{
+   const arr =fetchPostsFromDataBase
+  
+ let ins = [];   
+  let t = [];    // Randomly selected posts
+
+ const  find=(s, ins) =>{
+   return ins.some(index => index === s); 
+ }
+
+ let i = 0;
+ while (i < arr.length) {
+   let s = Math.floor(Math.random() * arr.length);  // Generate a random index
+
+//   // Keep generating until we find an unused index
+  while (find(s, ins)) {
+    s = Math.floor(Math.random() * arr.length);
+  }
+
+   ins.push(s);  // Save the used index
+   t.push(arr[s]);  // Store the corresponding post
+   i++;
+ }
+
+
+ console.log(t);    // Shows randomly selected posts
+ setfetchPostsFromDataBase(t) 
+},[FilterReversePost])
+
+
+
 
   return (
 <> 
@@ -496,15 +700,105 @@ const [testCard2,settestCard2] = useState(true)
             <div className={`busky--navbar ${open?'openside':"closeside"}`} >   
             <div className={`busky--navar-seetingrr ${open?"openx":"closex"}`}>
            <div className='busky--navabar--img'>
-            {/* <img src='https://cdn.bsky.app/img/avatar_thumbnail/plain/did:plc:sussmqg7qh7ja7ma46f3x2aj/bafkreido5og6sxgkdr3cf2uzfuuujjgqaw3ghhwiugai43hltq4jvlee6m@jpeg' alt=''/>
-             */}
-
+            
              <img 
               src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} 
               style={{objectFit:"cover",cursor:"pointer"}} alt=''
               onClick={()=>settestCard2((prev)=>!prev)}
               />
-              <div className='blockCard'></div>
+              <div className='blockCardappear'  style={{display:showNotfication?"block":"none"}}>
+               <div className='tileblockcarddpaer' style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"10px"}}><h1 style={{color:"white",fontWeight:"bold",marginTop:"5px"}}>Notification</h1>
+               <small style={{cursor:"pointer"}} onClick={()=>setshowNotfication((prev)=>!prev)}> X</small>
+               </div>
+               <Tabs variant='soft-rounded' colorScheme='green' >
+  <TabList>
+    <Tab style={{color:"white",fontWeight:"bold",backgroundColor:"#1C1F26"}} >All activity</Tab>
+    <Tab style={{color:"white",fontWeight:"bold",backgroundColor:"#1C1F26",marginLeft:"8px"}}>Likes</Tab>
+    <Tab style={{color:"white",fontWeight:"bold",backgroundColor:"#1C1F26",marginLeft:"8px"}}>Comments</Tab>
+
+    
+  </TabList>
+  <TabPanels>
+    <TabPanel>
+      <div>
+        <div>New</div>
+        <div className='flexDdev'>
+           <div> <Avatar size='lg'  src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`}/> </div>
+           <div className='tea' style={{marginLeft:"17px"}}>
+           <h3 style={{color:"white",fontWeight:"bold"}}>Welcome To Your Account <small className='colorChangeName'>{TokenUser.username}</small> </h3>
+          <p>Account Updates : Tu recevras <br/>
+          désormais une notifacation 
+          </p>
+           </div>
+        </div>
+
+
+       <div className='title4F'>
+
+        <div className='titleDrake' ><h2>This Week</h2></div>
+           <div className='containeroverflow'>
+
+          
+
+
+
+           {dataofNotfication.filter(
+  (item) => Object.keys(item).length > 0 && item.myusername !== TokenUser.username
+).length > 0 ? (
+  dataofNotfication
+    .filter((item) => Object.keys(item).length > 0 && item.myusername !== TokenUser.username)
+    .map((item) => (
+      <div className='flexDdev specifitem' style={{ cursor: "pointer" }} key={item.id}>
+        <div className='chbik'>
+          <Avatar size='lg' 
+          style={{position:"relative",bottom:"10px"}}
+          src={`${process.env.REACT_APP_API_KEY}/${item.myidimg}`} />
+        </div>
+        <div className='tea' style={{ marginLeft: postamn && "17px" }}>
+          <h3 style={{ color: "white", fontWeight: "bold" }}>{item.myusername}</h3>
+          <p>Liked your comment .{item.createdAt}</p>
+
+          <p style={{ color: 'white', backgroundColor: "#000", width: "100%", fontSize: "13px" }}>
+            <details style={{ overflow: "hidden" }}>
+              <summary style={{ position: "relative",backgroundColor:"#1a1f26" }} onClick={() => setpostamn((prev) => !prev)}>
+                show my comment
+              </summary>  
+              <div className='overcomment'>
+                {item.comment ? item.comment : <em>No comment available.</em>}
+              </div>
+            </details>
+          </p>
+        </div>
+
+        <div className='videoComment' style={{ display: postamn ? "block" : "none" }}>
+          <img
+            style={{ borderRadius: "10px", position: "relative", bottom: "10px" }}
+            src={item.postImage}
+            alt=''
+          />
+        </div>
+      </div>
+    ))
+) : (
+  <p style={{ color: 'white', textAlign: 'center', marginTop: '20px' }}>No notifications yet.</p>
+)}
+
+
+
+
+ 
+           </div>
+       </div>
+        
+      </div>
+      
+    </TabPanel>
+    <TabPanel>
+      <p>two!</p>
+    </TabPanel>
+  </TabPanels>
+</Tabs>
+              </div>
               
             <div className='cotainerSetting' style={{position:"absolute"}}>
 
@@ -528,8 +822,8 @@ const [testCard2,settestCard2] = useState(true)
            
 
            <div className='busky--container--section'>
-            <img src='./imgHome/notification.png' alt=''/>
-            <span>notification</span>
+            <img   onClick={()=>setshowNotfication((prev)=>!prev)} src='./imgHome/notification.png' alt=''/>
+            <span onClick={()=>setshowNotfication((prev)=>!prev)}>notification</span>
            </div>
            
 
@@ -624,9 +918,12 @@ const [testCard2,settestCard2] = useState(true)
 
 </>
   : 
+  
 fetchPostsFromDataBase
-.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sorting by createdAt
-.map((index) => <Posts item={index} key={index.id}  updateMessage  ={updatePost}  passFunc = {CoffeeTime}  />)
+// .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sorting by createdAt
+.map((index) => <Posts item={index} key={index.id}  updateMessage  ={updatePost}  passFunc = {CoffeeTime}
+ pass2Func  = {DetactLikes}
+ />)
  
  }
  
@@ -692,7 +989,7 @@ fetchPostsFromDataBase
 
 
         <div className='createPost' style={{display:post?'block':'none'}}>
-
+          
           <div className='createPostCancel'>
              <h1 style={{color:"#0085FF",cursor:"pointer"}} onClick={()=>setPost(false)}>Cancel</h1>
              <div className='post' style={{width:"100px",backgroundColor:"#3182CE"}} ><Button isLoading={loaddingimg}
@@ -763,13 +1060,18 @@ fetchPostsFromDataBase
         <div className='SectionComment' style={{display:CommentPost ? 'block':'none'}}>
            <div className='big'>
             <div className='routerComment'>
-               <div className='routerCommentIcon'>
+               <div className='routerCommentIcon' >
 
-               <span class="material-symbols-outlined" style={{fontSize:"20px"}}  >arrow_back_ios</span>
-               <span class="material-symbols-outlined" style={{fontSize:"20px"}}  >arrow_forward_ios</span>
-                    <div onClick={()=>setCommentPost((prev)=>!prev)}>
-                      x
+   
+                  <div className='rightyt'>
+                  <span class="material-symbols-outlined" style={{fontSize:"20px"}}  >arrow_back_ios</span>
+                  <span class="material-symbols-outlined" style={{fontSize:"20px"}}  >arrow_forward_ios</span>
+                  </div>
+                  
+                    <div   onClick={()=>setCommentPost((prev)=>!prev)}>
+                      <h1>X</h1>
                       </div>
+                      
                </div>
             </div>
             <div className='sectionCommentDescsiprion'>
@@ -777,7 +1079,8 @@ fetchPostsFromDataBase
               <div className='pargraph'>
                  
                 <p>
-                TLDRAn AI company, Cicero, has developed an AI avatar trained on Avi Loeb’s public appearances, promising features like phone call, text message, and full visual replica. This technology aims to save time by handling repetitive tasks and preserving personal narratives. AI avatars could evolve dramatically in the next decade, Show more
+                {/* TLDRAn AI company, Cicero, has developed an AI avatar trained on Avi Loeb’s public appearances, promising features like phone call, text message, and full visual replica. This technology aims to save time by handling repetitive tasks and preserving personal narratives. AI avatars could evolve dramatically in the next decade, Show more */}
+                {textf}
                 </p>
               </div>
             </div>
@@ -787,7 +1090,7 @@ fetchPostsFromDataBase
       <span className='mentionWebTracking' >#java script</span>
       <span className='mentionWebTracking'>#node js</span>
     
-      <div className='timeCreated'><p>Jun 27•6m read timeFrom deno.com</p></div>
+      <div className='timeCreated'><p>{new Date(creatTime).toLocaleDateString()}</p></div>
      </div>
       
 
@@ -795,7 +1098,19 @@ fetchPostsFromDataBase
  <div className='imgPost'>
 
   <div className='imgPostContainer'>
-    <img src='https://res.cloudinary.com/daily-now/image/upload/f_auto,q_auto/v1/posts/b8d4f161c390d0ca1d22808f4faaf705?_a=AQAEuiZ'/>
+    {/* <img src='https://res.cloudinary.com/daily-now/image/upload/f_auto,q_auto/v1/posts/b8d4f161c390d0ca1d22808f4faaf705?_a=AQAEuiZ'/>
+     */}
+     {/* <img src={imghyf} alt=''/> */}
+     {imghyf.includes('/video/upload') ? (
+    <video controls  >
+      <source src={imghyf} type="video/mp4" />
+       
+    </video>
+  ) : (
+   
+    imghyf==""?  <img src="https://res.cloudinary.com/daily-now/image/upload/f_auto,q_auto/v1/posts/b8d4f161c390d0ca1d22808f4faaf705?_a=AQAEuiZ" alt='' /> :  <img src={imghyf} alt='' />
+
+  )}
   </div>
  </div>
 
@@ -846,7 +1161,7 @@ fetchPostsFromDataBase
   <div className='containerAppF'>
     
   
-    <div className='imgconainerPdf'>  <img src='https://lh3.googleusercontent.com/a/ACg8ocK5b0CAawOTwTcxW2lWeewQqJXLqNWfgESkWUVe0D0Plpv5rdw=s96-c' alt='' /></div>
+    <div className='imgconainerPdf'>  <img src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} alt='' /></div>
     <div className='shareButtonS'>   <input type='text' placeholder={`Share your thoughts  ${TokenUser.username}`} value={dataFromPostComeent}
     onChange={(e)=>setdataFromPostComeent(e.target.value)}
     /></div>
@@ -889,7 +1204,9 @@ fetchPostsFromDataBase
   
 <div className='userInfoCardComment' style={{display:"flex",alignItems:"center"}}>
 
-<div className='img'><img  src={`${process.env.REACT_APP_API_KEY}/${item.ProfileImg}`} style={{width:"40px",height:"40px",objectFit:"cover"}}  alt=''/></div>
+<div className='img'><img  src={`${process.env.REACT_APP_API_KEY}/${item.ProfileImg}`}
+
+style={{width:"40px",height:"40px",objectFit:"cover"}}  alt=''/></div>
 <div className='userInsideInfo' style={{marginLeft:"10px"}}>
 <p>{item.UsernameComment}</p>
 <p className='gmail'>Ghaith@gmail.com <span style={{color:"#c3c3c3"}}>{new Date(item.createdAt).toLocaleDateString()}</span> </p>
@@ -913,7 +1230,7 @@ width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" 
 <div><p>2 UpVotes</p></div>
  
 </div>
-<hr/>
+ 
 
 {/* ----nestaed comopennt  */}
 {item.replies && item.replies.length > 0 && (
@@ -1028,7 +1345,7 @@ width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" 
 
 
         
-<div className='containertest' onClick={()=>window.location.reload()}>
+<div className='containertest'  onClick={()=>setFilterReversePost((prev)=>!prev)}>
 <svg viewBox="0 0 448 512" height="19" width="19" tabindex="-1"><path fill="hsl(211, 20%, 100%)" d="M201.4 137.4c12.5-12.5 32.8-12.5 45.3 0l160 160c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L224 205.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160z"></path></svg>
 </div>
  
@@ -1036,6 +1353,13 @@ width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" 
 
     <Input item ={tompData} Authorized={dataFromPostComeent} HandelClick  ={funcIclicktoThisButton}/>
     </div>
+
+     <div className="cercle"  style={{display:postLoading?"block":"none"}} >
+    <Spinner  size='xl' style={{color:"green"}} />
+    
+    </div> 
+
+
     </>
     
   )

@@ -12,8 +12,8 @@
  const RenderDataPrc = async()=>{
   try{
     const {data} = await axios.post(`/api/author/profile/${userProfileSe[0].userId}`)
+    setallData(data)
  
- setallData(data)
   }
   catch(eroor){
     console.log(eroor)
@@ -25,7 +25,7 @@
  
  },[])
 
- console.log(allData.username,"alldata")
+ 
    return (
      <div className='allCaontinserSearchProfileAbout'>
       <div className='search'></div>
@@ -78,7 +78,7 @@
       </div>
 
       <div className='about'></div>
-     </div>
+     </div> 
    )
  }
  

@@ -15,9 +15,9 @@ const Body = () => {
   const HandelApi = async()=>{
     try{
       const response = await axios.get("/getQuestion")
-      console.log(response.data)
+      // console.log(response.data)
       setQuestion(response.data.sort((a,b)=>b.view.length-a.view.length))
-      
+   
     }
     catch(index){
       console.log(`this eroor by ${index}`)
@@ -47,7 +47,9 @@ useEffect(()=>{
           <div className='Body__Container__Inside__Setting'>
             
           <div className='icon-left-side'>
-  <button  style={{cursor:"pointer"}}>TOP SCORE</button>
+  <button  style={{cursor:"pointer"}}>
+    <Link to={"/RankPage"}>TOP SCORE</Link>
+  </button>
 <div className='icon-self'>
 
    

@@ -52,7 +52,7 @@ const Admin = () => {
         };
  // fix this cheat in other day 
         try {
-            // Update the database
+            // Update the database                              // i thnik id each one has a session
             const response = await axios.put(`/ChatSession/66f771bc66699b7f34390f25`, {
                 PrivateSession: [newMessage],
             });

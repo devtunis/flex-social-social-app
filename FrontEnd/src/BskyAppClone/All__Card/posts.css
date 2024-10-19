@@ -1,7 +1,7 @@
 :root{
    --size-vide-1:90%;
-   --size-vide-2:93%;
-
+   --size-vide-2:70%;
+   --size-origginal-2:93%;
    --size-vide-3:95%;
 }
 
@@ -16,7 +16,7 @@
      
 }
 .busky--app-card-post{
-    background-color: #161E27;
+   background-color: #161E27;
     width: 99%;
     margin: 2px;
     border-bottom: 2px solid grey;

@@ -13,6 +13,7 @@ import { Spinner } from '@chakra-ui/react'
 
 const Login = () => {
   const [username,setUsername] = useState("")
+  
   const [email,setEmail] = useState("")
   const [password,setpassword]= useState("")
   const [imgUrl,setimgUrl]= useState("")
@@ -38,7 +39,7 @@ const Login = () => {
      formData.append("email",email)
      formData.append("password",password)
      formData.append("imgUser",selectedFile||'https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg')
-     console.log(formData)
+    
       try {
         setisLodingLogin(true)
           const reponse = await axios.post("/setUserWithAnswer",formData,{
@@ -64,7 +65,7 @@ const Login = () => {
       
   
       } catch (error) {
-        console.log(`Error during user creation: ${error}`);
+        console.log(`Error Create Come Later`);
         setisLodingLogin(false)
       }
   };

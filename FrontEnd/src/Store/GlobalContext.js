@@ -13,8 +13,8 @@ const initialState = {
   currentUser : JSON.parse(localStorage.getItem("currentUser")) || null,
   currentPictuer : JSON.parse(localStorage.getItem("currentPictuer")) || null,
   Ram : [],
-  userProfileSe:JSON.parse(localStorage.getItem("userProfileSe")) || null
-
+  userProfileSe:JSON.parse(localStorage.getItem("userProfileSe")) || null,
+ 
 
 };
 
@@ -22,6 +22,9 @@ const initialState = {
 const reducer = (state, action) => {
 
   switch (action.type) {
+
+    
+
     case "SeeMyProfile":
       const userProfileSedata  = [action.paylod]
       localStorage.setItem("userProfileSe",JSON.stringify(userProfileSedata))
@@ -154,7 +157,8 @@ export const ContextProvider = ({ children }) => {
       ,userTage:state.userTage,UserProfile:state.UserProfile,SavePost : state.SavePost,
       currentUser : state.currentUser ,currentPictuer :state.currentPictuer,
       Ram:state.Ram,
-      userProfileSe:state.userProfileSe
+      userProfileSe:state.userProfileSe,
+      
      }}>
       
       {children}
