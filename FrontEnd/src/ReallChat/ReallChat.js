@@ -48,7 +48,7 @@ const ReallChat = () => {
        vue :"oui",
        imgProfile : TokenUser.imgUser
 
-
+ 
       })
       
       console.log(data,"data")
@@ -343,6 +343,15 @@ const rio =()=>{
   setassus(true)
   
 }
+
+const handleKeyPress = (e) => {
+  if (e.key === 'Enter' && input.trim()) {
+    HandelChunk();
+  }
+};
+
+
+
   return (
     <>  
    
@@ -350,7 +359,7 @@ const rio =()=>{
    
       <div className='container--reallchat'>
         <div className='chatPage'>
-        {progressBar &&    <Progress size='xs' colorScheme='blue' height='3.2px' isIndeterminate />
+        {progressBar &&    <Spinner />
      }
           <div className='card-wrapp--acountx'>
             <div className='itemcards'>
@@ -464,6 +473,7 @@ const rio =()=>{
            style={{ width: "80%", fontWeight: "bold", fontSize: "19px" }}
            onClick={()=>HadndelTyping()}
            onBlur={()=>HandelCloseTyping()}
+           onKeyPress={handleKeyPress}
          />
          <Button
            isLoading={loading}
