@@ -8,7 +8,7 @@ import ChatSession from "./dbChatMessages.js"
 import ChatTalking  from "./dbTalking.js"
 import postBluskyg from "./dbCurrentPost.js"
 import Reels from "./dbReels.js"
-
+import Pdf from "./PdfSehma.js"
 import cors from "cors"
 import multer from 'multer';
 import path from "path"
@@ -64,31 +64,43 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 } // Increase as needed
 });
  
-//---------------------------------------------
-
-// const server = http.createServer(app)
- 
-// const wss = new WebSocketServer({ server });
-// wss.on('connection', (ws) => {
-//     console.log('New WebSocket client connected  plz connectedd as weel 🎉🎉🎉');
-
-//     ws.on('message', (message) => {
-//         console.log('Received message:', message);
-//     });
-
-//     ws.on('close', () => {
-//         console.log('Client disconnected');
-//     });
-// });
  
 
 
 
+app.post('/upload', upload.single('file'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+    }
+ 
+    res.status(200).json({ fileUrl: `/uploads/${req.file.filename}` });
+});
+
+
+app.post("/uplod/pdf/busky", async (req, res) => {
+    try {
+        const newPdf = new Pdf(req.body); // Create a new instance with req.body
+        const savedPdf = await newPdf.save(); // Save to the database
+
+        res.status(201).json(savedPdf); // Respond with the saved PDF data
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ error: error.message });
+    }
+});
 
 
 
+app.get("/all/pdf",async(req,res)=>{
+    try{
 
+        const data = await Pdf.find()
+        res.status(200).json(data)
 
+    }catch(eroor){
+        res.status(404).json(eroor)
+    }
+})
 
  
 
@@ -97,7 +109,7 @@ app.listen(PORT, () => {
 });
 
 
-
+ 
 
 
 
@@ -106,7 +118,7 @@ app.listen(PORT, () => {
  //--------------------------------------------------------------------
 
 
-app.get("/",(req,res)=>res.status(200).json("hello test api wokring"))
+app.get("/",(req,res)=>res.status(200).json("hello test api +9999"))
 
 
 app.post("/postQuestion", async (req, res) => {
@@ -551,6 +563,7 @@ app.post("/accesMessage/:id", async (req, res) => {
         });
 
         if (isChat) {
+
           
             isChat.messages.push({
                 imgUser : imgUser,
@@ -598,8 +611,32 @@ try{
 }
 
 })
+//-----------------------------------------Delete Messages-----------------
+app.post("/delete/access/message/:id", async (req, res) => {
+    try {
+      const { userId, messageId } = req.body;
+      
+                                           
+      // Use $pull to directly attempt to remove the message from the chat
+      const result = await ChatTalking.updateOne(
+        { 
+          users: { $all: [req.params.id, userId] }  // Ensure both users are part of the chat
+        },
+        { $pull: { messages: { _id: messageId } } }
+      );
+  
+      if (result.modifiedCount > 0) {
+        res.status(200).json("Message deleted successfully");
+      } else {
+        res.status(404).json("Chat or message not found");
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
 
-
+//----------------------------------------------------------
 app.get("/get/access/specif/:id", async (req, res) => {
     try {
       // Get the user ID from the URL parameters
@@ -840,8 +877,8 @@ app.post('/post-comment/replies/:postId', async (req, res) => {
   
       try {
           const allComments = await postBluskyg.find()
-       
-          res.status(200).json(allComments);
+          const sortTeodata = allComments.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))
+          res.status(200).json(sortTeodata);
       } catch (error) {
           console.error(error); // Log the error
           res.status(500).json({ message: "An error occurred", error });
@@ -1183,13 +1220,225 @@ app.post("/api/author/profile/:id",async(req,res)=>{
 
 
 
+app.post("/send/notification/author/:id", async (req, res) => {
+    try {
+        
+
+        // Use $push to add the notification to the 'noTifaction' array
+        const Post = await User.findByIdAndUpdate(
+             req.params.id,
+            { $push: { noTifaction: req.body } }, // Push the data from req.body.notification
+            { new: true } // Return the updated document
+        );
+
+        // Check if the user was found
+        if (!Post) {
+            return res.status(404).json("We didn't find a user");
+        }
+
+        res.status(200).json(Post); // Send back the updated user document
+
+    } catch (error) {
+        res.status(500).json(error); // Catch and handle any errors
+    }
+});
+
+app.get("/get/notifacation/:id",async(req,res)=>{
+    try{
+
+         const GetDataD = await User.findById(req.params.id)
+         res.status(200).json(GetDataD.noTifaction)
+    }
+    catch(eroor){
+        res.status(404).json(eroor)
+    }
+})
 
 
+// do this in personalle profile
+app.get("/getScoreRank",async(req,res)=>{
+    try{  
+        const rankd = await User.find()
+        res.status(200).json(rankd)
+               
+    }
+    catch(eroor){
+        console.log(eroor)
+    }
+})
 app.use('/uploads', express.static('uploads'));
 
 
 
-// ---------------Latex--------------
+// ---------------Block User--------------
+app.post("/blockChat/:id", async (req, res) => {
+    try {
+        const { userId} = req.body; 
+ 
+        let UpdateChat  = await ChatTalking.findOneAndUpdate({
+
+            $and: [
+                { users: { $elemMatch: { $eq: req.params.id } } }, 
+                { users: { $elemMatch: { $eq: userId } } }  
+            ]
+
+
+        },
+
+        {$set : {Block:true}},
+        {new : true}
+    
+    );
+        if(!UpdateChat){
+            res.status(404).json("we dont found this caht in this data bae")
+        }
+         
+    
+    res.status(200).json({ message: "Chat blocked successfully", chat: UpdateChat });
+    }
+   catch(eroor){
+    res.status(404).json(eroor)
+   }
+
+}
+)
+
+
+
+app.post("/unblock/:id", async (req, res) => {
+    try {
+        const { userId} = req.body; 
+ 
+        let UpdateChat  = await ChatTalking.findOneAndUpdate({
+
+            $and: [
+                { users: { $elemMatch: { $eq: req.params.id } } }, 
+                { users: { $elemMatch: { $eq: userId } } }  
+            ]
+
+
+        },
+
+        {$set : {Block:false},DataBlocker: []},
+         
+        {new : true}
+    
+    );
+        if(!UpdateChat){
+            res.status(404).json("we dont found this caht in this data bae")
+        }
+         
+    
+    res.status(200).json({ message: "Chat blocked successfully", chat: UpdateChat });
+    }
+   catch(eroor){
+    res.status(404).json(eroor)
+   }
+
+}
+)
+
+
+app.post("/deleteConversation/:id", async (req, res) => {
+    try {
+        const { userId} = req.body; 
+ 
+        let UpdateChat  = await ChatTalking.findOneAndUpdate({
+
+            $and: [
+                { users: { $elemMatch: { $eq: req.params.id } } }, 
+                { users: { $elemMatch: { $eq: userId } } }  
+            ]
+
+
+        },
+
+        {$set : {messages:[]}},
+        {new : true}
+    
+    );
+        if(!UpdateChat){
+            res.status(404).json("we dont found this caht in this data bae")
+        }
+         
+    
+    res.status(200).json({ message: "Chat blocked successfully", chat: UpdateChat });
+    }
+   catch(eroor){
+    res.status(404).json(eroor)
+   }
+
+}
+)
+
+
+
+
+app.post("/addBlocker/:id", async (req, res) => {
+    try {
+        const { userId} = req.body; 
+ 
+        let UpdateChat  = await ChatTalking.findOneAndUpdate({
+
+            $and: [
+                { users: { $elemMatch: { $eq: req.params.id } } }, 
+                { users: { $elemMatch: { $eq: userId } } }  
+            ]
+
+
+        },
+        { $push: { DataBlocker: req.body.blokcerAccount } },
+        {new : true},
+    
+    );
+        if(!UpdateChat){
+            res.status(404).json("we dont found this caht in this data bae")
+        }
+         
+    
+    res.status(200).json({ message: "Chat blocked successfully", chat: UpdateChat });
+    }
+   catch(eroor){
+    res.status(404).json(eroor)
+   }
+
+}
+)
+
+
+
+
+app.post("/deleteConversation/:id", async (req, res) => {
+    try {
+        const { userId} = req.body; 
+ 
+        let UpdateChat  = await ChatTalking.findOneAndUpdate({
+
+            $and: [
+                { users: { $elemMatch: { $eq: req.params.id } } }, 
+                { users: { $elemMatch: { $eq: userId } } }  
+            ]
+
+
+        },
+
+        {$set : {messages:[]}},
+        {new : true}
+    
+    );
+        if(!UpdateChat){
+            res.status(404).json("we dont found this caht in this data bae")
+        }
+         
+    
+    res.status(200).json({ message: "Chat blocked successfully", chat: UpdateChat });
+    }
+   catch(eroor){
+    res.status(404).json(eroor)
+   }
+
+}
+)
 
 
 

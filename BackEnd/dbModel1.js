@@ -40,8 +40,18 @@ const myPosts = new mongoose.Schema({
 
 // this awsome thing in this world
 
+
+const notificationSchema = new mongoose.Schema({
+    message: { type: String, required: true },
+    date: { type: Date, default: Date.now },
+    isRead: { type: Boolean, default: false },
+  });
+
+
+  
 // Main schema for users and their questions
 const UserSchema = new mongoose.Schema({
+    // id:{type:Number,unique:true},
     username: { type: String, required: true },
     email: { type: String, required: true },  
     imgUser :{type:String},
@@ -58,9 +68,10 @@ const UserSchema = new mongoose.Schema({
         type: [String],  
         default: []     
       },
-    noTifaction : {type :[String] ,default:[]},
-    postIpostsINthisApp :{type:[String],default:[]}
-      
+   
+    postIpostsINthisApp :{type:[String],default:[]},
+    ScoreRank : {type:Number,default:200},
+    noTifaction : {type :[],default:()=>[]},
 
 }, { timestamps: true });
 

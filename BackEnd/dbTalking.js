@@ -1,9 +1,18 @@
 import mongoose from "mongoose"
 import User from "./dbModel1.js"
 
+
+
+
+const DataBlocker = new mongoose.Schema({
+ id : {type:String},
+ nameBlocker : {type:String},
+ pictuerBlocker : {type:String},
+});
 const chatSchema = new mongoose.Schema({
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  
+    Block : {type:Boolean,default:false},
+    DataBlocker : {type:[DataBlocker],default:[]},
     messages: [
         {
             senderId:  { type: mongoose.Schema.Types.ObjectId, ref: 'User' },  
