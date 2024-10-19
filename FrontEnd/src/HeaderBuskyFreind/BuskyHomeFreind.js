@@ -331,9 +331,9 @@ const TestIds  =(id,arr)=>{
                    
                     <div className='headersMessages'>  
                        <h1>Messages</h1>
-                       <Button colorScheme='blue' variant='solid'>
+                       {/* <Button colorScheme='blue' variant='solid'>
                           Button
-                     </Button>
+                     </Button> */}
                     </div>
                      <div className='wrapUsersAccount'>
                      
@@ -356,9 +356,9 @@ const TestIds  =(id,arr)=>{
 
 <Avatar name='Ghaith Nahdi'  size='lg' src={`${process.env.REACT_APP_API_KEY}/${item.imgUser}`} />
 <div className='left--card-account'>
-<h2>{item.username}. 6 h</h2>
-<p>@{item.email}</p>
-<p className='messageme'>you : slm ya bro </p>
+<h2 style={{display:"flex",width:"200px"}}>{item.username} | {item.ScoreRank} ⭐</h2>
+{/* <p>@{item.email}</p> */}
+<p className='messageme'>{item.LastSeen}</p>
 </div>
 </div>
 )                 : <p>No Freind right now</p>             }

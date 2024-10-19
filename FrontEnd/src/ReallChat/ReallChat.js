@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./reallChat.css"
-import { Avatar, AvatarBadge, Button, Divider, Flex } from '@chakra-ui/react'
+import { Avatar, AvatarBadge, Button, Divider, Flex, Spinner } from '@chakra-ui/react'
 import { useGlobalContext } from '../Store/GlobalContext'
 import axios from '../Component/axios'
 import { useNavigate } from 'react-router-dom'
 import ThreePoint from '../FirstView/ThreePoint'
 import BlockUsers from './BlockUsers'
 import { Progress } from '@chakra-ui/react'
+
+
 const ReallChat = () => {
   const Nav = useNavigate()
   const [input, setInput] = useState("")
@@ -271,9 +273,25 @@ useEffect(()=>{
   console.log(messages)
 },[])
 
+const [loadingMessages,setLoadingMessages] = useState(false)
 
-const HandelDelteMyMessages =async()=>{
-  alert("hello")
+const HandelDelteMyMessages =async(b)=>{
+  setLoadingMessages(true)
+  try{
+      const DelteMyChat = await axios.post(`/delete/access/message/${TokenUser._id}`,{
+
+        userId:currentUser[0]._id,
+        messageId:b._id
+
+    })
+    setLoadingMessages(false)
+
+  }
+  catch(eroor){
+    console.log(eroor)
+    setLoadingMessages(false)
+  }
+
 }
 
 // other world 
@@ -335,6 +353,7 @@ const rio =()=>{
 
           <div className='scrennMessage' style={{color:"white"}}>
         
+         <div >  { loadingMessages && <Progress size='xs' isIndeterminate />}  </div>
                   {messages.map(b=>
                  
                   // "oneToOne  oneToneLeft
@@ -350,7 +369,7 @@ const rio =()=>{
                             <div>    
 
                       
-                       <div className='content' style={{backgroundColor:"green",
+                       <div className='content' style={{backgroundColor:"",
                        height:"100%",
                        width:"100%"
                        
@@ -364,11 +383,11 @@ const rio =()=>{
        <img src={b?.imgUser} alt='' className='contentimg' style={{borderRadius:"10px",cursor:'all-scroll'}}  onClick={()=>HandelSeeMessage(b)}/>
                 
                      
-                      <div style={{backgroundColor:"white",display:"flex",justifyContent:"space-between"}}> 
+                      <div style={{display:"flex",justifyContent:"space-between"}}> 
                     <div>   {new Date(b.timestamp).getHours()} :
                       {new Date(b.timestamp).getMinutes().toString().padStart(2, '0')}</div>
                          <div>
-                          <h1 onClick={()=>HandelDelteMyMessages()}>  remove</h1>
+                  {TokenUser._id==b.senderId &&  <h1   onClick={()=>HandelDelteMyMessages(b)}>  🗑️ </h1>}
                          </div>
                       </div>
                             </p>

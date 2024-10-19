@@ -39,7 +39,7 @@ background-color: var(--background-color);
   
    display: flex;
    justify-content: flex-end;
-   display: none;
+  
 }
 .busky--postsx{
     width: 60%;
@@ -291,6 +291,20 @@ background-color: var(--background-color);
 
    
   @media screen and (max-width: 930px){
+
+    .busky--navbarx{
+        width: 20%;
+        height: 100%;
+    background-color: var(--background-color);
+       
+      
+       display: flex;
+       justify-content: flex-end;
+       display: none;
+      
+    }
+
+    
     .busky--navar-seeting {
         width: 60%;
         background-color: rgb(14, 13, 13);
@@ -510,7 +524,8 @@ background-color: var(--background-color);
 
 
 .card-wrapp--acount{
-    background-color: rgb(19, 18, 18);
+    background-color: #12161b;
+    border-radius:20px;
     display: flex;
     padding: 10px;
     gap: 10px;
@@ -548,10 +563,11 @@ background-color: var(--background-color);
     gap: 10px;
     overflow-x: auto;
      scroll-behavior: smooth;
-
+     -ms-overflow-style: none;  /* IE and Edge */
+     scrollbar-width: none;
 }
 .headersMessages{
-    background-color: rgb(18, 18, 35);
+     
     width: 100%;
     padding: 16px;
     display: flex;
