@@ -466,9 +466,9 @@
    font-weight: bold;
    padding: 10px;
    border-radius: 10px;
-   width: 90%;
+  
    border: 1px solid grey;
-
+   width: 100%;
    margin-top: 10px;
 }
 
@@ -494,7 +494,7 @@
         
         margin-top: 10px;   
         background-color: #1A1F26;
-        margin-left: 10px;
+        margin-left: 0px;
         padding: 10px;
         border-radius: 10px;
         display: flex;

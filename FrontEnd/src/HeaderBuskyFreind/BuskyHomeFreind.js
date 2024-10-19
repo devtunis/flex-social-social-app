@@ -9,7 +9,7 @@ import { useGlobalContext } from '../Store/GlobalContext'
 import { useCallback } from 'react';
 import _ from 'lodash'; 
 import { Avatar, AvatarBadge, AvatarGroup } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 const BuskyHomeFreind = () => {
   const [open,setopen] = useState(false)
   const [users,setUsers] = useState([])
@@ -226,31 +226,22 @@ const TestIds  =(id,arr)=>{
 
             <div className={`busky--navbarx ${open?'openside':"closeside"}`}>   
             <div className={`busky--navar-seeting ${open?"openx":"closex"}`}>
-           <div className='busky--navabar--img'><img src='https://cdn.bsky.app/img/avatar_thumbnail/plain/did:plc:sussmqg7qh7ja7ma46f3x2aj/bafkreido5og6sxgkdr3cf2uzfuuujjgqaw3ghhwiugai43hltq4jvlee6m@jpeg' alt=''/></div>
+           <div className='busky--navabar--img'><img src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} alt=''/></div>
          
            <div className='busky--container--section'>
-            <img src='../imgHome/accueil.png' alt=''/>
+           
+            <Link to={"/bluskG"}>  <img src='../imgHome/accueil.png' alt=''/></Link>
             <span>Home</span>
            </div>
            
 
-           <div className='busky--container--section'>
-            <img src='../imgHome/chercher.png' alt=''/>
-            <span>Search</span>
-           </div>
+           
            
 
-           <div className='busky--container--section'>
-            <img src='../imgHome/notification.png' alt=''/>
-            <span>notification</span>
-           </div>
+           
            
 
-           <div className='busky--container--section'>
-            <img src='../imgHome/chat.png' alt=''/>
-            <span>Chat</span>
-           </div>
-           
+            
 
            <div className='busky--container--section'>
             <img src='../imgHome/symbole-hashtag.png' alt=''/>
@@ -277,13 +268,7 @@ const TestIds  =(id,arr)=>{
             <span>Setting</span>
            </div>
            
-           <div className='busky--container--section-new-post'>
-           <div className='up'>
-           <img src='../imgHome/editer.png' alt=''/>
-           <span>New Post</span>
-
-           </div>
-           </div>
+        
            
 
 

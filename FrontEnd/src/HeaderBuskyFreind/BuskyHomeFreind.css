@@ -39,7 +39,7 @@ background-color: var(--background-color);
   
    display: flex;
    justify-content: flex-end;
-
+   display: none;
 }
 .busky--postsx{
     width: 60%;
@@ -54,6 +54,7 @@ background-color: var(--background-color);
     height: 100%;
     background-color: var(--background-color);
     background-color: #161E27;
+    display: none;
 }  
 
 /* .busky--navbar{
@@ -423,7 +424,7 @@ background-color: var(--background-color);
     .screenSizex{
         cursor: pointer;
         margin-top: 3px;
-        background-color: rgb(17, 12, 12);
+        
         padding: 3px;
         img{
             width: 24px;
