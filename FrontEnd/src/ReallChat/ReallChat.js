@@ -55,7 +55,8 @@ const ReallChat = () => {
       setLoading(false)
       setInput("")
       setImage("")
-      Useref?.current?.scrollIntoView({behavior:"smooth"})
+     
+       
    }catch(eroor){
      console.log(eroor)
      setLoading(false)
@@ -64,12 +65,40 @@ const ReallChat = () => {
  
   }
 
+   useEffect(() => {
+ 
+     Useref.current.scrollIntoView({ behavior: "smooth" });
+ 
+     Useref.current.scrollIntoView({ behavior: "smooth" });
+ 
+      
+     Useref.current.scrollIntoView({ behavior: "smooth" });
+ 
 
-  useEffect(()=>{
-   // console.log(TokenUser?._id,currentUser[0]?._id,"time")
+   
+   }, [loading]);
+
+
+   
+   useEffect(() => {
+ 
+    Useref?.current.scrollIntoView({ behavior: "smooth" });
+
     
-   },[])
-Useref.current?.scrollIntoView({behavior:"smooth"})
+
+  
+  }, []);
+
+
+
+  
+  // useEffect(() => {
+  //  Useref.current.scrollIntoView({ behavior: "smooth" });
+  // }, []);
+
+
+
+// Useref.current?.scrollIntoView({behavior:"smooth"})
 
 const [block,setBlock] = useState(false)
 const [rayzen,setRayzen] = useState([])
@@ -80,8 +109,8 @@ const [rayzen,setRayzen] = useState([])
           userId : currentUser[0]?._id
         })
       
-       setMessages(data.messages)
-    
+         // can i do inverse message here i wanna last message sned appear in top ? 
+       setMessages(data.messages);
        setBlock(data.Block)
 
       }
@@ -354,9 +383,9 @@ const rio =()=>{
           <div className='scrennMessage' style={{color:"white"}}>
         
          <div >  { loadingMessages && <Progress size='xs' isIndeterminate />}  </div>
+         
                   {messages.map(b=>
-                 
-                  // "oneToOne  oneToneLeft
+                
                    <>
                   <div key={b._id} className={b.senderId===TokenUser._id  ? 'oneToneLeft' : 'oneToOne'} style={{cursor:"pointer"}}>
                    <div  style={{display:b.senderId===TokenUser._id && "flex",justifyContent:"flex-end"}}>
