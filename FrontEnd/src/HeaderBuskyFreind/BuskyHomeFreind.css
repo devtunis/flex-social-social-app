@@ -451,9 +451,9 @@ background-color: var(--background-color);
     }
 
     .busky--container--section-new-post{
-        background-color: rebeccapurple;
+        background-color: #1a1f26;
         width: 100%;
-         
+         cursor: pointer;
     }
     .busky--container--section-new-post .up {
         display: flex;

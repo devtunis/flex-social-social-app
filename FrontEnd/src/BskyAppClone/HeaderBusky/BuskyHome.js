@@ -828,10 +828,10 @@ useEffect(()=>{
            </div>
            
 
-           <div className='busky--container--section' style={{display:"flex",alignItems:"center"}}>
+           <div className='busky--container--section' style={{display:"flex",alignItems:"center",backgroundColor:"red"}}>
            
-            <Link to={"/bluskG/freind"}  style={{cursor:"alias",color:"none",}}  >  <img src='./imgHome/chat.png' alt=''/></Link>
-            <Link to={"/bluskG/freind"} style={{cursor:"alias",color:"none"}} > <span>Chat</span></Link>
+            <Link to={"/bluskG/freind"}  style={{cursor:"pointer",color:"none"}}  >  <img src='./imgHome/chat.png' alt='' style={{marginLeft:"17px"}}/></Link>
+            <Link to={"/bluskG/freind"} style={{cursor:"pointer",color:"none"}} > <span>Chat</span></Link>
            </div>
            
 
