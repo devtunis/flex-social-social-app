@@ -228,7 +228,7 @@ const [ShareLink,setShareLink] = useState("")
 </div>
 
 {/* <div className='busky-app-info-icons'> */}
-        <div className='busky-app-info-iconss'  style={{display:"flex",width:"100%",justifyContent:"space-between",margin:"13px"}}>
+        <div className='busky-app-info-iconss'  style={{display:"flex",width:"75%",justifyContent:"space-between",margin:"13px"}}>
           <div className='busky--app-info-icons-1' style={{cursor:"pointer"}}>
             <img src='./commenter.png' alt='' onClick={() => updateMessage(true, item)} />
             <span>{item.Comment.length}</span>
@@ -251,7 +251,7 @@ const [ShareLink,setShareLink] = useState("")
             <span>{item.LikesPost.length}</span>
           </div>
 
-          <div className='busky--app-info-icons-1'>
+          <div className='busky--app-info-icons-1' >
            
             {!UpdateProfile ?   <img src='./plus.png' alt=''   style={{cursor:"pointer"}}  onClick={()=>HelpChange()}/> :
             
