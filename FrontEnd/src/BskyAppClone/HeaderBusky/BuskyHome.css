@@ -371,12 +371,12 @@
     }
  
     .routerComment{
-        background-color: #208BFE;
+        background-color: #0E1217;
          display: flex;
          align-items: center;
         .routerCommentIcon{
             display: flex;
-            justify-content: flex-start;
+           
             gap: 1px;
             cursor: pointer;
             color: white;
@@ -524,6 +524,7 @@
         }
         .imgconainerPdf img {
             border-radius: 10px;
+            width: 37px;
         }
     }
 }
@@ -1313,7 +1314,7 @@ overflow: auto;
     }
 
     .containertest{
-        background-color:#b40975;
+        background-color: #12161b;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1324,7 +1325,7 @@ overflow: auto;
         position: absolute;
         top: 70%;
         z-index: 1;
-        left: 19%;
+        left: 6%;
         transform: translate(-50%,-50%);
     }
 
