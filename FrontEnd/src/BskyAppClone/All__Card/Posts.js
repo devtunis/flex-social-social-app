@@ -171,9 +171,9 @@ const [ShareLink,setShareLink] = useState("")
  
   return (
     
-    <div className='busky--app-card-post'  >
+    <div className='busky--app-card-post'   >
       
-      <div className='busky-app-avatar'>
+      <div className='busky-app-avatar' >
         <WrapItem>
        
                  <Link to={"/flexProfile"}>     <Avatar
@@ -187,7 +187,7 @@ const [ShareLink,setShareLink] = useState("")
   
       </div>
 
-      <div className='busky-app-content' >
+      <div className='busky-app-content'  >
         <div className='busky-app-info-user' style={{ display: "flex", alignItems: "center" }}>
           <h2 className='busky-username'>
             {item?.ownerUserName} 🩸 
@@ -210,7 +210,7 @@ const [ShareLink,setShareLink] = useState("")
           </div>
         </div>
 
-        <div className='busky-app-descibe-user' >
+        <div className='busky-app-descibe-user thisgonnahelpme'  >
           <p className='psotCommentEtoile'  >{item.post?.text}<small style={{color:"#0056b3"}}> #0001</small></p>
 
         </div>
@@ -228,7 +228,7 @@ const [ShareLink,setShareLink] = useState("")
 </div>
 
 {/* <div className='busky-app-info-icons'> */}
-        <div className='busky-app-info-iconss'  style={{display:"flex",width:"75%",justifyContent:"space-between",margin:"13px"}}>
+        <div className='busky-app-info-iconss'  style={{display:"flex",width:"90%",justifyContent:"space-between",margin:"13px"}}>
           <div className='busky--app-info-icons-1' style={{cursor:"pointer"}}>
             <img src='./commenter.png' alt='' onClick={() => updateMessage(true, item)} />
             <span>{item.Comment.length}</span>
@@ -280,7 +280,9 @@ const [ShareLink,setShareLink] = useState("")
           </div>
         </div>
       </div>
+      
     </div>
+
   );
 };
 

@@ -136,6 +136,11 @@ video{
 
 
  @media screen and (max-width:630px){
+   .thisgonnahelpme{
+ 
+      width: 288px;
+      
+   }
 
    .busky-app-avatar{
       display: flex;
@@ -147,6 +152,7 @@ video{
   }
   .busky--app-card-post{
       background-color: #161E27;
+ 
       width: 99%;
       margin: 2px;
       border-bottom: 2px solid grey;
@@ -208,6 +214,7 @@ video{
       justify-content: center;
       margin-left: 9px;
       padding: 5px;
+       
    }
    
    .busky-app-info-img{
