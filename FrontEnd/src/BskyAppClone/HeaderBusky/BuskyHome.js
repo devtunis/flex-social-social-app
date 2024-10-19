@@ -270,21 +270,22 @@ const res = image && image
 
 
 const HandelPushPost =async ()=>{
-  // if(textAra.length<30  ||image==false
+  if(textAra=="" 
     
-  // ){
-  //   toast({
-  //     title: 'Your ! Post  created.',
-  //     description: "We've can  create your post put more 10 word :).",
-  //     status: "warning",
-  //     duration: 2000,
-  //     isClosable: true,
-  //   })
-  // }
+  ){
+    toast({
+      title: 'Your ! Post  created.',
+      description: "We've can  create your post should type something :).",
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+    })
+  }
   setPostLoadingFire(true)
   setProgress(10)
  
  try{
+
 
   setProgress(40)
   setProgress(50)
