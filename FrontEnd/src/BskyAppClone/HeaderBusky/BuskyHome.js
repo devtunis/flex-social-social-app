@@ -874,7 +874,7 @@ useEffect(()=>{
             </div>
            
             <div className='busky--posts'>
-              <div className='screenSize'>
+              <div className='screenSize' style={{display:hidde?"block":"none"}}>
               
   <div style={{width:"100",display:"flex",justifyContent:"center"}}> <h2 style={{color:"#fff",fontWeight:"bold",fontSize:"30px"}}>Nahdi</h2>  </div>
                 <p style={{color:"white"}}></p>

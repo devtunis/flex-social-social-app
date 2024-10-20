@@ -1333,7 +1333,7 @@ overflow: auto;
 
 
     .Discover {
-        height: 90vh;
+        height: 100vh;
         overflow-y: auto;
         -ms-overflow-style: none;
         scrollbar-width: none;
