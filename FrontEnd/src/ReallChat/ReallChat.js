@@ -359,7 +359,7 @@ const handleKeyPress = (e) => {
    
       <div className='container--reallchat'>
         <div className='chatPage'>
-        {progressBar &&    <Spinner />
+        {progressBar &&    <Progress size='xs' colorScheme='blue' height='3.2px' isIndeterminate />
      }
           <div className='card-wrapp--acountx'>
             <div className='itemcards'>
