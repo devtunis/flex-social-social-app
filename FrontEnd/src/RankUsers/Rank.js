@@ -119,7 +119,7 @@ export default function Rank() {
           <Legend />
           <Line
             type="monotone"
-            dataKey="pv"
+            dataKey="pv"  
             stroke="#8884d8"
             dot={<CustomizedDot />}
           />
