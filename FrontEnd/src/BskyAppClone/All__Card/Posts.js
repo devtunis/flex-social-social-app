@@ -195,7 +195,7 @@ const [ShareLink,setShareLink] = useState("")
               <p style={{color:"#505059"}}>{new Date(item.createdAt).toLocaleDateString()}</p>
             </h3>
           </h2>
-          <div className='popelwannajoin' style={{ marginLeft: "80px" }}>
+          <div className='popelwannajoin' style={{ marginLeft: "5px" }}>
             <AvatarGroup size='md' max={3}>
               {item.LikesPost.map((like) => 
                 like.id !== item.userId && (
