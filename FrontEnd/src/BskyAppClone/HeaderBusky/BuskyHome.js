@@ -688,12 +688,17 @@ useEffect(()=>{
 
 
 const [vote,setVote] = useState("1000000")
+const [miniScreen,setminiScreen] = useState(false)
+
+const [openIframe,setOpenIframe] = useState(false)
+
+
 
   return (
 <> 
 
 
-    <div className='busky--home'>
+    <div className='busky--home' >
             
 
           <div className='busky--home--container'>
@@ -927,6 +932,26 @@ fetchPostsFromDataBase
  />)
  
  }
+ <div className='iframe' style={{cursor:"pointer",display:"flex",flexDirection:"column",gap:"40px"}}>
+
+ <Link to={"/bluskG/freind"}> <button style={{display:miniScreen?"block":"none",zIndex:3}}   ><img src='./message.png' alt='' style={{width:"40px"}}/></button></Link>
+ <button style={{display:miniScreen?"block":"none",zIndex:3}} onClick={()=>setOpenIframe((prev)=>!prev)} ><img src='./423cb91de98e4ee0b31e85d01936961a-free.png' alt='' style={{width:"40px",borderRadius:"20px"}}/></button>
+
+   {miniScreen ? <button className='zina' style={{zIndex:3}} onClick={()=>setminiScreen((prev)=>!prev)}>x</button> :  
+ <button className='zina' style={{zIndex:3}} onClick={()=>setminiScreen((prev)=>!prev)}>+</button> 
+}
+ </div>
+ 
+
+ <iframe 
+
+ style={{display:openIframe?"block":"none"}}
+ src='http://localhost:3000/Headers' 
+ 
+ className='menuPage'/>
+
+ 
+
  
 </>
 
