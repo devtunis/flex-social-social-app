@@ -25,6 +25,7 @@ import ProfileBuskt from './ProfileUser/ProfileBuskt.js';
 import Rank from './RankUsers/Rank.js';
 import CircleAnimation from './RankUsers/CircleAnimation.js';
 import AdminPosterPdf from './UniverstyPdf/AdminPosterPdf.js';
+import Eroor from './Eroor/Eroor.js';
 const App = () => {
  const [online,setIsOnline] = useState(true)
  // here dedict if i onlin or no
@@ -45,7 +46,11 @@ const App = () => {
             <Route path='/MathPage' element={<><MathPage/></>} />
             <Route path='/auth' element={<><Auth/></>} />
             <Route path='/Admin/upload/page' element={<><ImageUpload/></>} />
-            <Route path='/' element={<><FIRSTVIEW/></>} />
+            {/* <Route path='/' element={<><FIRSTVIEW/></>} /> */}
+            <Route path='/' element={<><Eroor/>
+            </>} />
+
+
             <Route path='/bluskG' element={<><BuskyHome/></>} />
             <Route path='/card' element={<><Posts/></>} />
             <Route path='/bluskG/freind' element={<><BuskyHomeFreind/></>} />
