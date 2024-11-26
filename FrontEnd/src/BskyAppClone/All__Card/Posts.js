@@ -53,7 +53,7 @@ const Posts = ({ item, updateMessage, passFunc ,pass2Func}) => {
         setIsLiked(false);
       }
     } catch (error) {
-      console.error(`Error: ${error}`);
+     //
     }
   };
 
@@ -169,6 +169,36 @@ const [ShareLink,setShareLink] = useState("")
   }
  
  
+
+  const Handel__reposT_React = async()=>{
+     console.log(item,"herewefo")
+     try{
+      const addToMyPost = await axios.post(`/postPost/profileY/${TokenUser._id}`,{
+       userId:TokenUser._id,
+       testeur:"notShare",
+       myPersonnalIdea : "hhha slm nike",
+       post:{
+           text:item.post.text,
+           like:0,
+           share:0,
+           imgItem:item.post.imgItem
+   
+       },
+       onwerHasPictuer : TokenUser?.imgUser,
+       ownerUserName : TokenUser?.username,
+       email : TokenUser?.email,
+       LikesPost :[],
+       repostUser :[],
+       Comment:[],
+       email:TokenUser?.email,
+       shareItFrom:[],
+   })
+   addToMyPost && alert("here we go from notShare ")
+    
+    }catch(eroor){
+     console.log("thsi eroor by",eroor)
+    }
+  }
   return (
     
     <div className='busky--app-card-post'   >
@@ -235,7 +265,7 @@ const [ShareLink,setShareLink] = useState("")
           </div>
 
           <div className='busky--app-info-icons-1'  style={{cursor:"pointer"}}>
-            <img src='./arrow.png' alt='' />
+            <img src='./arrow.png' alt='' onClick={()=>Handel__reposT_React()} />
             <span>{item.post.share}</span>
           </div>
 

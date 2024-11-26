@@ -1,6 +1,6 @@
 import React, { useRef, useState,useEffect } from 'react'
 import "./BuskyHome.css"
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Divider, Box, Avatar, CircularProgress, EnvironmentProvider, useEventListener, Hide, Spinner, AlertTitle, useFocusEffect, CircularProgressLabel } from '@chakra-ui/react'
+import {Text as ChakraText, Tabs, TabList, TabPanels, Tab, TabPanel, Divider, Box, Avatar, CircularProgress, EnvironmentProvider, useEventListener, Hide, Spinner, AlertTitle, useFocusEffect, CircularProgressLabel } from '@chakra-ui/react'
 import Posts from '../All__Card/Posts'
 import InputSearch from '../All__Card/InputSearch'
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
@@ -17,16 +17,23 @@ import UIX from '../../Component/UIX'
 import Uix2 from '../../FirstView/Uix2'
 import Reels from '../../ReelsSection/Reels'
 import RightCard from '../../ReelsSection/RightCard/RightCard'
- 
+import { io } from 'socket.io-client';
+import FlexSiri from '../../aiModels/FlexSiri'
+import SiriWave from "react-siriwave";
+
+const socket = io('http://localhost:9000')
+
+
+
 const BuskyHome = () => {
   var scroll = require("window-scroll");
-  const [open,setopen] = useState(false)
+  const [open,setopen] = useState(true)
   const [loading,setLoading] = useState(false)
   const [textAra,setTextArea]= useState("")
   const textareaRef = useRef(null);
   const [k,setk] = useState(300)
   const [post,setPost] = useState(false)
-  const {TokenUser,dispatch} = useGlobalContext()
+  const {TokenUser,dispatch,SiriVoice} = useGlobalContext()
   const toast = useToast()
   const [dataFromPostComeent,setdataFromPostComeent] = useState("")
   const [helpInput,setHelpInput] = useState([])
@@ -38,31 +45,197 @@ const BuskyHome = () => {
   const [helpFunctioE,sethelpFunctioE] = useState(false)
   const [postLoading,setPostLoadingFire] = useState(false)
   const [progressPost,setProgress] = useState(30)
-
-  console.log(`
+  const funca  = useRef(null)
+  // console.log(`
 
  
 
-    ███████╗██╗     ███████╗██╗  ██╗
-    ██╔════╝██║     ██╔════╝██║ ██╔╝
-    █████╗  ██║     █████╗  █████╔╝ 
-    ██╔══╝  ██║     ██╔══╝  ██╔═██╗ 
-    ██     ███████╗███████╗██║  ██╗
+  //   ███████╗██╗     ███████╗██╗  ██╗
+  //   ██╔════╝██║     ██╔════╝██║ ██╔╝
+  //   █████╗  ██║     █████╗  █████╔╝ 
+  //   ██╔══╝  ██║     ██╔══╝  ██╔═██╗ 
+  //   ██     ███████╗███████╗██║  ██╗
            
     
      
     
-        `)
+  //       `)
+
+
+ 
+// const TesttIfWeFreindOrno = async (id1, id2) => {
+//   try {
+//     const checkFreind = await axios.post(`/check/users/freind/${id1}`, {
+//       userId: id2
+//     });
+
+//     // Return the response data to be handled in useEffect
+//     return checkFreind.data; // Assuming 'checkFreind.data' contains 'yes' or 'no'
+//   } catch (error) {
+//     console.log(error);
+//     return null; // Return null in case of an error
+//   }
+// }
+
+
+ 
+
+
+//   useEffect(() => {
+//     socket.on("PrvMessages", async (data) => {
+//       console.log(data);  // Logs the incoming data from the socket
+  
+//       // Await the result of TesttIfWeFreindOrno
+//       const result = await TesttIfWeFreindOrno(data.room.users[0], data.room.users[1]);
+  
+//       console.log("Friend status:", result);
+  
+//       // You can now use the result (true or false) to do further logic
+//       if (result === "yes") {
+//         // Handle if they are friends
+//         console.log("You are friends, display the message!");
+//       } else {
+//         // Handle if they are not friends
+//         console.log("You are not friends.");
+//       }
+//     });
+  
+//     // Cleanup when component unmounts
+//     return () => {
+//       socket.off("PrvMessages");
+//     };
+//   }, []);
+  
 
 
 
 
 
 
+// useEffect(() => {
+//   const fetchFriendStatus = async () => {
+//     try {
+//       const df = await CheckFreind("67179bf458a86999ecd0601f");
+//       console.log(df, "func");
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
+//   fetchFriendStatus(); // Call the async function inside `useEffect`
+// }, []);
+
+
+
+// const CheckFreind  = async(checkUser)=>{
+//   try{
+ 
+//       const reponse  = await axios.post(`/check/users/freind/${TokenUser._id}`,{
+//         userId  :   checkUser
+//       })
+      
+//       return reponse.data
+//   }catch(eroor){
+//     console.log(eroor)
+//   }
+
+// }
+
+const [mess,setmess] = useState(1)
+const nameFriend  = async(id)=>{
+  let name = ""
+  try{
+     const {data}  =  await axios.post(`/request/${id}`)  // 
+      name  = data
+     
+  }catch(eroor){
+    console.log(eroor)
+  }
+  return name  
+}
 
 
 
 
+useEffect(() => {
+  socket.on("PrvMessages", async (data) => {
+    console.log(data.room);
+    
+    console.log(data.room.messages[(data.room.messages.length)-1].content)
+    
+   // console.log(nameFriend(data.room.messages[(data.room.messages.length)-1].senderId))
+    
+    // do try and awiit  function here  
+    // can i call function here ?   
+   
+     const funct = async()=>{
+         try {
+          const res = await nameFriend(data.room.messages[(data.room.messages.length)-1].senderId)
+          
+          const   reponse  = await axios.post(`/check/users/freind/${TokenUser._id}`,{
+            userId  :  TokenUser._id== data.room.users[0]? data.room.users[1] :  data.room.users[0]
+          })
+
+
+           console.log(reponse.data)  
+           
+
+
+
+
+           if(reponse.data){
+            setmess((prev)=>prev+1)
+            toast({
+           
+              description: data.room.messages[data.room.messages.length - 1].content,
+              duration: 3000,
+              isClosable: true,
+              position: "top",
+              
+              render: () => (
+                <div style={{ background: "black", color: "white", padding: "16px", borderRadius: "8px" }}>
+
+                   
+                    
+
+                  <div class="dataMessage0" style={{display:"flex",alignItems:"center",fontWeight:"bold",fontSize:"16px",fontFamily:"monospace"}}>
+
+                    <div class="iconFlex1"> <Avatar   src={`${process.env.REACT_APP_API_KEY}/${data.room.messages[(data.room.messages.length)-1].imgProfile   }`}  size="sm"  mr={3}  /></div>
+                   
+                    <div class="dataUser1">
+                        
+                      <div class="class11"><h2>{res}  <em style={{fontWeight:"bold"}}>{new Date(data.room.messages[(data.room.messages.length)-1].timestamp).toLocaleTimeString('en-US')}</em></h2></div>
+                      <div class="class22">{TokenUser.username.substr(0,Math.floor(TokenUser.username.length)/2)} ,you have {mess} new messages in a chat </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              ),
+            });
+            
+           }
+          
+         }catch(eroor){
+          console.log(eroor)
+         }
+     }
+
+
+
+     funct()
+  });
+
+
+
+
+
+
+  // Cleanup when component unmounts
+  return () => {
+    socket.off("PrvMessages");
+  };
+}, [socket, TokenUser, nameFriend, axios, setmess, toast, mess]);
 
 
 
@@ -270,7 +443,10 @@ const res = image && image
 
 
 const HandelPushPost =async ()=>{
-  if(textAra=="" 
+
+
+
+  if(textareaRef.current.value=="" 
     
   ){
     toast({
@@ -292,7 +468,7 @@ const HandelPushPost =async ()=>{
    const PushData = await axios.post(`/post-posts/${TokenUser._id}`,
     {
       post: {
-           text :  textAra,
+           text :   textareaRef.current.value,
            like : 0,
            share : 0,
            imgItem :image,
@@ -316,7 +492,7 @@ const HandelPushPost =async ()=>{
       duration: 2000,
       isClosable: true,
     })
-    
+    FuncX()
     setTextArea("")
     setImage("")
     setPost(false)
@@ -341,7 +517,54 @@ const HandelPushPost =async ()=>{
   setProgress(0)
   setPostLoadingFire(false)
  }
+ 
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+ const FuncX  = async()=>{
+
+  try{
+    const addToMyPost = await axios.post(`/postPost/profileY/${TokenUser._id}`,{
+     userId:TokenUser._id,
+     testeur:"Share",
+     post:{
+         text:textAra,
+         like:0,
+         share:0,
+         imgItem:image
+ 
+     },
+     onwerHasPictuer : TokenUser?.imgUser,
+     ownerUserName : TokenUser?.username,
+     email : TokenUser?.email,
+     LikesPost :[],
+     repostUser :[],
+     Comment:[],
+     email:TokenUser?.email,
+     shareItFrom:[],
+ })
+//  addToMyPost && alert("here we go ")
+  
+  }catch(eroor){
+   console.log("thsi eroor by",eroor)
+  }
+ 
+ }
+
+
 const [fetchPostsFromDataBase,setfetchPostsFromDataBase] = useState([])
 const [i,seti] = useState(false)
 
@@ -466,13 +689,14 @@ const PostCommentA = async()=>{
     const Dta = await axios.post(`/post-comment/${variable}`,{
       
         currentUserId:TokenUser._id,  // Replace with a valid user ObjectId
-        comment: dataFromPostComeent,
+        comment: funca.current.value,
         imgComment:"exmple try to post img",  // Optional image URL
         UsernameComment: TokenUser.username,
         ProfileImg: TokenUser.imgUser  // Optional profile image URL
     
     })
     if(Dta){
+     
 
       toast({
         title: 'Your ! Comment  Posted.',
@@ -507,17 +731,26 @@ const PostCommentA = async()=>{
       const dataBel7oula = await axios.post(
         `/send/notification/author/${userid7oula}`,
         {
-          myid: TokenUser.id,
+          myid: TokenUser._id,
           myidimg: TokenUser.imgUser,
           myusername: TokenUser.username,
           recipientId: userid7oula,
           postImage: imghyf,
           postContent: textf,
-          comment: dataFromPostComeent
+          comment:  funca.current.value
         },
         { headers: { 'Content-Type': 'application/json' } } // Ensure the server knows it's JSON
       );
-      
+      dataBel7oula ?  funca.current.value="":(     toast({
+        title: 'EROOR',
+        description: "Something happend Try Later or  relod page :(",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+      })
+)
+
+
    }catch(eroor){
      console.log(eroor)
    }
@@ -661,7 +894,8 @@ useEffect(()=>{
    const arr =fetchPostsFromDataBase
   
  let ins = [];   
-  let t = [];    // Randomly selected posts
+  let t = [];    // Randomly selected 
+  
 
  const  find=(s, ins) =>{
    return ins.some(index => index === s); 
@@ -693,17 +927,173 @@ const [miniScreen,setminiScreen] = useState(false)
 const [openIframe,setOpenIframe] = useState(false)
 
 
+// web socket here we go 🎉🎉🎉🎉🎉
 
+// useEffect(() => {
+//   socket.on("message", (data) => {
+//     console.log(data);
+//   });
+
+//   // Clean up to avoid duplicate listeners
+//   return () => {
+//     socket.off("message");
+//   };
+// }, []);
+
+
+
+const [not,setnot] = useState(0)
+const [change,setikill] = useState(false)
+const audio = new Audio('/music/reallChat.mp3');
+useEffect(() => {
+ 
+
+  //Register the listener once
+  socket.on(`${TokenUser._id}`, data=>{
+    console.log(data)
+   console.log(data,change)
+  //  data && setikill((prev)=>!prev)
+    setnot((prev)=>prev+1)
+ 
+  toast({
+    position: 'top-right',
+    duration: 3000,
+    isClosable: true,
+    status: 'success',
+    render: () => (
+      <Box 
+        display="flex" 
+        alignItems="center" 
+        p={4} 
+        bg="orange.500" 
+        borderRadius="md"
+        boxShadow="lg"
+      >
+
+<Avatar 
+          src={`${process.env.REACT_APP_API_KEY}/${data.data.myidimg}`} 
+          size="sm" 
+          mr={3} 
+        />
+
+      
+        <ChakraText color="white" fontWeight="bold">
+           {data.data.myusername}  type  a notification for you  mr <Avatar 
+          src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} 
+          size="sm" 
+          mr={3} 
+        />
+ 
+        </ChakraText>
+ 
+
+
+        
+     
+
+      </Box>
+    )
+  });
+  
+
+  
+  });
+
+  
+
+}, []);
+
+// useEffect(() => {
+ 
+//     audio.play().catch((error) => {
+//       console.error("Error playing sound:", error);
+//     });
+  
+// }, []);  
+
+
+
+// this section prodcast all users
+
+useEffect(()=>{
+
+
+  socket.on("event_post",data=>{
+    console.log(data)
+    // if in this data ther ._id like my current id i store this in TokenUser._d => if data.id!=TokenUser._id should be display the the toast their new post in this app 
+     if(data.userId!==TokenUser._id){
+ 
+      // toast({
+      //   position: 'top',
+      //   title: 'Success!',
+      //   description: "🎉 some one add new post !",
+      //   status: 'success',
+      //   duration: 2000, // Toast will last for 5 seconds
+      //   isClosable: false, // Adds a close button
+      //   containerStyle: {
+      //     width: '800px',
+      //     maxWidth: '100%',
+      //   },
+      // });
+
+
+
+
+      toast({
+        position: 'top',
+        duration: 9000,
+        isClosable: true,
+        status: 'success',
+        render: () => (
+          <Box 
+            
+            display="flex" 
+            alignItems="center" 
+            p={4} 
+            bg="purple.500" 
+            borderRadius="md"
+            boxShadow="lg"
+          >
+            <Avatar 
+              src={`${process.env.REACT_APP_API_KEY}/${data.onwerHasPictuer}`} 
+              size="sm" 
+              mr={3} 
+            />
+            <ChakraText color="white" fontWeight="bold">
+              {`${data.ownerUserName} Post new Post`} 
+            </ChakraText>
+          </Box>
+        )
+      });
+      
+      
+      
+
+     }
+
+
+  })
+
+
+},[])
+const [openSiri,setOpenSiri] = useState(true)
+useEffect(()=>{
+  dispatch({type:"SET_SIRI_VOICE",paySiri:false})
+},[])
   return (
 <> 
 
 
+
+<div className='SiriFlex' style={{marginTop:"10px",display:SiriVoice?"flex":"none"}}>
+<FlexSiri/>
+</div>
     <div className='busky--home' >
             
 
           <div className='busky--home--container'>
 
-            <div className={`busky--navbar ${open?'openside':"closeside"}`} >   
+            <div className={`busky--navbar ${open?'openside':"closeside"}`}    > 
             <div className={`busky--navar-seetingrr ${open?"openx":"closex"}`}>
            <div className='busky--navabar--img'>
             
@@ -729,7 +1119,12 @@ const [openIframe,setOpenIframe] = useState(false)
       <div>
         <div>New</div>
         <div className='flexDdev'>
-           <div> <Avatar size='lg'  src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`}/> </div>
+          
+           <div className='fixNewPicture' style={{backgroundColor:"transparent",position: "relative",top:"-21px"}}> 
+            <Avatar size='lg'  src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`}/>
+             </div>
+
+
            <div className='tea' style={{marginLeft:"17px"}}>
            <h3 style={{color:"white",fontWeight:"bold"}}>Welcome To Your Account <small className='colorChangeName'>{TokenUser.username}</small> </h3>
           <p>Account Updates : Tu recevras <br/>
@@ -753,6 +1148,7 @@ const [openIframe,setOpenIframe] = useState(false)
 ).length > 0 ? (
   dataofNotfication
     .filter((item) => Object.keys(item).length > 0 && item.myusername !== TokenUser.username)
+     .reverse()
     .map((item) => (
       <div className='flexDdev specifitem' style={{ cursor: "pointer" }} key={item.id}>
         <div className='chbik'>
@@ -777,12 +1173,24 @@ const [openIframe,setOpenIframe] = useState(false)
         </div>
 
         <div className='videoComment' style={{ display: postamn ? "block" : "none" }}>
-          <img
+     
+
+           {item.postImage ?    <img
             style={{ borderRadius: "10px", position: "relative", bottom: "10px" }}
             src={item.postImage}
             alt=''
-          />
+          /> :  
+          
+          
+          <img
+          style={{ borderRadius: "10px", position: "relative", bottom: "10px" }}
+          src="./smile-circle-svgrepo-com.svg"
+          alt=''
+        />
+        
+        }
         </div>
+
       </div>
     ))
 ) : (
@@ -815,21 +1223,25 @@ const [openIframe,setOpenIframe] = useState(false)
 
             </div>
          
-           <div className='busky--container--section'>
+           <div className='busky--container--section chillNed' id="dd">
             <img src='./imgHome/accueil.png' alt=''/>
             <span>Home</span>
            </div>
-           
+          
 
-           <div className='busky--container--section'>
+           <div className='busky--container--section'  id="dd">
             <img src='./imgHome/chercher.png' alt=''/>
             <span>Search</span>
-           </div>
-           
+           </div> 
 
            <div className='busky--container--section'>
-            <img   onClick={()=>setshowNotfication((prev)=>!prev)} src='./imgHome/notification.png' alt=''/>
-            <span onClick={()=>setshowNotfication((prev)=>!prev)}>notification</span>
+           <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}> 
+           <img   onClick={()=>setshowNotfication((prev)=>!prev)} src='./imgHome/notification.png' alt=''/>
+           <small style={{color:"red",position: "relative",right:"7px",bottom:"8px"}}> {not}</small>
+            </div>
+           
+            <span onClick={()=>{setshowNotfication((prev)=>!prev) 
+              setnot(0)}} style={{position:"relative",right:"15px"}}>notification</span>
            </div>
            
 
@@ -841,24 +1253,23 @@ const [openIframe,setOpenIframe] = useState(false)
            
 
            <div className='busky--container--section'>
-            <img src='./imgHome/symbole-hashtag.png' alt=''/>
-            <span>Freind</span>
+            <img src='./imgHome/symbole-hashtag.png' onClick={()=>FuncX()} alt=''/>
+            <span onClick={()=>FuncX()}> Freind</span>
             
            </div>
 
 
-           <div className='busky--container--section'>
+         <div className='busky--container--section'  id="dd" >
             <img src='./imgHome/liste-a-puces (1).png' alt=''/>
             <span>Lists</span>
            </div>
+ 
 
 
-
-
-           <div className='busky--container--section'>
+            <div className='busky--container--section'  id="dd">
             <img src='./imgHome/profil-de-lutilisateur.png' alt=''/>
             <span>Profile</span>
-           </div>
+           </div> 
 
            <div className='busky--container--section'>
             <img src='./imgHome/parametres-cog.png' alt=''/>
@@ -882,8 +1293,8 @@ const [openIframe,setOpenIframe] = useState(false)
               <div className='screenSize' style={{display:hidde?"block":"none"}}>
               
   <div style={{width:"100",display:"flex",justifyContent:"center"}}> <h2 style={{color:"#fff",fontWeight:"bold",fontSize:"30px"}}>Nahdi</h2>  </div>
-                <p style={{color:"white"}}></p>
-                {/* <img src='./ecdf797744ad4201be49b5d4e5582755-free.png' style={{width:"40px"}} alt=''/> 🎉 */}
+                {/* <p style={{color:"white"}}></p>
+ 
             {
              open ?   <img src='./imgHome/close.png'
               onClick={()=>setopen((prev)=>!prev)}
@@ -892,7 +1303,7 @@ const [openIframe,setOpenIframe] = useState(false)
               onClick={()=>setopen((prev)=>!prev)}
                className='menuSidebar' alt=''/>
             )
-            }
+            } */}
             </div>
              <Tabs size='md'defaultIndex={0} > 
                 <TabList  style={{display:hidde?"flex":"none"}}>
@@ -904,7 +1315,7 @@ const [openIframe,setOpenIframe] = useState(false)
                 
 
                 <TabPanels >
-                    <TabPanel className='Discover'  ref={scrollRef}>
+                    <TabPanel className='Discover'  ref={scrollRef}  style={{height:hidde?"85.8898888vh":"100vh"}} >
                     
                                                                      
  
@@ -929,6 +1340,7 @@ fetchPostsFromDataBase
 // .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sorting by createdAt
 .map((index) => <Posts item={index} key={index.id}  updateMessage  ={updatePost}  passFunc = {CoffeeTime}
  pass2Func  = {DetactLikes}
+ 
  />)
  
  }
@@ -1034,9 +1446,10 @@ fetchPostsFromDataBase
                 ref={textareaRef} 
                 placeholder='What’s up ?' 
                 onInput={handleInput}
-                onChange={(e)=>setTextArea(e.target.value)}
-                value={textAra}
+                
             />
+          
+            
 
           </div>
           <div className='thirdcontainer'>
@@ -1082,7 +1495,7 @@ fetchPostsFromDataBase
           </div>
 
         </div>
-{/* ///sectoon comment 🎉 */}
+{/* /// section comment 🎉 */}
         <div className='SectionComment' style={{display:CommentPost ? 'block':'none'}}>
            <div className='big'>
             <div className='routerComment'>
@@ -1101,7 +1514,7 @@ fetchPostsFromDataBase
                </div>
             </div>
             <div className='sectionCommentDescsiprion'>
-              <h1>I Built a 2D Game in 40 Minutes with Ebiten</h1>
+              <h1>I Built a This  app  in 40 Days  with Me</h1>
               <div className='pargraph'>
                  
                 <p>
@@ -1121,7 +1534,7 @@ fetchPostsFromDataBase
       
 
 
- <div className='imgPost'>
+ <div className='imgPost' style={{display:imghyf=="" && "none"}}>
 
   <div className='imgPostContainer'>
     {/* <img src='https://res.cloudinary.com/daily-now/image/upload/f_auto,q_auto/v1/posts/b8d4f161c390d0ca1d22808f4faaf705?_a=AQAEuiZ'/>
@@ -1183,8 +1596,9 @@ fetchPostsFromDataBase
     
   
     <div className='imgconainerPdf'>  <img src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} alt='' /></div>
-    <div className='shareButtonS'>   <input type='text' placeholder={`Share your thoughts  ${TokenUser.username}`} value={dataFromPostComeent}
-    onChange={(e)=>setdataFromPostComeent(e.target.value)}
+    <div className='shareButtonS'>   <input type='text' placeholder={`Share your thoughts  ${TokenUser.username}`} 
+    
+    ref={funca}
     /></div>
 
      <div className='buttonPost'>
@@ -1263,12 +1677,11 @@ width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" 
 >
   
   <div className='line' style={{background:"transparnt",width:"34px",display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column" }} >
-    <div className='menuCercleforcomment'><span class="material-symbols-outlined" style={{fontSize:"20px",color:"grey"}}>radio_button_unchecked</span></div>
+    <div className='menuCercleforcomment rotateD'><span class="material-symbols-outlined" style={{fontSize:"20px",color:"grey"}}>radio_button_unchecked</span></div>
    <img src='./imgHome/line.png' alt='' style={{height:"60px",width:"4px"}}/>
  
-   <div className='containerIndeideNestedComment' style={{width:"100%",display:"flex",alignItems:"center",gap:"12px",boxShadow:"0px 0px 20px #fff",backgroundColor:"transparnt"}}>
-    <span class="material-symbols-outlined" style={{width:"3px",marginLeft:"1.3px"}} >arrow_back_ios</span>
-    <span class="material-symbols-outlined" style={{width:"3px"}} >arrow_forward_ios</span>
+   <div className='containerIndeideNestedComment traficant'>
+    <span class="material-symbols-outlined" style={{width:"3px"}} >keyboard_arrow_down</span>
     
     </div>
 

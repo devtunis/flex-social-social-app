@@ -38,7 +38,7 @@ const Login = () => {
      formData.append("username",username)
      formData.append("email",email)
      formData.append("password",password)
-     formData.append("imgUser",selectedFile||'https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg')
+     formData.append("imgUser",selectedFile)
     
       try {
         setisLodingLogin(true)

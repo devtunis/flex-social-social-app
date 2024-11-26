@@ -1,14 +1,25 @@
  import React, { useEffect, useState } from 'react'
  import './NewProfileHome.css'
- import { Tabs, TabList, TabPanels, Tab, TabPanel, Editable } from '@chakra-ui/react'
+ import { Tabs, TabList, TabPanels, Tab, TabPanel, Editable, SkeletonCircle, SkeletonText, Box, HStack, Stack } from '@chakra-ui/react'
  import { Avatar, AvatarBadge, AvatarGroup } from '@chakra-ui/react'
  import { useGlobalContext } from '../Store/GlobalContext'
  import axios from "../Component/axios"
+import CardSharePost from './CardSharePost'
+import { Text } from 'recharts'
+import CardSharePost2 from './CardSharePost2'
+ 
  const ProfileBuskt = () => {
   const  {TokenUser ,userProfileSe} = useGlobalContext()
+  const [LoadingPost,setPostLodingPost]  = useState(false)
+  const [Likes,setLikes] = useState(0)
+  const [test,settest] = useState(false)
+ const [allData,setallData]= useState([])
+
  
 
- const [allData,setallData]= useState([])
+
+
+
  const RenderDataPrc = async()=>{
   try{
     const {data} = await axios.post(`/api/author/profile/${userProfileSe[0].userId}`)
@@ -25,10 +36,33 @@
  
  },[])
 
+ // this sectio acess to get data from backend
+const [retunPost,setReturnPost] = useState([])
+  const callOfDuty =async ()=>{
+    setPostLodingPost(true)
+    try{ 
+                                                // should check this  TokenUser[0]._id;
+
+      const {data} =  await axios.post(`/getMyposts/${TokenUser._id}`)
+       console.log(data.specifPost)
+      setReturnPost(data.specifPost)
+      setPostLodingPost(false)
+    }
+    catch(eroor){
+      setPostLodingPost(false)
+      console.log(eroor)
+      //
+    }
+  }
+useEffect(()=>{
+  callOfDuty()
+
+},[])
+ 
  
    return (
      <div className='allCaontinserSearchProfileAbout'>
-      <div className='search'></div>
+      <div className='search'>......  </div>
       <div className='Profilenb'>
         <div className='BackGroundPoctuer'>
           <img src="https://img.freepik.com/photos-gratuite/arriere-plan-flou-neon_23-2148132649.jpg" alt=''/>
@@ -53,22 +87,154 @@
           </div>
        
 <Tabs>
-  <TabList>
+  <TabList >
                
   <Tab><h1 style={{color:"grey",fontSize:"19px",fontWeight:"bold"}}>Posts</h1></Tab>
-                    <Tab ><h1 style={{color:"grey",fontSize:"19px",fontWeight:"bold"}}>Replies</h1></Tab>
-                    <Tab><h1  style={{color:"grey",fontSize:"19px",fontWeight:"bold"}}>Media</h1></Tab>
-                    <Tab><h1  style={{color:"grey",fontSize:"19px",fontWeight:"bold"}}>Likes</h1></Tab>
+                    <Tab ><h1 style={{color:"grey",fontSize:"16px",fontWeight:"bold"}}>Replies</h1></Tab>
+                    <Tab><h1  style={{color:"grey",fontSize:"16px",fontWeight:"bold"}}>Media</h1></Tab>
+                    <Tab><h1  style={{color:"grey",fontSize:"16px",fontWeight:"bold"}}>Likes</h1></Tab>
                     
 
   </TabList>
 
   <TabPanels>
-    <TabPanel>
-      <p>one!</p>
+    <TabPanel className='sharePostsg'>
+      
+
+
+      {LoadingPost ?  <>
+      
+        <Box padding='10' boxShadow='lg' bg='#161E27' style={{width:"90%"}}>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='5' noOfLines={1} spacing='1' skeletonHeight='300'  />
+ <div style={{display:"flex",justifyContent:"space-between",marginTop:"7px",borderRadius:"30px"}}>
+ <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+ </div>
+ <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+ </div>
+ <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+ </div>
+ 
+ </div>
+</Box>
+ 
+
+
+<Box padding='10' boxShadow='lg' bg='#161E27' style={{width:"90%"}}>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='5' noOfLines={1} spacing='1' skeletonHeight='300'  />
+ <div style={{display:"flex",justifyContent:"space-between",marginTop:"7px",borderRadius:"30px"}}>
+ <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+ </div>
+ <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+ </div>
+ <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+ </div>
+ 
+ </div>
+</Box>
+
+
+
+<Box padding='10' boxShadow='lg' bg='#161E27' style={{width:"90%"}}>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='5' noOfLines={1} spacing='1' skeletonHeight='300'  />
+ <div style={{display:"flex",justifyContent:"space-between",marginTop:"7px",borderRadius:"30px"}}>
+ <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+ </div>
+ <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+ </div>
+ <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+ </div>
+  
+
+ </div>
+</Box>
+
+</>
+       :  
+       retunPost?.sort((a,b)=>new Date(b.post.createdAt)-new Date(a.post.createdAt))
+      .filter((item)=>item.testeur=="Share")
+       .map((ins)=><CardSharePost item={ins}/>)
+      
+       
+     }
+  
+ 
     </TabPanel>
-    <TabPanel>
-      <p>two!</p>
+    <TabPanel  style={{backgroundColor:"red"}} >
+      <div className='ProfileContainerAppClone'>
+ 
+
+
+ 
+     
+
+      {
+          LoadingPost? 
+          <>
+      
+          <Box padding='10' boxShadow='lg' bg='#161E27' style={{width:"90%"}}>
+    <SkeletonCircle size='10' />
+    <SkeletonText mt='5' noOfLines={1} spacing='1' skeletonHeight='300'  />
+   <div style={{display:"flex",justifyContent:"space-between",marginTop:"7px",borderRadius:"30px"}}>
+   <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+   </div>
+   <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+   </div>
+   <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+   </div>
+   
+   </div>
+  </Box>
+   
+  
+  
+  <Box padding='10' boxShadow='lg' bg='#161E27' style={{width:"90%"}}>
+    <SkeletonCircle size='10' />
+    <SkeletonText mt='5' noOfLines={1} spacing='1' skeletonHeight='300'  />
+   <div style={{display:"flex",justifyContent:"space-between",marginTop:"7px",borderRadius:"30px"}}>
+   <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+   </div>
+   <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+   </div>
+   <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+   </div>
+   
+   </div>
+  </Box>
+  
+  
+  
+  <Box padding='10' boxShadow='lg' bg='#161E27' style={{width:"90%"}}>
+    <SkeletonCircle size='10' />
+    <SkeletonText mt='5' noOfLines={1} spacing='1' skeletonHeight='300'  />
+   <div style={{display:"flex",justifyContent:"space-between",marginTop:"7px",borderRadius:"30px"}}>
+   <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+   </div>
+   <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+   </div>
+   <div style={{width:"80px",borderRadius:"30px"}}>  <SkeletonText  noOfLines={1} skeletonHeight='7'  />
+   </div>
+    
+  
+   </div>
+  </Box>
+  
+  </>
+          :
+
+
+
+
+
+          retunPost?.sort((a,b)=>new Date(b.post.createdAt)-new Date(a.post.createdAt))
+          .filter((ins)=>ins.testeur=="notShare")
+          .map((ins)=><CardSharePost2 item={ins}/>)
+
+          
+      }
+      </div>
     </TabPanel>
     <TabPanel>
       <p>three!</p>
@@ -83,3 +249,12 @@
  }
  
  export default ProfileBuskt
+
+
+
+//  z-index: 2;
+//  display: flex;
+//  width: 0%;
+//  height: 100vh;
+//  position: absolute;
+//  display: flex;

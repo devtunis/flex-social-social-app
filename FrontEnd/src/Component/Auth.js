@@ -46,7 +46,8 @@ const Auth = () => {
       setLoading(false);
     }
   };
-
+ 
+ 
 
   return (
     <div className="auth-container">

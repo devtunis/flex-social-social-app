@@ -12,6 +12,7 @@ const Eroor = () => {
         className="rotate"
         style={{ width: '200px', height: '200px' ,backgroundColor:"white",borderRadius:"100px"}}
       />
+      
     </div>
   );
 };

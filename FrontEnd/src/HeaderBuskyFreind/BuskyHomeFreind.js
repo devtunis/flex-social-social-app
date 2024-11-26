@@ -105,6 +105,11 @@ const BuskyHomeFreind = () => {
       //setlodaing3(false)
     }
   }
+
+useEffect(()=>{
+  AcessAllMessagesTo_user() // this solution when page reneder give me all data in section messages
+},[])
+
  const HandelMyChatRoomFromTheServer = (item)=>{
   
  dispatch({
@@ -289,7 +294,7 @@ const TestIds  =(id,arr)=>{
             )
             }
             </div>
-             <Tabs size='md'defaultIndex={0} >
+             <Tabs size='md'defaultIndex={1} >
                 <TabList>
                     <Tab><h1 style={{color:"white",fontSize:"19px",fontWeight:"bold"}}>Users</h1></Tab>
                     <Tab onClick={()=>AcessAllMessagesTo_user()} ><h1 style={{color:"white",fontSize:"19px",fontWeight:"bold"}}>my Chat</h1></Tab>

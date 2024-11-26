@@ -1,4 +1,81 @@
+
+
+
+
+.traficant {
+    width: 73%;
+    color: black;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    background: #cbd8e6;
+    gap: 12px;
+    animation: shadowEffect 4s infinite; /* Add animation */
+    box-shadow: rgb(255, 255, 255) 0px 0px 20px;
+}
+
+/* Keyframe animation for box-shadow */
+@keyframes shadowEffect {
+    0% {
+        box-shadow: 0px 0px 20px rgb(255, 255, 255); /* white shadow */
+    }
+    25% {
+        box-shadow: 0px 0px 20px rgb(0, 0, 0); /* black shadow */
+    }
+    50% {
+        box-shadow: 0px 0px 20px rgb(255, 165, 0); /* surprise orange */
+    }
+    75% {
+        box-shadow: 0px 0px 20px rgb(34, 193, 195); /* surprise teal */
+    }
+    100% {
+        box-shadow: 0px 0px 20px rgb(138, 43, 226); /* surprise purple */
+    }
+}
+
+ 
+
+/* .rotateD{
+    animation: topx 2s infinite linear;
+    margin-left: 3px;
+}
+
+@keyframes topx {
+    from{
+        scale: 0.66;
+        
+    }
+    
+    to{
+        scale: 1.10    ;
+      
+    }
+} */
+
+
+
+
+
 /* section comment  */
+
+
+
+.SiriFlex{
+     
+    position: absolute;
+    top: 0;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+     width: 100%;
+}
+
+
+/* 
+ serie section  */
+
+
+
 
 .cercle{
     position: absolute;
@@ -217,6 +294,9 @@
         }
         .imgconainerPdf img {
             border-radius: 10px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
 }
@@ -348,6 +428,10 @@
 @media only screen and (max-width:900px) {
  /* section comment  */
 
+ .cotainerSetting{
+    position: absolute;
+    top: -282px;
+ }
 
 .SectionComment{
     position: absolute;
@@ -493,7 +577,7 @@
     .containerAppF{
         
         margin-top: 10px;   
-        background-color: #1A1F26;
+        background-color: 0e1217;
         margin-left: 0px;
         padding: 10px;
         border-radius: 10px;
@@ -502,6 +586,7 @@
         justify-content: space-between;
         width: 100%;
         color: white;
+        
        
         
         .buttonPost button{
@@ -524,7 +609,9 @@
         }
         .imgconainerPdf img {
             border-radius: 10px;
-            width: 37px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
 }
@@ -828,7 +915,7 @@ overflow: auto;
     .blockCardappear{
         width: 100%;
         padding: 5px;
-        background-color: red;
+         
         position: absolute;
         z-index: 2;
         right: 0;
@@ -864,12 +951,12 @@ overflow: auto;
     
     .containeroverflow{
     height:50vh;
-    background-color: green;
+
     overflow: auto;
     }
     
     .specifitem{
-        background-color: rgb(119, 197, 23);
+       
         display: flex;
         justify-content: space-around;
         margin: 10px;
@@ -891,7 +978,7 @@ overflow: auto;
     .blockCardappear{
         width: 100%;
         padding: 5px;
-        background-color: red;
+         
         position: absolute;
         z-index: 2;
         right: 0;
@@ -911,7 +998,7 @@ overflow: auto;
         }
     }
     .videoComment{
-        background-color: yellow;
+        
         /* width: 100px; */
          
         display: flex;
@@ -927,12 +1014,12 @@ overflow: auto;
     
     .containeroverflow{
     height:50vh;
-    background-color: green;
+    
     overflow: auto;
     }
     
     .specifitem{
-        background-color: rgb(119, 197, 23);
+        
         display: flex;
         justify-content: space-around;
         margin: 10px;
@@ -1199,7 +1286,7 @@ overflow: auto;
   
     .busky--navar-seetingrr {
         width: 60%;
-        background-color: rgb(14, 13, 13);
+        /* background-color: rgb(14, 13, 13); */
         color: whitesmoke;
         font-weight: bold;
         font-size: large;
@@ -1228,22 +1315,30 @@ overflow: auto;
 
   
   @media screen and (max-width: 930px){
+    
     .busky--navar-seetingrr {
-        width: 100px;
-
-        background-color: #1a1f26;
+        width: 100%;
+    
         color: whitesmoke;
         font-weight: bold;
         font-size: large;
+        display: flex;
+        height: 43px;
+        flex-direction: c;
+        /* flex-direction: row; */
+        /* gap: 19px; */
+        justify-content: space-around;
         .busky--container--section span{
             display: none;
         }
+        
 
         .busky--container--section {
           
             display: flex;
             justify-content: center;
             align-items: center;
+            
         }
 
     }
@@ -1304,9 +1399,13 @@ overflow: auto;
       }
   }
 
+ 
   
 
 @media screen and (max-width:630px){
+
+    
+   
 .moon{
     margin-left: 17px;
 }
@@ -1669,5 +1768,13 @@ this for phone responsive a lot
     
 } */
 
+#dd{
+    display: flex;
+}
 
+@media screen and (max-width:630px){
  
+    #dd{
+        display: none;
+    } 
+}
