@@ -178,26 +178,30 @@ app.get("/getQuestion",async(req,res)=>{
         console.log(`this eroor  by ${eroor}`)
     }
 })
-app.post('/setUserWithAnswer', upload.single('imgUser'), async (req, res) => {
-    
-      try {
-        // Create a new user with the uploaded file data and other form data
-        const formattedFilePath =  req.file.path.replace(/\\/g, '/');
-    
+// here change user data with this user
+app.post('/setUserWithAnswer', async (req, res) => {
+    try {
+      const { username, email, password, imgUser } = req.body;
+  
+      // Create a new user with the uploaded image URL and other form data
+      const newUser = new User({
+        username,
+        email,
+        password, // Store password as plain text (not recommended for production)
+        imgUser,  // Cloudinary URL
+      });
+  
+      await newUser.save();
+      res.status(200).json(newUser);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+      console.error(`Error occurred: ${error}`);
+    }
+  });
+  
 
-        const setAnswer = new User({
-          ...req.body,
-          imgUser: formattedFilePath
 
-        });
-      
-        await setAnswer.save();
-        res.status(200).json(setAnswer);
-      } catch (error) {
-        res.status(404).json({ message: error.message });
-        console.error(`The error: ${error}`);
-      }
-    });
+    // fix this  pictuer here 
 app.post("/setAdmin",async(req,res)=>{
     try{
      const setAdmin = new Admin(req.body)
@@ -813,6 +817,7 @@ app.get("/get/date/user/:id",async(req,res)=>{
 app.post("/post-posts/:id", async (req, res) => {
     try {
         const findUser = await User.findById(req.params.id);
+
         if (!findUser) {
             return res.status(404).json({ message: "We couldn't find the user" });
         }
@@ -850,6 +855,7 @@ app.post("/post-posts/:id", async (req, res) => {
 app.post("/postPost/profileY/:id", async (req, res) => {
     try {
         const FindIdUser = await User.findById(req.params.id);
+        
         if (!FindIdUser) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -1516,7 +1522,7 @@ app.post("/deleteConversation/:id", async (req, res) => {
 
 
 // --- this section for get my post post it in this  app for thi react 🎉🎉🎉-------
-
+// click  in top user to get his id 
 
 app.post("/getMyposts/:id",async(req,res)=>{
     try{
@@ -1536,6 +1542,26 @@ app.post("/getMyposts/:id",async(req,res)=>{
 
 
 
+
+//
+
+// app.get("/getMyposts/:id", async (req, res) => {
+//     try {
+//         const user = await User.findById(req.params.id);
+
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found in the database." });
+//         }
+
+//         const posts = user.postIpostsINthisApp;
+//         res.status(200).json({ myallData: user, specifPost: posts });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: "An error occurred on the server." });
+//     }
+// });
+
+//
 
 
 // build Tehme 
