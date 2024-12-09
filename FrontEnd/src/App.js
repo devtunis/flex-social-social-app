@@ -38,6 +38,8 @@ const App = () => {
  const [online,setIsOnline] = useState(true)
  // here dedict if i onlin or no
  
+    
+//   
   return (
     <>
       {online === false ? (
@@ -68,7 +70,7 @@ const App = () => {
             <Route path='/RankPage' element={<><Rank/></>} />
             <Route path='/blsuky/pdf' element={<><AdminPosterPdf/></>} />
             <Route path='/blsuky/Draw' element={<><Draw/></>} />
-            <Route path='/blsuky/Youtube' element={<><Ai/><FlexYoutube/></>} />
+            <Route path=' ' element={<><Ai/><FlexYoutube/></>} />
             <Route path='/ai' element={<><Ai/></>} />
             <Route path='/ping' element={<><FlexSiri/></>} />
             <Route path='/AiTesting' element={<><AiTesting/></>} />

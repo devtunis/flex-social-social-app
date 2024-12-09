@@ -1,8 +1,9 @@
 .app-right-side{
     width: 15%;
-    height: 100vh;
-   
-    background-color: rgb(169, 156, 156);
+    height: 100%;
+      color: white;
+    background-color: #0f0f0f;
+    
 }
 .sideIcon{
     width: 70%;

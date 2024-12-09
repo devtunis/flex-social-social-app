@@ -538,10 +538,10 @@ const HandelPushPost =async ()=>{
 
   try{
     const addToMyPost = await axios.post(`/postPost/profileY/${TokenUser._id}`,{
-     userId:TokenUser._id,
+     userId:TokenUser._id,    // fix this part fo sahre ing with speople i htink all thing the same value for thsi peoml e
      testeur:"Share",
      post:{
-         text:textAra,
+         text: textareaRef?.current?.value,
          like:0,
          share:0,
          imgItem:image
@@ -556,7 +556,7 @@ const HandelPushPost =async ()=>{
      email:TokenUser?.email,
      shareItFrom:[],
  })
-//  addToMyPost && alert("here we go ")
+ addToMyPost ?alert("here we go ") :alert("not yet")
   
   }catch(eroor){
    console.log("thsi eroor by",eroor)
@@ -971,7 +971,7 @@ useEffect(() => {
       >
 
 <Avatar 
-          src={`${process.env.REACT_APP_API_KEY}/${data.data.myidimg}`} 
+          src={`${data.data.myidimg}`} 
           size="sm" 
           mr={3} 
         />
@@ -979,7 +979,7 @@ useEffect(() => {
       
         <ChakraText color="white" fontWeight="bold">
            {data.data.myusername}  type  a notification for you  mr <Avatar 
-          src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} 
+          src={`${TokenUser.imgUser}`} 
           size="sm" 
           mr={3} 
         />
@@ -1020,9 +1020,10 @@ useEffect(()=>{
 
   socket.on("event_post",data=>{
     console.log(data)
+     CoffeeTime()
     // if in this data ther ._id like my current id i store this in TokenUser._d => if data.id!=TokenUser._id should be display the the toast their new post in this app 
      if(data.userId!==TokenUser._id){
- 
+    
       // toast({
       //   position: 'top',
       //   title: 'Success!',
@@ -1055,7 +1056,7 @@ useEffect(()=>{
             boxShadow="lg"
           >
             <Avatar 
-              src={`${process.env.REACT_APP_API_KEY}/${data.onwerHasPictuer}`} 
+              src={`${data.onwerHasPictuer}`} 
               size="sm" 
               mr={3} 
             />
@@ -1098,7 +1099,7 @@ useEffect(()=>{
            <div className='busky--navabar--img'>
             
              <img 
-              src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} 
+              src={`${TokenUser.imgUser}`} 
               style={{objectFit:"cover",cursor:"pointer"}} alt=''
               onClick={()=>settestCard2((prev)=>!prev)}
               />
@@ -1121,7 +1122,7 @@ useEffect(()=>{
         <div className='flexDdev'>
           
            <div className='fixNewPicture' style={{backgroundColor:"transparent",position: "relative",top:"-21px"}}> 
-            <Avatar size='lg'  src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`}/>
+            <Avatar size='lg'  src={`${TokenUser.imgUser}`}/>
              </div>
 
 
@@ -1439,7 +1440,7 @@ fetchPostsFromDataBase
           <div className='createuserPofile'>
            
           <div className='fig'>
-            <Avatar size='md' name='Kent Dodds'  src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} /></div>
+            <Avatar size='md' name='Kent Dodds'  src={`${TokenUser.imgUser}`} /></div>
        
           <textarea 
               
@@ -1556,7 +1557,7 @@ fetchPostsFromDataBase
 
 
 <div className='nmuberofcomment'>
-  <h1>184 Upvotes</h1> <h1>20 comments</h1>
+  <h1>999 Upvotes</h1> <h1>{reallComment.length} comments</h1>
 </div>
 
 <div className='numberOfVoteButton'>
@@ -1595,7 +1596,7 @@ fetchPostsFromDataBase
   <div className='containerAppF'>
     
   
-    <div className='imgconainerPdf'>  <img src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} alt='' /></div>
+    <div className='imgconainerPdf'>  <img src={`${TokenUser.imgUser}`} alt='' /></div>
     <div className='shareButtonS'>   <input type='text' placeholder={`Share your thoughts  ${TokenUser.username}`} 
     
     ref={funca}
@@ -1618,7 +1619,7 @@ fetchPostsFromDataBase
 
 {/* reall Comment : ))))  */}
 
-<div className='awsomeComment' ref={commentRef}> 
+<div className='awsomeComment' ref={commentRef} > 
 
   <div className='autoPaddingWithHeightelmentInsideit'>
 
@@ -1632,14 +1633,14 @@ fetchPostsFromDataBase
     
     
     <div className='GhaithNahdi' >
-
+ 
  
 <div className='cardcomment'>
 
   
 <div className='userInfoCardComment' style={{display:"flex",alignItems:"center"}}>
 
-<div className='img'><img  src={`${process.env.REACT_APP_API_KEY}/${item.ProfileImg}`}
+<div className='img'><img  src={`${item.ProfileImg}`}
 
 style={{width:"40px",height:"40px",objectFit:"cover"}}  alt=''/></div>
 <div className='userInsideInfo' style={{marginLeft:"10px"}}>
@@ -1689,7 +1690,7 @@ width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" 
   
   <div className='userInfoCardComment'  style={{marginTop:"10px",display:"flex",flexDirection:"row",alignItems:"center"}}  >
 
-<div className='img'><img  src={`${process.env.REACT_APP_API_KEY}/${reply.ProfileImg}`}  style={{width:"40px",height:"40px",objectFit:"cover"}} alt=''/></div>
+<div className='img'><img  src={`${reply.ProfileImg}`}  style={{width:"40px",height:"40px",objectFit:"cover"}} alt=''/></div>
 <div className='userInsideInfo' style={{marginLeft:"10px"}}>
 <p>{reply.UsernameComment}</p>
 <p className='gmail'>{reply.UsernameComment}@gmail.com <span style={{color:"#c3c3c3"}}>{new Date(reply.createdAt).toLocaleDateString()}</span></p>

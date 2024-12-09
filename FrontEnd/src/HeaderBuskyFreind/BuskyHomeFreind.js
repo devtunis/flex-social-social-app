@@ -231,7 +231,7 @@ const TestIds  =(id,arr)=>{
 
             <div className={`busky--navbarx ${open?'openside':"closeside"}`}>   
             <div className={`busky--navar-seeting ${open?"openx":"closex"}`}>
-           <div className='busky--navabar--img'><img src={`${process.env.REACT_APP_API_KEY}/${TokenUser.imgUser}`} alt=''/></div>
+           <div className='busky--navabar--img'><img src={`${TokenUser.imgUser}`} alt=''/></div>
          
            <div className='busky--container--section'>
            
@@ -342,15 +342,16 @@ const TestIds  =(id,arr)=>{
                     </div>
                      <div className='wrapUsersAccount'>
                      
-                       {lodaing3 ?           <>  
-                     <Box padding='2' boxShadow='md' d="flex" bg='#161E2' style={{width:"400px"}}>
-                     <SkeletonCircle size='70' />
-                     <SkeletonText mt='9' noOfLines={4} spacing='5' skeletonHeight='4' />
-                     </Box>
-                     <Box padding='2' boxShadow='md' d="flex" bg='#161E2' style={{width:"400px"}}>
-                     <SkeletonCircle size='70' />
-                     <SkeletonText mt='9' noOfLines={4} spacing='5' skeletonHeight='4' />
-                     </Box>       
+                       { user3.length==0 ? <p>no freind now </p>  
+                       : lodaing3 ?       <>  
+                       <Box padding='2' boxShadow='md' d="flex" bg='#161E2' style={{width:"400px"}}>
+                       <SkeletonCircle size='70' />
+                       <SkeletonText mt='9' noOfLines={4} spacing='5' skeletonHeight='4' />
+                       </Box>
+                       <Box padding='2' boxShadow='md' d="flex" bg='#161E2' style={{width:"400px"}}>
+                       <SkeletonCircle size='70' />
+                       <SkeletonText mt='9' noOfLines={4} spacing='5' skeletonHeight='4' />
+                       </Box>      
                                       
                                       
                                                         
@@ -362,7 +363,7 @@ const TestIds  =(id,arr)=>{
              .reverse()
             .map((item,index)=>      <div className='card-wrapp--acount' style={{cursor:"pointer"}} onClick={()=>HandelMyChatRoomFromTheServer(item)}  key={index}>
 
-<Avatar name='Ghaith Nahdi'  size='lg' src={`${process.env.REACT_APP_API_KEY}/${item.imgUser}`} />
+<Avatar name='Ghaith Nahdi'  size='lg' src={`${item.imgUser}`} />
 <div className='left--card-account'>
 <h2 style={{display:"flex",width:"200px"}}>{item.username} | {item.ScoreRank} ⭐</h2>
 {/* <p>@{item.email}</p> */}
@@ -416,7 +417,7 @@ const TestIds  =(id,arr)=>{
            </Box>: <>
           { user2?.map((item)=>
             <div className='cards--busky-freind'>
-            <Avatar name='Dan Abrahmov' src={`${process.env.REACT_APP_API_KEY}/${item.imgUser}`} />
+            <Avatar name='Dan Abrahmov' src={`${item.imgUser}`} />
           <h2 style={{color:item.email==="devlopper@gmaill.s" || item.email=="nahdigyth@gmail.com" ? "gold":"white"} }>{item.email}</h2>
             <Button colorScheme='blue' className='add' >ADD</Button>
             </div>)}

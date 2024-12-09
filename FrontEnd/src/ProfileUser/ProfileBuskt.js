@@ -38,11 +38,13 @@ import CardSharePost2 from './CardSharePost2'
 
  // this sectio acess to get data from backend
 const [retunPost,setReturnPost] = useState([])
+
   const callOfDuty =async ()=>{
+    console.log(retunPost,"this data from this input value to value   ")
     setPostLodingPost(true)
     try{ 
                                                 // should check this  TokenUser[0]._id;
-
+                                                 // shiukd be passe it from useglobalt context 
       const {data} =  await axios.post(`/getMyposts/${TokenUser._id}`)
        console.log(data.specifPost)
       setReturnPost(data.specifPost)
@@ -71,7 +73,7 @@ useEffect(()=>{
           <div className='UsERDinfo'>
 
             <div className='imgUserDinfo'>
-              <Avatar size='lg'  src={`${process.env.REACT_APP_API_KEY}/${allData.imgUser}`} className='slm'/>
+              <Avatar size='lg'  src={`${allData.imgUser}`} className='slm'/>
               <h1 style={{color:"white",fontWeight:"bold"}}>{allData.username}.bsky.socail</h1>
               <h1 style={{color:"grey",fontWeight:"bold"}}>{allData.email}</h1>
               <h1 style={{color:"grey",fontWeight:"bold"}}>1 Follower 5 Following 9 posts</h1>
@@ -228,7 +230,7 @@ useEffect(()=>{
 
 
 
-          retunPost?.sort((a,b)=>new Date(b.post.createdAt)-new Date(a.post.createdAt))
+          retunPost.sort((a,b)=>new Date(b.post.createdAt)-new Date(a.post.createdAt))
           .filter((ins)=>ins.testeur=="notShare")
           .map((ins)=><CardSharePost2 item={ins}/>)
 
@@ -252,9 +254,4 @@ useEffect(()=>{
 
 
 
-//  z-index: 2;
-//  display: flex;
-//  width: 0%;
-//  height: 100vh;
-//  position: absolute;
-//  display: flex;
+ 

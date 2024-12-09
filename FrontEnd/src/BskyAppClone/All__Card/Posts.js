@@ -209,7 +209,7 @@ const [ShareLink,setShareLink] = useState("")
                  <Link to={"/flexProfile"}>     <Avatar
             size='md'
            
-            src={`${process.env.REACT_APP_API_KEY}/${item.onwerHasPictuer}`}
+            src={`${item.onwerHasPictuer}`}
             onClick={()=>HandelSeeProfile()}
           /> </Link>
 
@@ -232,7 +232,7 @@ const [ShareLink,setShareLink] = useState("")
                   <Avatar 
                     key={like.id}
                     name={like.name}
-                    src={`${process.env.REACT_APP_API_KEY}/${like.imgUser}`}
+                    src={`${like.imgUser}`}
                   />
                 )
               )}
