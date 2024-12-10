@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const instance = axios.create({
-    baseURL : "http://localhost:9000"
+    baseURL : "https://flex-social-social-app.onrender.com"
  
 
 
