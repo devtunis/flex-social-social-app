@@ -87,6 +87,7 @@ const Auth = () => {
     }
 
     </div>
+  <br/>
 
         <button type="submit" className="auth-button" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
