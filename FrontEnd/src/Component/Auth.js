@@ -80,9 +80,9 @@ const Auth = () => {
  
     {
       open ?      <span className="material-symbols-outlined auth" onClick={()=>setOpen((index)=>!index)}>
-      visibility
+      👀
       </span> :      <span className="material-symbols-outlined auth" onClick={()=>setOpen((index)=>!index)}>
-visibility_off
+🛡️
 </span>
     }
 
