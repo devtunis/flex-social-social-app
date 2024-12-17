@@ -1,6 +1,6 @@
 import React, { useReducer, createContext, useContext, useEffect } from 'react';
 
-// Retrieve data from localStorage or use the default initial state
+// Retrieve data from localStorage or use the default initial state 
 const initialState = {
   user: null,
   TokenUser: JSON.parse(localStorage.getItem('TokenUser')) || [] ,
