@@ -1593,7 +1593,7 @@ fetchPostsFromDataBase
 
 <div className='SectionCurrentPost'>
 
-  <div className='containerAppF'>
+  <div className='containerAppF' style={{ display: 'flex' }} >
     
   
     <div className='imgconainerPdf'>  <img src={`${TokenUser.imgUser}`} alt='' /></div>
