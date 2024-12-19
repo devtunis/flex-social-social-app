@@ -1597,10 +1597,17 @@ fetchPostsFromDataBase
     
   
     <div className='imgconainerPdf'>  <img src={`${TokenUser.imgUser}`} alt='' /></div>
-    <div className='shareButtonS'>   <input type='text' placeholder={`Share your thoughts  ${TokenUser.username}`} 
-    
-    ref={funca}
-    /></div>
+    <div className='shareButtonS'>  
+ <input
+  type="text"
+  placeholder={`Share your thoughts ${TokenUser.username}`}
+  ref={funca}
+  style={{ border: '1px solid #ccc' }} // default border style
+  onFocus={(e) => (e.target.style.border = 'none')}
+  onBlur={(e) => (e.target.style.border = '1px solid #ccc')} // Optional: restores the border when blurred
+/>
+
+      </div>
 
      <div className='buttonPost'>
       
