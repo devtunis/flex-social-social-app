@@ -1602,9 +1602,9 @@ fetchPostsFromDataBase
   type="text"
   placeholder={`Share your thoughts ${TokenUser.username}`}
   ref={funca}
-  style={{ border: '1px solid #ccc' }} // default border style
+ 
   onFocus={(e) => (e.target.style.border = 'none')}
-  onBlur={(e) => (e.target.style.border = '1px solid #ccc')} // Optional: restores the border when blurred
+  
 />
 
       </div>
