@@ -16,7 +16,8 @@
      
 }
 .busky--app-card-post{
-    background-color: #161E27;
+/*     background-color: #161E27; */
+    background-color: #000000;
     width: 99%;
     margin: 2px;
     border-bottom: 2px solid grey;
