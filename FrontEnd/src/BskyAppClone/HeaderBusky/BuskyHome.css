@@ -1076,7 +1076,8 @@ overflow: auto;
 .busky--posts{
     width: 38%;
     height: 100%;
-    background-color: var(--background-color);
+/*     background-color: var(--background-color); */
+    background-color: #000000;
     /* scroll-behavior: smooth; */
     border-left: 0.44px solid grey;
     border-right: 0.44px solid grey;
