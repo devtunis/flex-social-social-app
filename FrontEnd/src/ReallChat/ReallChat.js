@@ -58,7 +58,7 @@ const sendRquestThemeToDataBase = async(Theme)=>{
     settemplate(true)
   
   try{  
-      const SendRequest = await axios.post(`${process.env.REACT_APP_API_KEY}/ChangeTehme/${TokenUser._id}`,{
+      const SendRequest = await axios.post(`/ChangeTehme/${TokenUser._id}`,{
         userId  :currentUser[0]._id,
         nameTheme:Theme
       })
