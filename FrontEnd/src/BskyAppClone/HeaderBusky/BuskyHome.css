@@ -1141,9 +1141,9 @@ overflow: auto;
  .busky--navar-seetingrr{
     width: 47%;
 
-/*     background-color: var(--background-color); */
+    background-color: var(--background-color); 
         
-    background-color: #000000;
+ 
     color: whitesmoke;
     font-weight: bold;
     font-size: 20px;
