@@ -46,7 +46,7 @@ const BuskyHomeFreind = () => {
 
     const intervalId = setInterval(() => {
       UsersApi()
-  },700);
+  },2000);
 
 
   return () => clearInterval(intervalId);
