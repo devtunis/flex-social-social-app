@@ -1209,7 +1209,8 @@ overflow: auto;
     margin-left: 30px;
     width: 61%;
     height: 90%;
-    background-color: var(--background-color);
+/*     background-color: var(--background-color); */
+         background-color: #000000;
  }
  .busky--links{
     display: flex;
