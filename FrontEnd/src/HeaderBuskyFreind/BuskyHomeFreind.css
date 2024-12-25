@@ -22,7 +22,8 @@
 }
 .busky--home--container{
     width: 100%;
-    background-color:var(--background-color) ;
+/* background-color: #161e27; */
+    background-color: #000000;
     height: 100%;
     display: flex;
     flex-direction: row;
