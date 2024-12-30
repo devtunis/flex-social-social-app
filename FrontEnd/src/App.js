@@ -70,7 +70,7 @@ const App = () => {
             <Route path='/RankPage' element={<><Rank/></>} />
             <Route path='/blsuky/pdf' element={<><AdminPosterPdf/></>} />
             <Route path='/blsuky/Draw' element={<><Draw/></>} />
-            <Route path=' ' element={<><Ai/><FlexYoutube/></>} />
+            <Route path='blsuky/flexYoutube' element={<><Ai/><FlexYoutube/></>} />
             <Route path='/ai' element={<><Ai/></>} />
             <Route path='/ping' element={<><FlexSiri/></>} />
             <Route path='/AiTesting' element={<><AiTesting/></>} />
