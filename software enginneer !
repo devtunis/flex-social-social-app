@@ -58,3 +58,7 @@ const WebSocketComponent = () => {
 };
 
 export default WebSocketComponent;
+
+
+//Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
