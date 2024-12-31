@@ -1069,15 +1069,15 @@ overflow: auto;
 .busky--navbar{
     width: 30%;
     height: 100%;
-/*     background-color: var(--background-color); */
-   background-color: #000000;
+    background-color: var(--background-color);
+
 
 }
 .busky--posts{
     width: 38%;
     height: 100%;
-/*     background-color: var(--background-color); */
-    background-color: #000000;
+   background-color: var(--background-color); 
+    
     /* scroll-behavior: smooth; */
     border-left: 0.44px solid grey;
     border-right: 0.44px solid grey;
@@ -1085,8 +1085,8 @@ overflow: auto;
 .busky--search--useres{
     width: 27%;
     height: 100%;
-/*     background-color: var(--background-color); */
-    background-color: #000000;
+    background-color: var(--background-color);  
+ 
 }  
 
 /* .busky--navbar{
