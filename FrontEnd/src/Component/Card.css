@@ -1,0 +1,54 @@
+.cardSectionUser{
+    background-color: black;
+    color: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    gap:10px;
+    align-items: center;
+    
+}
+
+.icon-pictuer{
+    background-color: white;
+    color: black;
+    
+  
+    padding: 10px;
+    border-radius: 15px;
+}
+
+@media (max-width: 768px) {
+
+    .cardSectionUser{
+        background-color: black;
+        color: white;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        gap:10px;
+        align-items: center;
+        flex-direction: column;
+        
+    }
+    
+    .icon-pictuer{
+        background-color: white;
+        color: black;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+      
+        padding: 10px;
+         
+    }
+    .icon-name{
+        font-size: small;
+    }
+}
