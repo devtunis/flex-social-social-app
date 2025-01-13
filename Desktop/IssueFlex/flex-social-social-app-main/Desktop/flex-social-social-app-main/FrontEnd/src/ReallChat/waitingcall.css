@@ -1,0 +1,102 @@
+.WaitingCall {
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h2{
+        font-weight: bold;
+        font-size: large;
+        
+    }
+    .Header-Waiting-Call-title{
+        text-align: center;
+    }
+    .titlename{
+        font-weight: bold;
+    }
+    .Waiting-call-content{
+       
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 26px;
+        padding: 10px;
+        color: white;
+    }
+    .answer-Waiting-call{
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        justify-content: center;
+    }
+    .handeller-caller-off{
+       
+        padding: 10px;
+        border-radius: 100%;
+    }
+    
+}
+.hearder-app{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Header-Waiting-Call-title{
+    color: white;
+    background-color: black;
+    width: 100%;
+    text-align: center;
+}
+.handeller-caller-off{
+    background-color: red;
+}
+.handeller-caller-off-1{
+    background-color: gray;
+    width: 100%;
+    text-align: center;
+    border-radius: 100%;
+    padding: 10px;
+}
+.handeller-caller-off-2{
+    background-color: gray;
+    width: 100%;
+    text-align: center;
+    border-radius: 100%;
+    padding: 10px;
+}
+
+.handeller-caller-off-3{
+    background-color: gray;
+    width: 100%;
+    text-align: center;
+    border-radius: 100%;
+    padding: 10px;
+}
+
+
+
+
+#rotateacall {
+    animation: rotatethis 4s infinite linear;
+}
+
+@keyframes rotatethis {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+  
+
+

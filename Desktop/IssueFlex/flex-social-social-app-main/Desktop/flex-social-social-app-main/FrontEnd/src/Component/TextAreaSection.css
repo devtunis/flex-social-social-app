@@ -1,0 +1,100 @@
+/* src/Component/TextAreaSection.css */
+
+.latex-renderer {
+     width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9f9; /* Light gray background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: black;
+  }
+  
+  .latex-renderer h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .latex-renderer textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: vertical; /* Allow vertical resizing only */
+    margin-bottom: 20px;
+  }
+  
+  .latex-renderer textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .latex-renderer .katex {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .latex-renderer .katex * {
+    font-family: "Times New Roman", serif; /* Match the font used in KaTeX */
+  }
+  
+  /* Styling for the answer section, to mimic Stack Overflow style */
+  .answer-section {
+    border-top: 1px solid #e1e1e1;
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+  
+  .answer-section h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .answer-section .answer-content {
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .answer-section .answer-content p {
+    margin: 0;
+  }
+  
+  .answer-section .answer-content pre {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  
+
+  .sumbitButtonDesigned{
+    padding: 10px;
+    border: none;
+    font-size: 30px;
+    background-color: black;
+   
+    
+  }
+
+  .sumbitButtonDesigned:hover{
+    
+     background-color: rgb(22, 21, 21); 
+  }
+
+
+  .ContainersumbitButtonDesigned{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }

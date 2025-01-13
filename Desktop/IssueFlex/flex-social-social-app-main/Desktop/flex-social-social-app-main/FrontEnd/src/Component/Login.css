@@ -1,0 +1,95 @@
+/* Login.css */
+.formtadataSection{
+  background-color:#ddd;
+}
+.Form {
+    width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+
+    transform: translate(-50%, -50%); 
+     
+  }
+  
+  .Form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .Form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .Form input[type='text'] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+    
+  .Form input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+
+  
+  .Form input[type='file'] {
+    display: block;
+    margin-bottom: 15px;
+  }
+  
+  .Form button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .Form button:hover {
+    background: #0056b3;
+  }
+  
+  .Form .toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+   
+   
+  
+
+
+
+  @media screen and (max-width: 600px) {
+     
+   .formtadataSection>.Form{
+   
+    width: 100%;
+   }
+  }
+
+

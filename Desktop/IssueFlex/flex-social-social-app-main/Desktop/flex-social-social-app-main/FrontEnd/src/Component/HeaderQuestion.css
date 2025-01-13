@@ -1,0 +1,335 @@
+.HeadersQuestion {
+   width: 100%;
+   height: auto;
+   
+   background-color: #12161b;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.HeadersQuestionInside {
+   width: 98%;
+   height: 96%;
+   background-color: #12161b;
+   display: flex;
+   gap: 3px;
+   justify-content: center;
+}
+
+.left__Side {
+   width: 18%;
+   background-color: rgba(0, 0, 0, 0.39);
+   height: 100vh;
+}
+
+.rightSide {
+   width: 70%;
+   background-color: #12161b;
+   height: 100%;
+}
+
+.NavBarRightSide {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   margin-top: 10px;
+   padding: 10px;
+}
+
+.Level1 {
+   width: 70%;
+   background-color: #12161b;
+   color: white;
+}
+
+.Level2 button {
+   padding: 10px;
+   border-radius: 10px;
+   color: white;
+   background-color: red;
+}
+
+.AskedToday {
+   background-color: #1e2329;
+   display: flex;
+   justify-content: center;
+   
+}
+
+.AskedToday span {
+   font-size: 20px;
+   background-color: white;
+   margin: 10px;
+   border-radius: 20px;
+   padding: 5px;
+}
+
+.App__Vote__Question {
+   display: flex;
+   flex-direction: row;
+}
+
+.Vote__Question {
+   width: 14%;
+   height: auto;
+   background-color: #1E2329;
+}
+
+.right__Vote__Question {
+   width: 86%;
+   height: auto;
+   /* background-color: orangered; */
+   overflow-x: auto;
+   color: white;
+}
+
+.Space__Vote h2 {
+   font-size: medium;
+   padding: 10px;
+  
+}
+
+.PdfSectionUser {
+   display: flex;
+   justify-content:center;
+   align-items: center;
+   background-color: #12161b;
+   overflow-y: auto;
+}
+
+
+.PdfSectionUser img {
+ width: 99.99%;
+ height: 800px;
+ margin-top: 4px;
+ object-fit: contain;
+ border-radius: 50px;
+
+}
+
+.ecran {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   border: 1px solid black;
+   height:900px;
+   overflow-x: auto;
+}
+
+.Counter {
+   background-color: rgb(242, 235, 235);
+   width: 40px;
+   height: 40px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 20px;
+   font-weight: bold;
+   border-radius: 100%;
+}
+
+.Main__Vote {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 10px;
+}
+
+.box {
+   background-color: grey;
+   padding: 10px;
+   border-radius: 100%;
+   cursor: pointer;
+}
+.left__Side{
+   display: flex;
+   justify-content: flex-start;
+   flex-direction: column;
+
+}
+ 
+.icon-left-side{
+   margin-top: 70px;
+   background-color: white;
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+}
+
+.icon-self{
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   gap: 10px;
+   font-weight: bold;
+   img{
+     width: 30px;
+     object-fit: cover;
+   }
+ }
+ Link{
+ text-decoration: none;
+ }
+
+@media (max-width: 600px) {
+
+   .PdfSectionUser img {
+      width: 100%;
+      height: auto;
+      margin-top: 4px;
+      object-fit: contain;
+      border-radius: 10px;
+      
+     }
+
+
+     
+   .HeadersQuestion {
+      width: 100%;
+      height: auto;
+       
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px; /* Add some padding for better spacing on mobile */
+   }
+   
+   .HeadersQuestionInside {
+      width: 100%;
+      max-width: 600px; /* Limit the width on small screens */
+      height: auto;
+       
+      display: flex;
+      flex-direction: column; /* Stack items vertically on small screens */
+      gap: 10px;
+   }
+   
+   .left__Side {
+      width: 100%; /* Full width for mobile */
+      
+      height: auto;
+   }
+   
+   .rightSide {
+      width: 100%; /* Full width for mobile */
+      
+      height: auto;
+   }
+   
+   .NavBarRightSide {
+      display: flex;
+      flex-direction: column; /* Stack vertically on mobile */
+      align-items: center;
+      margin-top: 10px;
+      padding: 10px;
+   }
+   
+   .Level1 {
+      width: 100%; /* Full width for mobile */
+      
+   }
+   
+   .Level2 button {
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 14px; /* Smaller button size for mobile */
+   }
+   
+   .AskedToday {
+      background-color: rgb(16, 100, 149);
+      display: flex;
+      flex-direction: row; /* Stack items vertically on mobile */
+      align-items: center;
+      padding: 10px 0;
+   }
+   
+   .AskedToday span {
+      font-size: 16px; /* Adjusted font size for mobile */
+      background-color: white;
+      margin: 5px;
+      border-radius: 15px;
+      padding: 4px;
+   }
+   
+   .App__Vote__Question {
+      display: flex;
+      flex-direction: column; /* Stack vertically on mobile */
+   }
+   
+   .Vote__Question {
+      width: 100%; /* Full width for mobile */
+      height: auto;
+      
+       display: none;
+   }
+   
+   .right__Vote__Question {
+      width: 100%; /* Full width for mobile */
+      height: auto;
+     
+      overflow-x: auto;
+    
+   }
+   
+   .Space__Vote h2 {
+      font-size: 18px; /* Adjusted font size for mobile */
+   }
+   
+   .PdfSectionUser {
+      display: flex;
+      justify-content: center; /* Center content on mobile */
+      align-items: center;
+    
+   }
+   
+   .ecran {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border: 1px solid black;
+      height: 600px; /* Adjusted height for mobile */
+      overflow-y: auto; /* Changed to vertical scrolling */
+   }
+   
+   .Counter {
+      background-color: red;
+      width: 30px; /* Smaller size for mobile */
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px; /* Adjusted font size for mobile */
+      font-weight: bold;
+      border-radius: 100%;
+   }
+   
+   .Main__Vote {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+   }
+   
+   .box {
+      background-color: grey;
+      padding: 8px; /* Smaller padding for mobile */
+      border-radius: 100%;
+      cursor: pointer;
+   }
+
+   
+   .HeadersQuestion {
+       padding: 5px; /* Reduced padding for smaller screens */
+   }
+
+   .HeadersQuestionInside {
+       padding: 5px; /* Reduced padding for smaller screens */
+   }
+
+   .ecran {
+       height: 500px; /* Further adjusted height for very small screens */
+   }
+}

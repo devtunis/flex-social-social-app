@@ -1,0 +1,33 @@
+.answer-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .answer-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    resize: vertical; /* Allow the user to resize the textarea vertically */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  button {
+    display: block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
