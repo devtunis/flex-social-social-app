@@ -1,8 +1,7 @@
 import React from 'react'
 import "./FirstVIew.css"
 import { useNavigate } from 'react-router-dom'
-import ButterFlyD from './ButterFlyD'
- 
+
 
 const   FIRSTVIEW = () => {
     const Nav = useNavigate()
